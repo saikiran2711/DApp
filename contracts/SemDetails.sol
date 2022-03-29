@@ -18,8 +18,6 @@ contract SemDetails{
     semdetails memory sem=semdetails(preDecimal,postDecimal,semNumber);
     userData[msg.sender].push(sem);
   }
-
-  
   struct semdetails{
     uint256 montessa;
     uint256 decimal;
