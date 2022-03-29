@@ -8,5 +8,5 @@ module.exports = {
     develop: {
       port: 8545
     }
-  }
+  },
 };
