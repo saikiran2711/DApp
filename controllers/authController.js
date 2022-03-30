@@ -16,7 +16,7 @@ exports.signUp = async (req, res, next) => {
   console.log("Req is ", req.body);
   const rollNo = req.body.rollNo;
   const password = req.body.password;
-  const password2 = req.body.password2;
+
   var idx = await Index.find();
   console.log("Idxs :", idx);
   if (idx.length == 0) {
@@ -24,20 +24,24 @@ exports.signUp = async (req, res, next) => {
       accIndex: 0,
     });
   } else {
-    idx = await Index.findOneAndUpdate(
+    console.log("Already there : ", idx[0]);
+    idx = await Index.updateOne(
       { accIndex: idx[0].accIndex },
       {
-        $inc: {
-          accIndex: 1,
+        $set: {
+          accIndex: idx[0].accIndex + 1,
         },
       }
     );
   }
-  console.log("Updated Idx is ", idx);
-  let address = await getAddress(idx.accIndex);
+  var idx = await Index.find();
+
+  console.log("Updated Idx is ", idx[0]);
+  let address = await getAddress(idx[0].accIndex);
+  console.log("Address is : ", address);
 
   User.findOne({ rollNo: rollNo })
-    .then(async (user) => {
+    .then((user) => {
       console.log("USer ", user);
       if (!user) {
         console.log("No user", idx.accIndex);
@@ -58,13 +62,14 @@ exports.signUp = async (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.log("err");
+      console.log("err", err);
     });
 };
 
 exports.signIn = (req, res, next) => {
   const rollNo = req.body.rollNo;
   const password = req.body.password;
+  console.log(req.bo);
 
   User.findOne({ rollNo: rollNo })
     .then((user) => {

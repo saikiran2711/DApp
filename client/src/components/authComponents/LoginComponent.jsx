@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { Box, Card, Grid, Typography, Button } from "@mui/material";
 
@@ -47,7 +47,41 @@ const useStyles = makeStyles({
   },
 });
 const LoginComponent = () => {
+  const [rollNo, setrollNo] = useState("");
+  const [password, setPassword] = useState("");
   const classes = useStyles();
+
+  const handleRoll = (e) => {
+    setrollNo(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    console.log(rollNo, password);
+    fetch("/auth/signin", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        rollNo: rollNo,
+        password: password,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <Box className={classes.root}>
@@ -86,6 +120,8 @@ const LoginComponent = () => {
                   placeholder="Roll Number"
                   inputMode="text"
                   fullWidth={true}
+                  onChange={handleRoll}
+                  value={rollNo}
                   startAdornment={
                     <InputAdornment position="start">
                       <KeyOutlinedIcon
@@ -100,8 +136,11 @@ const LoginComponent = () => {
               <Grid item sx={{ marginTop: "50px" }}>
                 <Input
                   sx={{ fontSize: "20px" }}
-                  placeholder="Password"
+                  placeholder="Password
+                  "
                   fullWidth={true}
+                  onChange={handlePassword}
+                  value={password}
                   type="password"
                   startAdornment={
                     <InputAdornment position="start">
@@ -121,6 +160,7 @@ const LoginComponent = () => {
               </Grid>
               <Grid item>
                 <Button
+                  onClick={handleLogin}
                   sx={{
                     backgroundColor: "#a46ef5",
                     textTransform: "none",
