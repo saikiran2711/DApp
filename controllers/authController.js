@@ -62,4 +62,26 @@ exports.signUp = async (req, res, next) => {
     });
 };
 
-exports.signIn = (req, res, next) => {};
+exports.signIn = (req, res, next) => {
+  const rollNo = req.body.rollNo;
+  const password = req.body.password;
+
+  User.findOne({ rollNo: rollNo })
+    .then((user) => {
+      if (!user) {
+        return res.status(422).json({ err: "User not found." });
+      }
+      if (user.password == password) {
+        return res
+          .status(200)
+          .json({ message: "Logged in successfully!", user: user });
+      } else {
+        return res.status(422).json({ err: "Password is incorrect" });
+      }
+    })
+    .catch((err) => {
+      err.statusCode = 500;
+      err.message = "Internal Server Error";
+      next(err);
+    });
+};
