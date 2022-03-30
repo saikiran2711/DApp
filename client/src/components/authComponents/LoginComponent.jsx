@@ -51,7 +51,7 @@ const LoginComponent = () => {
   return (
     <>
       <Box className={classes.root}>
-        <Card variant="outlined" className={classes.card}>
+        <Card className={classes.card}>
           <Grid
             container
             direction="column"
