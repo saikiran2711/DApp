@@ -1,13 +1,11 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import { Box, Card, Grid, Typography, Button } from "@mui/material";
-
+import { Box, Card, Grid, Typography, Button, TextField } from "@mui/material";
 import Input from "@mui/material/Input";
-
 import InputAdornment from "@mui/material/InputAdornment";
-
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles({
   root: {
     background: "linear-gradient(45deg, #26e2d9 , #58a8dd,#a46ef5)",
@@ -46,6 +44,7 @@ const useStyles = makeStyles({
     direction: "left",
   },
 });
+
 const LoginComponent = () => {
   const classes = useStyles();
   return (
@@ -81,36 +80,36 @@ const LoginComponent = () => {
               </Grid>
 
               <Grid item sx={{ marginTop: "90px" }}>
-                <Input
+                <TextField
                   sx={{ fontSize: "20px" }}
-                  placeholder="Roll Number"
+                  label="Roll Number"
+                  color="login"
                   inputMode="text"
                   fullWidth={true}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <KeyOutlinedIcon
-                        fontSize="large"
-                        sx={{ marginBottom: "8px", marginRight: "10px" }}
-                      />
-                    </InputAdornment>
-                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <KeyOutlinedIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
 
               <Grid item sx={{ marginTop: "50px" }}>
-                <Input
+                <TextField
                   sx={{ fontSize: "20px" }}
-                  placeholder="Password"
+                  label="Password"
                   fullWidth={true}
                   type="password"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LockOutlinedIcon
-                        fontSize="large"
-                        sx={{ marginBottom: "8px", marginRight: "10px" }}
-                      />
-                    </InputAdornment>
-                  }
+                  color="login"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockOutlinedIcon />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item sx={{ marginTop: "20px" }}>
@@ -122,7 +121,7 @@ const LoginComponent = () => {
               <Grid item>
                 <Button
                   sx={{
-                    backgroundColor: "#a46ef5",
+                    background:'linear-gradient(90deg,#ad44cd,#4c00ff)',
                     textTransform: "none",
                     width: "400px",
                     marginTop: "30px",
@@ -143,15 +142,19 @@ const LoginComponent = () => {
                   }}
                 >
                   Don't have an account ?
-                  <span
-                    style={{
-                      color: "#26e2d9",
-                      marginLeft: "5px",
-                      fontSize: "20px",
-                    }}
+                  <Link
+                    to="/signup"
+                    className={classes.loginTypo}
+                    style={{ textDecoration: "none" }}
                   >
-                    Signup here
-                  </span>{" "}
+                    <Button
+                      variant="text"
+                      color="login"
+                      sx={{ textTransform: "capitalize" }}
+                    >
+                      Sign Up
+                    </Button>{" "}
+                  </Link>
                 </Typography>
               </Grid>
             </Box>
