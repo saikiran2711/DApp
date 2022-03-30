@@ -59,7 +59,7 @@
   "sourceMap": "69:311:0:-;;;221:50;8:9:-1;5:2;;;30:1;27;20:12;5:2;221:50:0;256:10;248:5;;:18;;;;;;;;;;;;;;;;;;69:311;;;;;;",
   "deployedSourceMap": "69:311:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;69:311:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;117:36;;;:::i;:::-;;;;;;;;;;;;;;;;;;;93:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;275:103;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;275:103:0;;;;;;;;;;;;;;;;;:::i;:::-;;117:36;;;;:::o;93:20::-;;;;;;;;;;;;;:::o;275:103::-;204:5;;;;;;;;;;;190:19;;:10;:19;;;186:26;;;364:9;337:24;:36;;;;186:26;275:103;:::o",
   "source": "// SPDX-License-Identifier: MIT\n// pragma solidity >=0.4.21 <0.7.0;\n\ncontract Migrations {\n  address public owner;\n  uint public last_completed_migration;\n\n  modifier restricted() {\n    if (msg.sender == owner) _;\n  }\n\n  constructor() public {\n    owner = msg.sender;\n  }\n\n  function setCompleted(uint completed) public restricted {\n    last_completed_migration = completed;\n  }\n}\n",
-  "sourcePath": "/Users/sampathbabu/DApp/contracts/Migrations.sol",
+  "sourcePath": "/home/saikk/Documents/MajorProject/DApp/DApp/contracts/Migrations.sol",
   "ast": {
     "absolutePath": "project:/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -924,16 +924,9 @@
     "name": "solc",
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
-  "networks": {
-    "5777": {
-      "events": {},
-      "links": {},
-      "address": "0x7459bA84Ad2771402C2E87127e880C3bAFDB5212",
-      "transactionHash": "0x134ffb8f02812f543fd9ce7c2440a55c2ae057b2f652568c450afa7cdd8eedc6"
-    }
-  },
+  "networks": {},
   "schemaVersion": "3.4.6",
-  "updatedAt": "2022-03-29T11:16:21.234Z",
+  "updatedAt": "2022-03-29T11:41:43.193Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
