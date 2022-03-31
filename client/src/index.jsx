@@ -5,6 +5,7 @@ import { createTheme } from "@mui/material/styles";
 // import App from "./App";
 import SignUpFormBox from "./SignUp";
 import { ThemeProvider } from "@emotion/react";
+import App from "./App";
 const theme = createTheme({
   palette: {
     login: {
@@ -19,7 +20,7 @@ const theme = createTheme({
 // import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <SignUpFormBox />
+    <App />
   </ThemeProvider>,
   document.getElementById("root")
 );

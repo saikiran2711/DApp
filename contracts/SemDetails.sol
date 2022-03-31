@@ -29,6 +29,7 @@ contract SemDetails{
      
   function setProfile(string memory _name,string memory _email,uint256 _phone) public {
     mappedData[msg.sender]=profile(_name,_email,_phone);
+    
   }
   function getProfile() public view returns(string memory _name,string memory _email,uint256 _phone){
     string memory name=mappedData[msg.sender].name;

@@ -23,13 +23,18 @@ class App extends Component {
         SimpleStorageContract.abi,
         deployedNetwork && deployedNetwork.address
       );
-      console.log(instance.methods);
-      instance.methods.getProfile().call().then((result,err)=>{
-        console.log(result);
-
-      });
-      let resultSem=await instance.methods.getSemDetails().call();
-      console.log((resultSem));
+      console.log(instance);
+      let result=await instance.methods.setProfile("abc","abc@zxyc.com",22222222222).send({from:accounts[7]});
+      console.log(result);
+      // instance.methods.getProfile().call().then((res,err)=>{
+      //   console.log("RES "+res);
+      // })
+      // let resultSem=await instance.methods.getSemDetails().call({from:accounts[7]});
+      // console.log("Res sem: "+resultSem);
+      // let resu=await instance.methods.setProfile("abc","abc@zxyc.com",22222222222).call({from:accounts[7]});
+      // console.log("resu : "+resu);
+      // resu=await instance.methods.getProfile().call({from:accounts[7]});
+      // console.log("Get RES "+resu);
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({ web3, accounts, contract: instance }, this.runExample);
