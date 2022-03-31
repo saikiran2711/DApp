@@ -1,16 +1,31 @@
 import { ArrowForward } from "@mui/icons-material";
 import { Paper, Typography, Box, IconButton } from "@mui/material";
 import React from "react";
+import SemDetails from '../../contracts/SemDetails.json';
 import getWeb3 from "../../web3";
 import { NavLink } from "react-router-dom";
-const header=async()=>{
-const web3=await getWeb3();
-let accounts=await web3.eth.getAccounts();
-console.log(accounts);
-}
+const header = async () => {
+  const web3 = await getWeb3();
+  let accounts = await web3.eth.getAccounts();
+  console.log(accounts);
+  const networkId = await web3.eth.net.getId();
+  console.log("Network id is : ", networkId);
+  const deployedNetwork = SemDetails.networks[networkId];
+  console.log("Address id is : ", deployedNetwork);
+  const instance = new web3.eth.Contract(
+    SemDetails.abi,
+    deployedNetwork && deployedNetwork.address
+  );
+  console.log(instance);
+let result=await instance.methods.setProfile("abc","abc@zy.com",12344).call({from:accounts[2]});
+console.log(accounts[2]);
+console.log(result);
+result=await instance.methods.getProfile().call({from:accounts[2]});
+console.log(result);
+};
 
-function Home(props){
-header();
+function Home(props) {
+  header();
   return (
     <Box width={1 / 6} margin="auto">
       <Paper
