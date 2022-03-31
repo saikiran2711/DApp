@@ -1,9 +1,16 @@
 import { ArrowForward } from "@mui/icons-material";
 import { Paper, Typography, Box, IconButton } from "@mui/material";
 import React from "react";
+import getWeb3 from "../../web3";
 import { NavLink } from "react-router-dom";
+const header=async()=>{
+const web3=await getWeb3();
+let accounts=await web3.eth.getAccounts();
+console.log(accounts);
+}
 
-function Home(props) {
+function Home(props){
+header();
   return (
     <Box width={1 / 6} margin="auto">
       <Paper
