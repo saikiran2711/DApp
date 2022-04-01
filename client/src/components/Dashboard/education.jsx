@@ -9,7 +9,10 @@ const EducationPage = () => {
         <Grid item>
           <SideBar />
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          sx={{ backgroundColor: "blue", flex: "1", overflowY: "auto" }}
+        >
           <h1>Education Details Page</h1>
         </Grid>
       </Grid>

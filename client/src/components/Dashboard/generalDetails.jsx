@@ -2,7 +2,7 @@ import React from "react";
 import { Grid } from "@mui/material";
 import SideBar from "./sidebar";
 
-const AccountPage = () => {
+const GeneralDetails = () => {
   return (
     <>
       <Grid container>
@@ -13,11 +13,11 @@ const AccountPage = () => {
           item
           sx={{ backgroundColor: "blue", flex: "1", overflowY: "auto" }}
         >
-          <h1>Accounts Details Page</h1>
+          <h1>General Details Page</h1>
         </Grid>
       </Grid>
     </>
   );
 };
 
-export default AccountPage;
+export default GeneralDetails;
