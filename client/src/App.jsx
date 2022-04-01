@@ -10,7 +10,6 @@ class App extends Component {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
-
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
       console.log(accounts);
@@ -25,7 +24,7 @@ class App extends Component {
       );
       console.log(instance);
       let result=await instance.methods.setProfile("abc","abc@zxyc.com",22222222222).send({from:accounts[7]});
-      console.log(result);
+      console.log("RES"+result);
       // instance.methods.getProfile().call().then((res,err)=>{
       //   console.log("RES "+res);
       // })
