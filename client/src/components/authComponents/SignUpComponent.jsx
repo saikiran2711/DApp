@@ -93,7 +93,7 @@ function SignUpBox(props) {
           </Grid>
           <Grid item sx={{ marginTop: 5 }}>
             <TextField
-              inputMode="email"
+              inputMode="text"
               color={"login"}
               label="Enter Roll Number"
               onChange={addressHandler}

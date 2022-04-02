@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles({
   sideBarBox: {
     backgroundColor: "#3f3f47",
-    height: "100vh",
+    height: "96.9vh",
     width: "18rem",
     margin: "15px",
     borderRadius: "10px",
-    overflow: "auto",
+    // overflow: "",
     // position: "fixed",
   },
   heading: {
@@ -19,7 +19,16 @@ const useStyles = makeStyles({
     borderBottom: "1px solid GrayText",
   },
   sideBarItems: {
-    // backgroundColor: "pink",
+    backgroundColor: "#e25474",
+    color: "#d9d4a5",
+    // "&:hover": {
+    //   backgroundColor: "#55555a",
+    // },
+    padding: "12px",
+    borderRadius: "10px",
+  },
+  notsideBarItems: {
+    // backgroundColor: "#e25474",
     color: "#d9d4a5",
     "&:hover": {
       backgroundColor: "#55555a",
@@ -30,13 +39,14 @@ const useStyles = makeStyles({
 });
 const SideBar = () => {
   const classes = useStyles();
+  const url = window.location.pathname;
   return (
     <Grid container>
-      <Grid item sx={{ backgroundColor: "red" }}>
+      <Grid item sx={{}}>
         <Box className={classes.sideBarBox}>
           <Grid container direction="column">
             <Grid item textAlign="center" className={classes.heading}>
-              <h1>Dashboard</h1>
+              <h1>DAppbase</h1>
             </Grid>
             <Link style={{ textDecoration: "none" }} to="/dashboard">
               <Grid
@@ -46,9 +56,31 @@ const SideBar = () => {
                   marginLeft: "10px",
                   marginRight: "10px",
                 }}
-                className={classes.sideBarItems}
+                className={`${
+                  url.match("/dashboard")
+                    ? `${classes.sideBarItems}`
+                    : `${classes.notsideBarItems}`
+                }`}
               >
-                <Typography>General Detals</Typography>{" "}
+                <Typography sx={{ color: "white" }}>Dashboard </Typography>{" "}
+              </Grid>
+            </Link>
+
+            <Link style={{ textDecoration: "none" }} to="/general">
+              <Grid
+                item
+                sx={{
+                  marginTop: "2px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
+                className={`${
+                  url.match("/general")
+                    ? `${classes.sideBarItems}`
+                    : `${classes.notsideBarItems}`
+                }`}
+              >
+                <Typography sx={{ color: "white" }}>General Details</Typography>{" "}
               </Grid>
             </Link>
             <Link style={{ textDecoration: "none" }} to="/educationalDetails">
@@ -59,9 +91,17 @@ const SideBar = () => {
                   marginLeft: "10px",
                   marginRight: "10px",
                 }}
-                className={classes.sideBarItems}
+                classNa
+                className={`${
+                  url.match("/educationalDetails")
+                    ? `${classes.sideBarItems}`
+                    : `${classes.notsideBarItems}`
+                }`}
+                me={classes.sideBarItems}
               >
-                <Typography>Educational Details</Typography>
+                <Typography sx={{ color: "white" }}>
+                  Educational Details
+                </Typography>
               </Grid>
             </Link>
             <Link style={{ textDecoration: "none" }} to="/account">
@@ -72,9 +112,15 @@ const SideBar = () => {
                   marginLeft: "10px",
                   marginRight: "10px",
                 }}
-                className={classes.sideBarItems}
+                classN
+                className={`${
+                  url.match("/account")
+                    ? `${classes.sideBarItems}`
+                    : `${classes.notsideBarItems}`
+                }`}
+                ame={classes.sideBarItems}
               >
-                <Typography>Account</Typography>
+                <Typography sx={{ color: "white" }}>Account</Typography>
               </Grid>
             </Link>
             <Link style={{ textDecoration: "none" }} to="/">
@@ -85,9 +131,9 @@ const SideBar = () => {
                   marginLeft: "10px",
                   marginRight: "10px",
                 }}
-                className={classes.sideBarItems}
+                className={classes.notsideBarItems}
               >
-                <Typography>Logout</Typography>
+                <Typography sx={{ color: "white" }}>Logout</Typography>
               </Grid>
             </Link>
           </Grid>
