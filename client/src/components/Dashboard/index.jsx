@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import { Grid } from "@mui/material";
-import React from "react";
-import SideBar from "./sidebar";
-
-const Index = () => {
-  return (
-    <>
-      <Grid container>
-        <Grid item>
-          <SideBar />
-        </Grid>
-        <Grid item>
-          <h1>General Details Page</h1>
-=======
 import {
   Grid,
   Typography,
@@ -159,7 +144,6 @@ const Index = () => {
               </Card>
             </Grid>
           </Grid>
->>>>>>> 347379d18aa4b9ca12a9a607b978897f5e049037
         </Grid>
       </Grid>
     </>
