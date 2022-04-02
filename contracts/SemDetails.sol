@@ -173,7 +173,12 @@ contract Semester{
     }
     return(scores);
   }
-
+  
+  function setSem1(int256[] memory arr) public {
+      for(uint256 i=0;i<sem1Subs.length;i++)
+      sem1[msg.sender][sem1Subs[i]]=arr[i];
+  }  
+  
   function Sem2initializer() public{
     sem2[msg.sender]["Mathematics-2"]=-2;
     sem2[msg.sender]["Chemistry"]=23;
