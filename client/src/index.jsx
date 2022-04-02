@@ -12,6 +12,9 @@ const theme = createTheme({
     login: {
       main: "#26e2d9",
     },
+    fields: {
+      main: "#3f3f47",
+    },
     error: {
       main: "#FF0000",
     },

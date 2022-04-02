@@ -5,15 +5,23 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   address: {
     type: String,
-    required: true,
+  },
+  email: {
+    type: String,
   },
   rollNo: {
     type: String,
-    required: true,
   },
   password: {
     type: String,
     required: true,
+  },
+  isLoggedIn: {
+    type: Boolean,
+  },
+  role: {
+    type: String,
+    default: "Student",
   },
 });
 
