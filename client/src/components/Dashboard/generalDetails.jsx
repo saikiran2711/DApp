@@ -11,88 +11,149 @@ import {
   MenuItem,
   Button,
   FormControl,
+  IconButton,
 } from "@mui/material";
 import SideBar from "./sidebar";
+import { makeStyles } from "@mui/styles";
 import Web3 from "web3";
 import SemDetails from "../../contracts/SemDetails.json";
+
 import InputAdornment from "@mui/material/InputAdornment";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 let instance;
+const useStyles = makeStyles({
+  gridItems: {
+    padding: "6px",
+    // margin: "2px",
+  },
+});
 const GeneralDetails = () => {
-  const [load, setload] = useState(true);
-  const [data, setdata] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [addrss, setAddrss] = useState("");
-  const [aadharNumber, setAadharNumber] = useState("");
-  const [rollNo, setRollNo] = useState("");
-  const [bloodgrp, setBloodgrp] = useState("");
-  const [phone, setPhone] = useState("");
-  const [fatherName, setFatherName] = useState("");
-  const [motherName, setMotherName] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("India");
-  const [pincode, setPincode] = useState();
-  const [state, setState] = useState();
+  const classes = useStyles();
+
+  const [formData, setformData] = useState({
+    name: "",
+    email: "",
+    addrss: "",
+    aadharNumber: "",
+    rollNo: "",
+    bloodgrp: "",
+    phone: "",
+    fatherName: "",
+    motherName: "",
+    city: "",
+    country: "India",
+    pincode: "",
+    state: "",
+    edit: false,
+    load: true,
+    newForm: false,
+  });
+  // const [load, setload] = useState(true);
 
   const handleName = (e) => {
     console.log(e.target.value);
-    setName(e.target.value);
+    setformData({
+      ...formData,
+      name: e.target.value,
+    });
   };
   const handleEmail = (e) => {
     console.log(e.target.value);
-    setEmail(e.target.value);
+    setformData({
+      ...formData,
+      email: e.target.value,
+    });
   };
   const handleRoll = (e) => {
     console.log(e.target.value);
-    setRollNo(e.target.value);
+    setformData({
+      ...formData,
+      rollNo: e.target.value,
+    });
   };
   const handlePhone = (e) => {
     console.log(e.target.value);
-    setPhone(e.target.value);
+    setformData({
+      ...formData,
+      phone: e.target.value,
+    });
   };
   const handleAadhar = (e) => {
     console.log(e.target.value);
-    setAadharNumber(e.target.value);
+    setformData({
+      ...formData,
+      aadharNumber: e.target.value,
+    });
   };
   const handleBloodGrp = (e) => {
     console.log(e.target.value);
-    setBloodgrp(e.target.value);
+    setformData({
+      ...formData,
+      bloodgrp: e.target.value,
+    });
   };
   const handleAddress = (e) => {
     console.log(e.target.value);
-    setAddrss(e.target.value);
+    setformData({
+      ...formData,
+      addrss: e.target.value,
+    });
   };
 
   const handleFather = (e) => {
     console.log(e.target.value);
-    setFatherName(e.target.value);
+    setformData({
+      ...formData,
+      fatherName: e.target.value,
+    });
   };
 
   const handleMother = (e) => {
     console.log(e.target.value);
-    setMotherName(e.target.value);
+    setformData({
+      ...formData,
+      motherName: e.target.value,
+    });
   };
 
   const handleCountry = (e) => {
     console.log(e.target);
-    setCountry(e.target.value);
+    setformData({
+      ...formData,
+      country: e.target.value,
+    });
   };
 
   const handleState = (e) => {
     console.log(e.target.value);
-    setState(e.target.value);
+    setformData({
+      ...formData,
+      state: e.target.value,
+    });
   };
 
   const handlePin = (e) => {
     console.log(e.target.value);
-    setPincode(e.target.value);
+    setformData({
+      ...formData,
+      pincode: e.target.value,
+    });
   };
 
   const handleCity = (e) => {
     console.log(e.target.value);
-    setCity(e.target.value);
+    setformData({
+      ...formData,
+      city: e.target.value,
+    });
   };
 
+  const handleEdit = () => {
+    setformData({
+      ...formData,
+      edit: true,
+    });
+  };
   const getInstance = async () => {
     const provider = new Web3.providers.HttpProvider("http://127.0.0.1:7545");
     const web3 = new Web3(provider);
@@ -102,6 +163,8 @@ const GeneralDetails = () => {
       SemDetails.abi,
       deployedNetwork && deployedNetwork.address
     );
+    let balance = await web3.eth.getBalance(localStorage.getItem("address"));
+    console.log("Balamce is : ", balance);
     console.log("Instance is ", instance);
     return instance;
   };
@@ -129,46 +192,94 @@ const GeneralDetails = () => {
 
     let response = await instance.methods.getProfile().call({ from: account });
     console.log("Response is :", response);
-    setload(false);
+    // setload(false);
 
-    setdata(response[0].name);
+    setformData({
+      ...formData,
+      name: response[0].name,
+      email: response[0].email,
+      addrss: response[0].addrss,
+      aadharNumber:
+        response[0].aadharNumber == "0" ? "" : response[0].aadharNumber,
+      rollNo: response[0].rollNo == "0" ? "" : response[0].rollNo,
+      bloodgrp: response[0].bloodgrp,
+      phone: response[0].phone == "0" ? "" : response[0].phone,
+      fatherName: response[1].fatherName,
+      motherName: response[1].motherName,
+      city: response[2].city,
+      country: response[2].country == "" ? "India" : response[2].country,
+      pincode: response[2].pincode == "0" ? "" : response[2].pincode,
+      state: response[2].state,
+      load: false,
+      newForm: response[0].name == "" ? true : false,
+    });
   };
 
   const handleSubmit = async (e) => {
     const account = localStorage.getItem("address");
     e.preventDefault();
-    console.log(
-      "Data is ",
-      name,
-      email,
-      phone,
-      rollNo,
-      motherName,
-      fatherName,
-      state,
-      country,
-      city,
-      pincode,
-      addrss,
-      bloodgrp,
-      aadharNumber
-    );
+    console.log("Data is ", formData);
 
     console.log(account);
-    // let instance = await getInstance();
+    let instance = await getInstance();
+    let {
+      name,
+      email,
+      rollNo,
+      phone,
+      addrss,
+      aadharNumber,
+      bloodgrp,
+      fatherName,
+      motherName,
+      country,
+      state,
+      pincode,
+      city,
+    } = formData;
     console.log("Instance in submit : ", instance);
-    let profile = [name, email, rollNo, phone, addrss, aadharNumber, bloodgrp];
+    let profile = [
+      formData.name,
+      email,
+      rollNo,
+      phone,
+      addrss,
+      aadharNumber,
+      bloodgrp,
+    ];
     let relation = [fatherName, motherName];
     let address = [country, state, pincode, city];
     console.log(profile, relation, address);
-    let result = await instance.methods
+    const result = await instance.methods
       .setProfile(
         [name, email, +rollNo, +phone, addrss, +aadharNumber, bloodgrp],
         [fatherName, motherName],
         [country, state, +pincode, city]
       )
-      .send({ from: account, gas: 30000000000000000000000 });
+      .send({ from: account, gas: 3000000 });
     console.log("Result is : ", result);
+
+    let response = await instance.methods.getProfile().call({ from: account });
+    console.log("Response is :", response);
+    setformData({
+      ...formData,
+      name: response[0].name,
+      email: response[0].email,
+      addrss: response[0].addrss,
+      aadharNumber:
+        response[0].aadharNumber == "0" ? "" : response[0].aadharNumber,
+      rollNo: response[0].rollNo == "0" ? "" : response[0].rollNo,
+      bloodgrp: response[0].bloodgrp,
+      phone: response[0].phone == "0" ? "" : response[0].phone,
+      fatherName: response[1].fatherName,
+      motherName: response[1].motherName,
+      city: response[2].city,
+      country: response[2].country == "" ? "India" : response[2].country,
+      pincode: response[2].pincode == "0" ? "" : response[2].pincode,
+      state: response[2].state,
+      newForm: false,
+      edit: false,
+    });
   };
   useEffect(() => {
     fetchData();
@@ -180,13 +291,13 @@ const GeneralDetails = () => {
         <Grid item>
           <SideBar />
         </Grid>
-        {load ? (
+        {formData.load ? (
           <center>
             <CircularProgress />
           </center>
         ) : (
           <>
-            {data == "" ? (
+            {formData.newForm || formData.edit ? (
               <Grid
                 item
                 sx={{
@@ -210,10 +321,14 @@ const GeneralDetails = () => {
                       marginTop: "40px",
                     }}
                   >
-                    <Typography sx={{}} variant="h4">
-                      Hello, I guess you are new here. Please fill up the below
-                      form.
-                    </Typography>
+                    {formData.edit ? (
+                      <Typography variant="h4">Welcome user,</Typography>
+                    ) : (
+                      <Typography sx={{}} variant="h4">
+                        Hello, I guess you are new here. Please fill up the
+                        below form.
+                      </Typography>
+                    )}
                   </Grid>
                   <Grid item sx={{ marginTop: "20px" }}>
                     <Card
@@ -226,9 +341,15 @@ const GeneralDetails = () => {
                     >
                       <Grid container direction="column">
                         <Grid item alignSelf="center" sx={{ padding: "10px" }}>
-                          <Typography variant="h4">
-                            Fill Your Details
-                          </Typography>
+                          {formData.edit ? (
+                            <Typography variant="h4">
+                              Edit Your Details
+                            </Typography>
+                          ) : (
+                            <Typography variant="h4">
+                              Fill Your Details
+                            </Typography>
+                          )}
                         </Grid>
 
                         <Box
@@ -245,13 +366,13 @@ const GeneralDetails = () => {
                             <Grid container>
                               <Grid item md={3} sx={{ margin: "10px" }}>
                                 <TextField
-                                  sx={{ fontSize: "20px" }}
+                                  sx={{ fontSize: "20px", fontWeight: "bold" }}
                                   label="Name"
                                   color="fields"
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleName}
-                                  value={name}
+                                  value={formData.name}
                                 />
                               </Grid>
                               <Grid item md={4} sx={{ margin: "10px" }}>
@@ -262,7 +383,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleEmail}
-                                  value={email}
+                                  value={formData.email}
                                 />
                               </Grid>
                               <Grid item md={4} sx={{ margin: "10px" }}>
@@ -273,7 +394,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleRoll}
-                                  value={rollNo}
+                                  value={formData.rollNo}
                                 />
                               </Grid>
                               <Grid item md={3} sx={{ margin: "10px" }}>
@@ -284,7 +405,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handlePhone}
-                                  value={phone}
+                                  value={formData.phone}
                                 />
                               </Grid>
                               <Grid item md={4} sx={{ margin: "10px" }}>
@@ -295,7 +416,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleAadhar}
-                                  value={aadharNumber}
+                                  value={formData.aadharNumber}
                                 />
                               </Grid>
                               <Grid item md={3} sx={{ margin: "10px" }}>
@@ -306,7 +427,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleBloodGrp}
-                                  value={bloodgrp}
+                                  value={formData.bloodgrp}
                                 />
                               </Grid>
                               <Grid item md={4} sx={{ margin: "10px" }}>
@@ -319,7 +440,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleAddress}
-                                  value={addrss}
+                                  value={formData.addrss}
                                 />
                               </Grid>
                             </Grid>
@@ -335,7 +456,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleFather}
-                                  // value={rollNo}
+                                  value={formData.fatherName}
                                 />
                               </Grid>
                               <Grid item md={4} sx={{ margin: "10px" }}>
@@ -346,7 +467,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleMother}
-                                  // value={rollNo}
+                                  value={formData.motherName}
                                 />
                               </Grid>
                             </Grid>
@@ -367,7 +488,7 @@ const GeneralDetails = () => {
                                     fullWidth={true}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={country}
+                                    value={formData.country}
                                     color="fields"
                                     label="Country"
                                     // placeholder="Age"
@@ -398,7 +519,7 @@ const GeneralDetails = () => {
                                     fullWidth={true}
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={state}
+                                    value={formData.state}
                                     color="fields"
                                     label="State"
                                     // placeholder="Age"
@@ -420,7 +541,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handlePin}
-                                  value={pincode}
+                                  value={formData.pincode}
                                 />
                               </Grid>
                               <Grid item md={3} sx={{ margin: "10px" }}>
@@ -431,7 +552,7 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleCity}
-                                  value={city}
+                                  value={formData.city}
                                 />
                               </Grid>
                             </Grid>
@@ -450,9 +571,414 @@ const GeneralDetails = () => {
             ) : (
               <Grid
                 item
-                sx={{ backgroundColor: "blue", flex: "1", overflowY: "auto" }}
+                sx={{
+                  backgroundColor: "blue",
+                  flex: "1",
+
+                  height: "100vh",
+                  overflowY: "scroll",
+                  overflowX: "hidden",
+                }}
               >
-                <h2>Data found</h2>
+                <Box mx={2} my={5}>
+                  <Typography variant="h4">
+                    Welcome user, below are your general details.
+                  </Typography>
+                </Box>
+                <Box marginTop={10} marginLeft="50px">
+                  <Card sx={{ width: "1000px", marginBottom: "30px" }}>
+                    <Grid container direction="column">
+                      <Grid item sx={{ padding: "8px" }}>
+                        <Typography variant="h5" fontWeight="bold">
+                          Personal Details :
+                        </Typography>
+                      </Grid>
+                      <Box sx={{ position: "absolute", left: "81rem" }}>
+                        <IconButton onClick={handleEdit}>
+                          <EditOutlinedIcon fontSize="large" color="login" />
+                        </IconButton>
+                      </Box>
+
+                      <Grid container>
+                        <Grid item md={3} className={classes.gridItems}>
+                          <Typography alignSelf="center" variant="h6">
+                            Name
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          width="20px"
+                          className={classes.gridItems}
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          item
+                          alignSelf="center"
+                          className={classes.gridItems}
+                          md={2}
+                        >
+                          <Typography variant="h6">{formData.name}</Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          md={3}
+                          className={classes.gridItems}
+                          alignSelf="center"
+                        >
+                          <Typography variant="h6">Email</Typography>
+                        </Grid>
+                        <Grid
+                          width="20px"
+                          className={classes.gridItems}
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">{formData.email}</Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6">Roll no</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">
+                            {formData.rollNo}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6">Aadhar number</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">
+                            {formData.aadharNumber}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6"> Blood grp</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">
+                            {formData.bloodgrp}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      {/* <Box> */}
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6">Contact no</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">{formData.phone}</Typography>
+                        </Grid>
+                      </Grid>
+                      {/* </Box> */}
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="flex-start"
+                          md={3}
+                        >
+                          <Typography variant="h6">Address</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          alignSelf="flex-start"
+                          className={classes.gridItems}
+                          width="20px"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          sx={{ wordWrap: "break-word" }}
+                          item
+                          className={classes.gridItems}
+                          alignSelf="flex-start"
+                          md={6}
+                        >
+                          <Typography flexWrap="wrap" variant="h6">
+                            {formData.addrss}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid item sx={{ padding: "8px" }}>
+                        <Typography variant="h5" fontWeight="bold">
+                          Relational Details :
+                        </Typography>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid item className={classes.gridItems} md={3}>
+                          <Typography alignSelf="center" variant="h6">
+                            Mother's Name
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">
+                            {formData.motherName}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6">Father's Name</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">
+                            {formData.fatherName}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid item sx={{ padding: "8px" }}>
+                        <Typography variant="h5" fontWeight="bold">
+                          Address Details :
+                        </Typography>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6">Country</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">
+                            {formData.country}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6">State</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">{formData.state}</Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6">Pin code</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">
+                            {formData.pincode}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={3}
+                        >
+                          <Typography variant="h6">City</Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          width="20px"
+                          alignSelf="center"
+                        >
+                          :
+                        </Grid>
+
+                        <Grid
+                          item
+                          className={classes.gridItems}
+                          alignSelf="center"
+                          md={2}
+                        >
+                          <Typography variant="h6">{formData.city}</Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Card>
+                </Box>
               </Grid>
             )}
           </>
