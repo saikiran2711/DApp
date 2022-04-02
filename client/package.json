@@ -19,7 +19,7 @@
     "react-scripts": "^2.1.8",
     "web3": "^1.6.1"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:9000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

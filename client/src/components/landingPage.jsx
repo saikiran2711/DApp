@@ -1,10 +1,19 @@
 import React from "react";
-import { Box, Grid, Card, Button, Typography, TextField } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Card,
+  Button,
+  Typography,
+  TextField,
+  Paper,
+} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { ArrowForwardRounded } from "@mui/icons-material";
 
 const useStyle = makeStyles({
   root: {
@@ -78,23 +87,96 @@ const LandingPage = () => {
                   }}
                   className={classes.loginTypo}
                 >
-                  Welcome
+                  Welcome,
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography sx={{ color: "GrayText" }}>
-                  Enter your details below to continue
+                  Select your Role to Login
                 </Typography>
               </Grid>
               <Grid item>
                 <Box className={classes.rightCircle}></Box>
               </Grid>
-
-              <Link
+                <Grid container spacing={5} sx={{marginTop:2}}>
+                  <Grid item>
+                  <Link
                 to="/admin"
                 style={{ textDecoration: "none", color: "black" }}
               >
-                <Grid
+                    <Paper
+                      className={classes.hoverItem}
+                      elevation={3}
+                      sx={{
+                        borderRadius: "8%",
+                        width: "150px",
+                        height: "100px",
+                        textAlign: "center",
+                        display: "flex",
+                        flexWrap:'wrap',
+                        flexDirection: "column",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Box display='inline-flex' justifyContent='center' flexDirection='center'>
+                      <Typography>Admin
+                      </Typography>
+                      <ManageAccountsIcon
+                          sx={{ color: "#26e2d9",paddingLeft:1}}
+                        />
+                        </Box>
+                      <ArrowForwardRounded
+                        sx={{
+                          display: "flex",
+                          width: "inherit",
+                          textAlign: "right",
+                          position:'relative',
+                          top:'1rem',
+                          left: "3rem",
+                        }}
+                      />
+                    </Paper>
+                    </Link>
+                  </Grid>
+                  
+                  <Grid item>
+                  <Link to='/login' style={{ textDecoration: "none", color: "black" }}>
+                    <Paper
+                    elevation={3}
+                      className={classes.hoverItem}
+                      sx={{
+                        borderRadius: "8%",
+                        width: "150px",
+                        height: "100px",
+                        textAlign: "center",
+                        display: "flex",
+                        flexWrap:'wrap',
+                        flexDirection: "column",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Box display='inline-flex' justifyContent='center' flexDirection='center'>
+                      <Typography>Student
+                      </Typography>
+                      <AccountCircleIcon
+                          sx={{ color: "#26e2d9",paddingLeft:1}}
+                        />
+                        </Box>
+                      <ArrowForwardRounded
+                        sx={{
+                          display: "flex",
+                          width: "inherit",
+                          textAlign: "right",
+                          position:'relative',
+                          top:'1rem',
+                          left: "3rem",
+                        }}
+                      />
+                    </Paper>
+                    </Link>
+                  </Grid>
+                </Grid>
+                {/* <Grid
                   item
                   sx={{
                     marginTop: "90px",
@@ -126,13 +208,14 @@ const LandingPage = () => {
                       </Grid>
                     </Grid>
                   </Box>
-                </Grid>
-              </Link>
+                </Grid> */}
+              {/* </Link>
               <Link
                 style={{ textDecoration: "none", color: "black" }}
                 to="/login"
               >
-                <Grid
+                 */}
+                {/* <Grid
                   item
                   sx={{
                     marginTop: "10px",
@@ -160,8 +243,8 @@ const LandingPage = () => {
                       </Grid>
                     </Grid>
                   </Box>
-                </Grid>
-              </Link>
+                </Grid> */}
+              {/* </Link> */}
 
               <Grid item>
                 <Box className={classes.leftCircle}></Box>

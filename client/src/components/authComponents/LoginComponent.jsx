@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import { Box, Card, Grid, Typography, Button, TextField } from "@mui/material";
 
 import { Link, useNavigate } from "react-router-dom";
-
+import getWeb3 from "../../web3";
 import InputAdornment from "@mui/material/InputAdornment";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
@@ -49,6 +49,8 @@ const useStyles = makeStyles({
 });
 
 const LoginComponent = () => {
+  const web3=new getWeb3();
+  
   let navigate = useNavigate();
   const [rollNo, setrollNo] = useState("");
   const [password, setPassword] = useState("");

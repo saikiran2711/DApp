@@ -1,6 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
 import LoginComponent from "./components/authComponents/LoginComponent";
 import SignUpBox from "./components/authComponents/SignUpComponent";
 import Home from "./components/Dashboard/Home";
@@ -11,6 +10,7 @@ import EducationPage from "./components/Dashboard/education";
 import LandingPage from "./components/landingPage";
 import AdminComponent from "./components/authComponents/adminComponent";
 import GeneralDetails from "./components/Dashboard/generalDetails";
+import SemesterComponent from "./components/EducationDetails/SemesterDetails";
 
 function App() {
   return (
