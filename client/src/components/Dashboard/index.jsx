@@ -20,6 +20,7 @@ import {
   ArrowForwardIosOutlined,
   ArrowForwardOutlined,
 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   cardMui: {
@@ -88,19 +89,21 @@ const Index = () => {
                   </Typography>
                 </CardContent>
 
-                <IconButton
-                  sx={{
-                    position: "relative",
-                    left: "19rem",
-                    top: "3rem",
-                    // bottom: "1rem",
-                  }}
-                >
-                  <ArrowForwardOutlined
-                    sx={{ color: "white" }}
-                    fontSize="large"
-                  />
-                </IconButton>
+                <Link to="/general">
+                  <IconButton
+                    sx={{
+                      position: "relative",
+                      left: "19rem",
+                      top: "3rem",
+                      // bottom: "1rem",
+                    }}
+                  >
+                    <ArrowForwardOutlined
+                      sx={{ color: "white" }}
+                      fontSize="large"
+                    />
+                  </IconButton>
+                </Link>
               </Card>
             </Grid>
             <Grid item md={3}>
@@ -129,18 +132,20 @@ const Index = () => {
                     Get to know about your educational details.
                   </Typography>
                 </CardContent>
-                <IconButton
-                  sx={{
-                    position: "relative",
-                    left: "19rem",
-                    top: "1.5rem",
-                  }}
-                >
-                  <ArrowForwardOutlined
-                    sx={{ color: "white" }}
-                    fontSize="large"
-                  />
-                </IconButton>
+                <Link to="/educationalDetails">
+                  <IconButton
+                    sx={{
+                      position: "relative",
+                      left: "19rem",
+                      top: "1.5rem",
+                    }}
+                  >
+                    <ArrowForwardOutlined
+                      sx={{ color: "white" }}
+                      fontSize="large"
+                    />
+                  </IconButton>
+                </Link>
               </Card>
             </Grid>
           </Grid>

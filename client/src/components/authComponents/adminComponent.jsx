@@ -81,27 +81,26 @@ const AdminComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(email, password);
-    // fetch("/auth/signin", {
-    //   method: "post",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     email: email,
-    //     password: password,
-    //   }),
-    // })
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //     localStorage.setItem("address", data.user.address);
-    //     return navigate("/dashboard");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    fetch("/admin/signin", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        return navigate("/admin/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <>
