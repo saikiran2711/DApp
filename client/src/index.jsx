@@ -14,6 +14,9 @@ const theme = createTheme({
     fields: {
       main: "#3f3f47",
     },
+    pink: {
+      main: "#e25474",
+    },
     error: {
       main: "#FF0000",
     },

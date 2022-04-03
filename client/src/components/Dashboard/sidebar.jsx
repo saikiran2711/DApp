@@ -42,7 +42,7 @@ const SideBar = () => {
   const url = window.location.pathname;
   return (
     <Grid container>
-      <Grid item sx={{}}>
+      <Grid item>
         <Box className={classes.sideBarBox}>
           <Grid container direction="column">
             <Grid item textAlign="center" className={classes.heading}>

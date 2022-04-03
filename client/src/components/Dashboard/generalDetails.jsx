@@ -24,6 +24,7 @@ let instance;
 const useStyles = makeStyles({
   gridItems: {
     padding: "6px",
+    color: "white",
     // margin: "2px",
   },
 });
@@ -292,9 +293,16 @@ const GeneralDetails = () => {
           <SideBar />
         </Grid>
         {formData.load ? (
-          <center>
-            <CircularProgress />
-          </center>
+          <Grid
+            alignSelf="center"
+            textAlign="center"
+            item
+            sx={{
+              flex: "1",
+            }}
+          >
+            <CircularProgress color="pink" />
+          </Grid>
         ) : (
           <>
             {formData.newForm || formData.edit ? (
@@ -572,7 +580,6 @@ const GeneralDetails = () => {
               <Grid
                 item
                 sx={{
-                  backgroundColor: "blue",
                   flex: "1",
 
                   height: "100vh",
@@ -585,19 +592,36 @@ const GeneralDetails = () => {
                     Welcome user, below are your general details.
                   </Typography>
                 </Box>
-                <Box marginTop={10} marginLeft="50px">
-                  <Card sx={{ width: "1000px", marginBottom: "30px" }}>
+                <Box marginTop={6} marginLeft="150px" p={3}>
+                  <Card
+                    elevation={5}
+                    sx={{
+                      borderRadius: 5,
+                      // backgroundColor: "#e25474",
+
+                      boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+                      transition: "0.5s",
+                      width: "900px",
+                      marginBottom: "10px",
+                      backgroundColor: "#3f3f47",
+                      padding: "20px",
+                    }}
+                  >
                     <Grid container direction="column">
+                      <Box sx={{ position: "absolute", left: "82rem" }}>
+                        <IconButton onClick={handleEdit}>
+                          <EditOutlinedIcon fontSize="large" color="pink" />
+                        </IconButton>
+                      </Box>
                       <Grid item sx={{ padding: "8px" }}>
-                        <Typography variant="h5" fontWeight="bold">
+                        <Typography
+                          variant="h5"
+                          color="white"
+                          fontWeight="bold"
+                        >
                           Personal Details :
                         </Typography>
                       </Grid>
-                      <Box sx={{ position: "absolute", left: "81rem" }}>
-                        <IconButton onClick={handleEdit}>
-                          <EditOutlinedIcon fontSize="large" color="login" />
-                        </IconButton>
-                      </Box>
 
                       <Grid container>
                         <Grid item md={3} className={classes.gridItems}>
@@ -794,8 +818,12 @@ const GeneralDetails = () => {
                         </Grid>
                       </Grid>
 
-                      <Grid item sx={{ padding: "8px" }}>
-                        <Typography variant="h5" fontWeight="bold">
+                      <Grid item sx={{ padding: "8px", marginTop: "20px" }}>
+                        <Typography
+                          variant="h5"
+                          color="white"
+                          fontWeight="bold"
+                        >
                           Relational Details :
                         </Typography>
                       </Grid>
@@ -856,8 +884,12 @@ const GeneralDetails = () => {
                         </Grid>
                       </Grid>
 
-                      <Grid item sx={{ padding: "8px" }}>
-                        <Typography variant="h5" fontWeight="bold">
+                      <Grid item sx={{ padding: "8px", marginTop: "20px" }}>
+                        <Typography
+                          variant="h5"
+                          color="white"
+                          fontWeight="bold"
+                        >
                           Address Details :
                         </Typography>
                       </Grid>

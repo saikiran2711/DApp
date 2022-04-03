@@ -1,5 +1,5 @@
-var SemDetails = artifacts.require("Semester");
+var Semester = artifacts.require("./Semester.sol");
 
 module.exports = function (deployer) {
-  deployer.deploy(SemDetails);
+  deployer.deploy(Semester);
 };
