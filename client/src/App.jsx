@@ -16,6 +16,7 @@ import ListSemCards from "./components/EducationDetails/ListSemCards";
 import SemesterTable from "./components/EducationDetails/SemesterTable";
 import { setSemDetails } from "./components/EducationDetails/getHandler";
 import SetSemesterTable from "./components/EducationDetails/SetSemesterTable";
+import InterfaceCard from "./components/EducationDetails/InterfaceCard";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
         <Route path="/general" element={<GeneralDetails />} />
 
         <Route path="/account" element={<AccountPage />} />
-        <Route path="/educationalDetails" element={<SetSemesterTable />} />
+        <Route path="/educationalDetails" element={<InterfaceCard />} />
         <Route exact path={"/educationalDetails/:sem"} element={<SemesterTable />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>

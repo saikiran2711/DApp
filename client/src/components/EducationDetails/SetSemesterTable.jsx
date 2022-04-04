@@ -5,7 +5,6 @@ import SideBar from "../Dashboard/sidebar";
 function SetSemester(props) {
   let [subs, setSubs] = useState([]);
   let [marks, setMarks] = useState({});
-  
   // let [result,setResult]=useState([]);
   // connectionHandler();
   console.log("Before Calling", subs);

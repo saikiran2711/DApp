@@ -2,15 +2,16 @@ import { Grid,Box } from "@mui/material";
 import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SideBar from "../Dashboard/sidebar";
-import { connectionHandler, getSemSubjects } from "./getHandler";
+import { connectionHandler, getSemDetails, getSemSubjects } from "./getHandler";
 function SemesterTable(props) {
   let [subs, setSubs] = useState([]);
+  let [marks,setMarks]=useState([]);
   // connectionHandler();
-  console.log("Before Calling", subs);
+  // console.log("Before Calling", subs);
   let account = localStorage.getItem("address");
   if (subs.length == 0) {
     getSemSubjects(account).then((res, err) => {
-      console.log(account);
+      // console.log(account);
       // console.log("Res", res);
       // console.log("Res leng", res.length);
       // console.log("Type", res[1]);
@@ -18,7 +19,10 @@ function SemesterTable(props) {
       setSubs([...res]);
     });
   }
-  console.log(subs, subs.length);
+  if(marks.length==0){
+    getSemDetails(account).then((res,err)=>setMarks([...res]));
+  }
+  // console.log(subs, subs.length);
   let content = [];
   content.push(
     <>
@@ -30,20 +34,23 @@ function SemesterTable(props) {
       </Grid>
     </>
   );
+  let sum=0;
   for (let i = 0; i < subs.length; i++) {
-    console.log(i, subs[i]);
+    sum+=parseInt(marks[i]);
+    // console.log(i, subs[i]);
     content.push(
       <>
         <Grid item xs={6} sx={{ margin: 2 }}>
           {subs[i]}
         </Grid>
         <Grid item display="flex" justifyContent="center" alignItems="center">
-          10
+          {marks[i]}
         </Grid>
       </>
     );
   }
-  content.push(<><Grid item xs={6} sx={{ margin: 2 }} fontWeight='bold'>Total GPA</Grid><Grid item display="flex" justifyContent="center" alignItems="center" fontWeight='bold'>10</Grid></>)
+  let total=sum/(marks.length);
+  content.push(<><Grid item xs={6} sx={{ margin: 2 }} fontWeight='bold'>Total GPA</Grid><Grid item display="flex" justifyContent="center" alignItems="center" fontWeight='bold'>{total.toPrecision(3)}</Grid></>)
   return subs.length == 0 ? (
     <>Loading</>
   ) : (

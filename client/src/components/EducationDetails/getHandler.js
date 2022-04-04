@@ -21,15 +21,18 @@ export async function connectionHandler() {
 }
 
 export const getSemDetails = async (accountNo) => {
-  connectionHandler().then(async (res, err) => {
-    if (res) {
-      let result = await res.methods.getSem1().call({ from: accountNo });
-      console.log(result);
-      //   return result;
-    } else {
-      console.log(err);
-    }
-  });
+  let instance=await connectionHandler();
+  let result=await instance.methods.getSem1().call({from:accountNo});
+  return result;
+  // connectionHandler().then(async (res, err) => {
+  //   if (res) {
+  //     let result = await res.methods.getSem1().call({ from: accountNo });
+  //     console.log(result);
+  //     //   return result;
+  //   } else {
+  //     console.log(err);
+  //   }
+  // });
 };
 export const getSemSubjects = async (accountNo) => {
     let instance=await connectionHandler();
