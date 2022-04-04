@@ -94,3 +94,23 @@ exports.signIn = (req, res, next) => {
       next(err);
     });
 };
+
+exports.logOut = (req, res, next) => {
+  const address = req.body.address;
+  console.log(req);
+  User.updateOne(
+    { address: address },
+    {
+      $set: {
+        isLoggedIn: false,
+      },
+    }
+  )
+    .then((user) => {
+      console.log(user);
+      res.status(200).json({ message: "Logged out " });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

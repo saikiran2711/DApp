@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     borderRadius: "10px",
   },
 });
-const SideBar = () => {
+const AdminSideBar = () => {
   const classes = useStyles();
   const url = window.location.pathname;
   return (
@@ -48,7 +48,7 @@ const SideBar = () => {
             <Grid item textAlign="center" className={classes.heading}>
               <h1>DAppbase</h1>
             </Grid>
-            <Link style={{ textDecoration: "none" }} to="/dashboard">
+            <Link style={{ textDecoration: "none" }} to="/admin/dashboard">
               <Grid
                 item
                 sx={{
@@ -62,11 +62,11 @@ const SideBar = () => {
                     : `${classes.notsideBarItems}`
                 }`}
               >
-                <Typography sx={{ color: "white" }}>Dashboard </Typography>{" "}
+                <Typography sx={{ color: "white" }}>User Dashboard </Typography>{" "}
               </Grid>
             </Link>
 
-            <Link style={{ textDecoration: "none" }} to="/general">
+            {/* <Link style={{ textDecoration: "none" }} to="/general">
               <Grid
                 item
                 sx={{
@@ -104,7 +104,7 @@ const SideBar = () => {
                 </Typography>
               </Grid>
             </Link>
-            {/* <Link style={{ textDecoration: "none" }} to="/account">
+            <Link style={{ textDecoration: "none" }} to="/account">
               <Grid
                 item
                 sx={{
@@ -143,4 +143,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default AdminSideBar;

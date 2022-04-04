@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const { use } = require("../routes/adminRoutes");
 
 exports.adminLogin = (req, res, next) => {
   console.log(req.body);
@@ -28,5 +29,20 @@ exports.adminLogin = (req, res, next) => {
       err.statusCode = 500;
       err.message = "Internal Server Error";
       next(err);
+    });
+};
+
+exports.getUsers = (req, res, next) => {
+  User.find()
+    .then((users) => {
+      if (users.length === 0) {
+        return res.status(200).json({ message: "Users data", data: [] });
+      }
+      console.log(users);
+      let data = users.filter((d) => d.role != "admin");
+      return res.status(200).json({ message: "Users data", data: data });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

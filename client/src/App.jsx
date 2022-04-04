@@ -17,6 +17,8 @@ import SemesterTable from "./components/EducationDetails/SemesterTable";
 import { setSemDetails } from "./components/EducationDetails/getHandler";
 import SetSemesterTable from "./components/EducationDetails/SetSemesterTable";
 import InterfaceCard from "./components/EducationDetails/InterfaceCard";
+import LogoutComponent from "./components/authComponents/LogoutComponent";
+import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 
 function App() {
   return (
@@ -28,12 +30,18 @@ function App() {
 
         <Route path="/signup" element={<SignUpBox />} />
         <Route path="/dashboard" element={<Index />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/general" element={<GeneralDetails />} />
 
         <Route path="/account" element={<AccountPage />} />
-        <Route path="/educationalDetails" element={<InterfaceCard />} />
-        <Route exact path={"/educationalDetails/:sem"} element={<SemesterTable />} />
+        <Route path="/educationalDetails" element={<EducationPage />} />
+        <Route
+          exact
+          path={"/educationalDetails/:sem"}
+          element={<SemesterTable />}
+        />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/logout" element={<LogoutComponent />} />
       </Routes>
     </>
   );
