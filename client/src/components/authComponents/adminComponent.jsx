@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { Box, Card, Grid, Typography, Button, TextField } from "@mui/material";
 
-import { Link, useNavigate } from "react-router-dom";
-import getWeb3 from "../../web3";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
+
 import InputAdornment from "@mui/material/InputAdornment";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
+
+import { Email } from "@mui/icons-material";
 
 const useStyles = makeStyles({
   root: {
@@ -20,9 +22,9 @@ const useStyles = makeStyles({
     background: "linear-gradient(45deg,#a46ef5 , #26e2d9 )",
     position: "absolute",
     borderRadius: "50%",
-    left: "380px",
+    left: "390px",
     zIndex: 10,
-    bottom: "350px",
+    bottom: "260px",
   },
   leftCircle: {
     width: "200px",
@@ -31,7 +33,8 @@ const useStyles = makeStyles({
     position: "absolute",
     borderRadius: "50%",
     right: "560px",
-    bottom: "1%",
+    top: "500px",
+    // bottom: "1%",
     zIndex: 10,
   },
   card: {
@@ -48,16 +51,27 @@ const useStyles = makeStyles({
   },
 });
 
-const LoginComponent = () => {
-  const web3=new getWeb3();
-  
+const AdminComponent = () => {
+  let theme = useTheme();
   let navigate = useNavigate();
-  const [rollNo, setrollNo] = useState("");
+  let [boolErr, setBoolErr] = useState(false);
+  let [errormsg, setErr] = useState("");
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
 
-  const handleRoll = (e) => {
-    setrollNo(e.target.value);
+  const handleEmail = (e) => {
+    let email = e.target.value;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (e.target.value.match(emailRegex)) {
+      setErr("");
+      setBoolErr(false);
+    } else {
+      setBoolErr(true);
+      setErr("Please enter valid email.");
+    }
+    setEmail(e.target.value);
   };
 
   const handlePassword = (e) => {
@@ -66,14 +80,14 @@ const LoginComponent = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(rollNo, password);
-    fetch("/auth/signin", {
+    console.log(email, password);
+    fetch("/admin/signin", {
       method: "post",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        rollNo: rollNo,
+        email: email,
         password: password,
       }),
     })
@@ -82,8 +96,7 @@ const LoginComponent = () => {
       })
       .then((data) => {
         console.log(data);
-        localStorage.setItem("address", data.user.address);
-        return navigate("/dashboard");
+        return navigate("/admin/dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -109,36 +122,37 @@ const LoginComponent = () => {
                   sx={{ fontSize: "50px", fontWeight: "bold" }}
                   className={classes.loginTypo}
                 >
-                  Login
+                  Admin Login
                 </Typography>
               </Grid>
-              <Grid item>
-                <Typography sx={{ color: "GrayText" }}>
-                  Enter your details below to continue
-                </Typography>
-              </Grid>
+
               <Grid item>
                 <Box className={classes.rightCircle}></Box>
               </Grid>
 
-              <Grid item sx={{ marginTop: "90px" }}>
+              <Grid item sx={{ marginTop: "60px" }}>
                 <TextField
                   sx={{ fontSize: "20px" }}
-                  label="Roll Number"
+                  label="E-mail"
                   color="login"
-                  inputMode="text"
+                  inputMode="email"
                   fullWidth={true}
-                  onChange={handleRoll}
-                  value={rollNo}
+                  error={boolErr}
+                  onChange={handleEmail}
+                  value={email}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <KeyOutlinedIcon />
+                        <Email sx={{ color: theme.palette.login.main }} />
                       </InputAdornment>
                     ),
                   }}
                 />
               </Grid>
+              <Typography color="red" fontSize="12px">
+                {" "}
+                {errormsg}
+              </Typography>
 
               <Grid item sx={{ marginTop: "50px" }}>
                 <TextField
@@ -152,15 +166,15 @@ const LoginComponent = () => {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <LockOutlinedIcon />
+                        <LockOutlinedIcon
+                          sx={{ color: theme.palette.login.main }}
+                        />
                       </InputAdornment>
                     ),
                   }}
                 />
               </Grid>
-              <Grid item sx={{ marginTop: "20px" }}>
-                <Typography>Forgot password ?</Typography>
-              </Grid>
+
               <Grid item>
                 <Box className={classes.leftCircle}></Box>
               </Grid>
@@ -181,29 +195,6 @@ const LoginComponent = () => {
                   Login
                 </Button>
               </Grid>
-              <Grid item sx={{ marginTop: "40px" }}>
-                <Typography
-                  sx={{
-                    color: "GrayText",
-                    fontSize: "20px",
-                  }}
-                >
-                  Don't have an account ?
-                  <Link
-                    to="/signup"
-                    className={classes.loginTypo}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Button
-                      variant="text"
-                      color="login"
-                      sx={{ textTransform: "capitalize" }}
-                    >
-                      Sign Up
-                    </Button>{" "}
-                  </Link>
-                </Typography>
-              </Grid>
             </Box>
           </Grid>
         </Card>
@@ -212,4 +203,4 @@ const LoginComponent = () => {
   );
 };
 
-export default LoginComponent;
+export default AdminComponent;
