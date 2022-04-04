@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { getSemDetails } from "./getHandler";
-import SemesterComponent from "./SemesterDetails";
 import SemesterTable from "./SemesterTable";
 import SetSemester from "./SetSemesterTable";
 function InterfaceCard(props){
