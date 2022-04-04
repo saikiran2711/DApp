@@ -2,7 +2,8 @@ import React from "react";
 import { Button, Grid } from "@mui/material";
 import SideBar from "./sidebar";
 import { connectionHandler } from "../EducationDetails/getHandler.js";
-
+import SemesterTable from "../EducationDetails/SemesterTable";
+import ListSemCards from "../EducationDetails/ListSemCards";
 const EducationPage = () => {
   return (
     <>
@@ -12,10 +13,10 @@ const EducationPage = () => {
         </Grid>
         <Grid
           item
-          sx={{ backgroundColor: "blue", flex: "1", overflowY: "auto" }}
+          sx={{ flex: "1", overflowY: "auto" }}
         >
-          <h1>Education Details Page</h1>
-          <Button onClick={connectionHandler}>Click me</Button>
+          <ListSemCards />
+          {/* <Button onClick={connectionHandler}>Click me</Button> */}
         </Grid>
       </Grid>
     </>

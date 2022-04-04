@@ -13,11 +13,11 @@ export async function connectionHandler() {
     SemDetails.abi,
     deployedNetwork && deployedNetwork.address
   );
-  console.log("Got instance!!!!!");
+  console.log("Got instance!!!!!", instance);
   acc = await web3.eth.getAccounts();
   acc = acc[0];
   console.log(acc);
-  // return instance;
+  return instance;
 }
 
 export const getSemDetails = async (accountNo) => {
@@ -32,27 +32,20 @@ export const getSemDetails = async (accountNo) => {
   });
 };
 export const getSemSubjects = async (accountNo) => {
-  connectionHandler().then(async (res, err) => {
-    if (res) {
-      let result = await res.methods.getSemSubs().call({ from: accountNo });
-      console.log(result);
-      return result;
-    } else {
-      console.log(err);
-    }
-  });
+    let instance=await connectionHandler();
+    let result=await instance.methods.getSemSubs().call({from:accountNo});
+//   connectionHandler().then(async (res, err) => {
+//        result = await res.methods.getSemSubs().call({ from: accountNo });
+//     //   console.log(result);
+//     //   return result;
+//   });
+  return result;
 };
 
 export const setSemDetails = async (accountNo, arr) => {
   //accountNo:'string', arr:Array of scores (size == subject's size)
-  connectionHandler().then(async (re, er) => {
-    if (re) {
-      let result = await re.methods
-        .setSem1(arr)
-        .send({ from: accountNo, gas: 300000 });
-      return result;
-    } else {
-      console.log(er);
-    }
-  });
+let instance =await connectionHandler();
+let result=await instance.methods.setSem1(arr).send({from:accountNo,gas:300000});
+  console.log(result);
+  return result;
 };

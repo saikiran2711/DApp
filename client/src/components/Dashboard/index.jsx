@@ -88,7 +88,6 @@ const Index = () => {
                     Get to know your general details.
                   </Typography>
                 </CardContent>
-
                 <Link to="/general">
                   <IconButton
                     sx={{

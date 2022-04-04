@@ -14,11 +14,12 @@ const connectionHandler = async () => {
   );
   account = await web3.eth.getAccounts();
   console.log("Testing instance from Semester : " + instance);
-  let result = await instance.methods
-    .Sem1initializer()
-    .send({ from: account[0], gas: 300000 });
-  console.log(result);
-  TranactionHash = result["transactionHash"];
+  // let result = await instance.methods
+  //   .Sem1initializer()
+  //   .send({ from: account[0], gas: 300000 });
+  // console.log(result);
+  let result
+  // TranactionHash = result["transactionHash"];
   subs = await instance.methods.getSemSubs().call();
   console.log(subs);
   scores = await instance.methods.getSem1().call();
@@ -28,17 +29,22 @@ const connectionHandler = async () => {
 
 function SemesterComponent() {
   const [forms,setForms] = useState([]);
+  const [value,setValue]=useState("");
+  const hanlde=(event)=>{
+setValue(event.target.value);
+  }
   connectionHandler().then((res, err) => {
     console.log(res);
     console.log(typeof(res));
     for (let i = 0; i < subs.length; i += 1)
       setForms( arr =>
         [...arr,
-        <Box display='block'>
-          <TextField disabled value={subs[i]}></TextField>
-          <TextField value={scores[i]}></TextField>
+        <Box display='block' key={i}>
+          <TextField  disabled value={subs[i]}/>
+          <TextField onChange={hanlde} />
         </Box>]
       );
+      // value={scores[i]<0?"":scores[i]}
 
   });
   return (

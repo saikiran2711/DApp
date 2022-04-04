@@ -8,7 +8,7 @@ contract Semester{
    mapping(address=> mapping(string=>int256)) public sem2;
    mapping(address=> mapping(string=>int256)) public sem3;
   // mapping(uint256 => string) public gradeMapping;
-  string[] sem1Subs=["Mathematics-1","Physics","Basics of Electrical Engineering","Physics Lab","Basics of Electrical Engineering","Engineering Graphics & Design"];
+  string[] sem1Subs=["Mathematics-1","Physics","Basics of Electrical Engineering","Physics Lab","Basics of Electrical Engineering Lab","Engineering Graphics & Design"];
   function sem1temp() public {
     
   }

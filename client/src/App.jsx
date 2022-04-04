@@ -11,6 +11,11 @@ import LandingPage from "./components/landingPage";
 import AdminComponent from "./components/authComponents/adminComponent";
 import GeneralDetails from "./components/Dashboard/generalDetails";
 import SemesterComponent from "./components/EducationDetails/SemesterDetails";
+import SemCards from "./components/EducationDetails/SemCards";
+import ListSemCards from "./components/EducationDetails/ListSemCards";
+import SemesterTable from "./components/EducationDetails/SemesterTable";
+import { setSemDetails } from "./components/EducationDetails/getHandler";
+import SetSemesterTable from "./components/EducationDetails/SetSemesterTable";
 
 function App() {
   return (
@@ -25,8 +30,8 @@ function App() {
         <Route path="/general" element={<GeneralDetails />} />
 
         <Route path="/account" element={<AccountPage />} />
-        <Route path="/educationalDetails" element={<EducationPage />} />
-
+        <Route path="/educationalDetails" element={<SetSemesterTable />} />
+        <Route exact path={"/educationalDetails/:sem"} element={<SemesterTable />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
