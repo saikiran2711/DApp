@@ -7,7 +7,7 @@ import { semInitializer } from "./getHandler";
 function ListSemCards(props) {
   let a=localStorage.getItem('address');
   useEffect(()=>{
-    semInitializer().then((res,err)=>console.log(res));
+    semInitializer(a).then((res,err)=>console.log(res));
   },[]);
   let content = [];
   for (let i = 0; i < 8; i++)

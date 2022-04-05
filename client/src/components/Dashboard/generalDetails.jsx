@@ -54,6 +54,7 @@ const GeneralDetails = () => {
   let [pinErr,setPinErr]=useState('')
   let [bloodErr,setBloodErr]=useState('');
   let [emailErr,setEmailErr]=useState('');
+  let rollNo=localStorage.getItem('roll');
   // const [load, setload] = useState(true);
   const handleName = (e) => {
     console.log(e.target.value);
@@ -432,10 +433,10 @@ const GeneralDetails = () => {
                                   label="Roll Number"
                                   color="fields"
                                   inputMode="text"
-                                  
+                                  disabled={true}
                                   fullWidth={true}
-                                  onChange={handleRoll}
-                                  value={formData.rollNo}
+                                  // onChange={handleRoll}
+                                  value={rollNo}
                                 />
                               </Grid>
                               <Grid item md={3} sx={{ margin: "10px" }}>

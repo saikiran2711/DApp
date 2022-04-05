@@ -8,8 +8,8 @@ import {
   CardContent,
   CardHeader,
 } from "@mui/material";
-import React from "react";
-import { makeStyles } from "@mui/styles";
+import React, { useContext, useState } from "react";
+import { makeStyles, propsToClassKey } from "@mui/styles";
 
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -21,6 +21,7 @@ import {
   ArrowForwardOutlined,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { hashProvider } from "../../App";
 
 const useStyles = makeStyles({
   cardMui: {
@@ -33,7 +34,8 @@ const useStyles = makeStyles({
   },
 });
 
-const Index = () => {
+const Index = (props) => {
+  let [hash,setHash]=useContext(hashProvider);
   const classes = useStyles();
   return (
     <>
@@ -46,7 +48,6 @@ const Index = () => {
             sx={{
               marginTop: "30px",
               padding: "6px",
-              // backgroundColor: "yellow",
             }}
           >
             <Typography variant="h4">Welcome, Mr.Kiran </Typography>
@@ -54,7 +55,6 @@ const Index = () => {
           <Grid
             container
             sx={{
-              // backgroundColor: "orange",
               marginTop: "20px",
               padding: "10px",
             }}
@@ -94,7 +94,6 @@ const Index = () => {
                       position: "relative",
                       left: "19rem",
                       top: "3rem",
-                      // bottom: "1rem",
                     }}
                   >
                     <ArrowForwardOutlined
