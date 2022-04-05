@@ -1,29 +1,36 @@
-const { response } = require("express");
 const express = require("express");
 const mongoose = require("mongoose");
 
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
 app.use(bodyParser.json());
-
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST , PUT, DELETE, PATCH"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type , Authorization");
+  next();
+});
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 
-// const Web3 = require("web3");
-// const web3 = new Web3("http://localhost:7545");
-// web3.eth.getAccounts(function (error, result) {
-//   console.log(result);
-// });
+app.use((err, req, res, next) => {
+  res.status(500).json({ err: err.message });
+});
 
 mongoose
   .connect(
     "mongodb+srv://admin:SZU4VZBeqlx7uEaA@cluster0.w3g9c.mongodb.net/DApp?retryWrites=true&w=majority"
   )
   .then((response) => {
-    console.log("Connected to mongodb..");
-    app.listen(5000, () => {
+    console.log("Connected to mongodb..", response);
+    app.listen(9000, () => {
       console.log("Server started at 5000");
     });
   })

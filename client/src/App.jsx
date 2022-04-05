@@ -1,84 +1,42 @@
-import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SemDetails.json";
-import getWeb3 from "./getWeb3";
-import "./App.css";
-import SignUpFormBox from "./SignUp";
-class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import LoginComponent from "./components/authComponents/LoginComponent";
+import SignUpBox from "./components/authComponents/SignUpComponent";
+import Home from "./components/Dashboard/Home";
+import Profile from "./components/Dashboard/Profile";
+import Index from "./components/Dashboard/index";
+import AccountPage from "./components/Dashboard/account";
+import EducationPage from "./components/Dashboard/education";
+import LandingPage from "./components/landingPage";
+import AdminComponent from "./components/authComponents/adminComponent";
+import GeneralDetails from "./components/Dashboard/generalDetails";
+import SemesterComponent from "./components/EducationDetails/SemesterDetails";
+import SemCards from "./components/EducationDetails/SemCards";
+import ListSemCards from "./components/EducationDetails/ListSemCards";
+import SemesterTable from "./components/EducationDetails/SemesterTable";
+import { setSemDetails } from "./components/EducationDetails/getHandler";
+import SetSemesterTable from "./components/EducationDetails/SetSemesterTable";
+import InterfaceCard from "./components/EducationDetails/InterfaceCard";
 
-  componentDidMount = async () => {
-    try {
-      // Get network provider and web3 instance.
-      const web3 = await getWeb3();
-      // Use web3 to get the user's accounts.
-      const accounts = await web3.eth.getAccounts();
-      console.log(accounts);
-      // Get the contract instance.
-      const networkId = await web3.eth.net.getId();
-      console.log("Network id is : ", networkId);
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
-      console.log("Address id is : ", deployedNetwork);
-      const instance = new web3.eth.Contract(
-        SimpleStorageContract.abi,
-        deployedNetwork && deployedNetwork.address
-      );
-      console.log(instance);
-      let result=await instance.methods.setProfile("abc","abc@zxyc.com",22222222222).send({from:accounts[7]});
-      console.log("RES"+result);
-      // instance.methods.getProfile().call().then((res,err)=>{
-      //   console.log("RES "+res);
-      // })
-      // let resultSem=await instance.methods.getSemDetails().call({from:accounts[7]});
-      // console.log("Res sem: "+resultSem);
-      // let resu=await instance.methods.setProfile("abc","abc@zxyc.com",22222222222).call({from:accounts[7]});
-      // console.log("resu : "+resu);
-      // resu=await instance.methods.getProfile().call({from:accounts[7]});
-      // console.log("Get RES "+resu);
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
-    } catch (error) {
-      // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
-      );
-      console.error(error);
-    }
-  };
-  // runExample = async () => {
-  //   const { accounts, contract } = this.state;
+function App() {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/admin" element={<AdminComponent />} />
+        <Route path="/login" element={<LoginComponent />} />
 
-  //   // Stores a given value, 5 by default.
-  //   await contract.methods.set(10).send({ from: accounts[1] });
+        <Route path="/signup" element={<SignUpBox />} />
+        <Route path="/dashboard" element={<Index />} />
+        <Route path="/general" element={<GeneralDetails />} />
 
-  //   // Get the value from the contract to prove it worked.
-  //   const response = await contract.methods.get().call();
-
-  //   // Update state with the result.
-  //   this.setState({ storageValue: response });
-  // };
-
-  render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
-    }
-    return (
-      <SignUpFormBox />
-      // <div className="App">
-      //   <h1>Good to Go!</h1>
-      //   <p>Your Truffle Box is installed and ready.</p>
-      //   <h2>Smart Contract Example</h2>
-      //   <p>
-      //     If your contracts compiled and migrated successfully, below will show
-      //     a stored value of 5 (by default).
-      //   </p>
-      //   <p>
-      //     Try changing the value stored on <strong>line 42</strong> of App.js.
-      //   </p>
-      //   <div>The stored value is: {this.state.storageValue}</div>
-      // </div>
-    );
-  }
+        <Route path="/account" element={<AccountPage />} />
+        <Route path="/educationalDetails" element={<ListSemCards />} />
+        <Route exact path={"/educationalDetails/:sem"} element={<InterfaceCard />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
