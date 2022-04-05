@@ -49,8 +49,13 @@ const GeneralDetails = () => {
     load: true,
     newForm: false,
   });
-  // const [load, setload] = useState(true);
 
+  let [phErr,setPhErr]=useState('');
+  let [aadharErr,setAadharErr]=useState('');
+  let [pinErr,setPinErr]=useState('')
+  let [bloodErr,setBloodErr]=useState('');
+  let [emailErr,setEmailErr]=useState('');
+  // const [load, setload] = useState(true);
   const handleName = (e) => {
     console.log(e.target.value);
     setformData({
@@ -64,6 +69,11 @@ const GeneralDetails = () => {
       ...formData,
       email: e.target.value,
     });
+    if(e.target.value.includes('.com') & e.target.value.includes('@')){
+      setEmailErr('');
+      
+    }else setEmailErr('Enter valid email');
+    console.log(emailErr);
   };
   const handleRoll = (e) => {
     console.log(e.target.value);
@@ -71,6 +81,7 @@ const GeneralDetails = () => {
       ...formData,
       rollNo: e.target.value,
     });
+    
   };
   const handlePhone = (e) => {
     console.log(e.target.value);
@@ -78,6 +89,10 @@ const GeneralDetails = () => {
       ...formData,
       phone: e.target.value,
     });
+    if(e.target.value.length==10 && e.target.value.match(/[0-9]/g).length>0){
+      setPhErr("");
+      
+    }else setPhErr("Enter valid Phone number");
   };
   const handleAadhar = (e) => {
     console.log(e.target.value);
@@ -85,6 +100,11 @@ const GeneralDetails = () => {
       ...formData,
       aadharNumber: e.target.value,
     });
+    if(e.target.value.length==12 && e.target.value.match(/[0-9]/g).length>0){
+      setAadharErr('');
+
+    }else 
+    setAadharErr("Enter valid aadhar number");
   };
   const handleBloodGrp = (e) => {
     console.log(e.target.value);
@@ -92,6 +112,12 @@ const GeneralDetails = () => {
       ...formData,
       bloodgrp: e.target.value,
     });
+    if((e.target.value.endsWith('+') || e.target.value.endsWith('-')) && e.target.value.match(/[O|A|AB]/g)){
+      
+      setBloodErr('');
+    }else{
+      setBloodErr('Enter valid Blood Group');
+    }
   };
   const handleAddress = (e) => {
     console.log(e.target.value);
@@ -139,6 +165,10 @@ const GeneralDetails = () => {
       ...formData,
       pincode: e.target.value,
     });
+    if(e.target.value.length==6 && e.target.value.match(/[0-9]/g).length>0){
+      setPinErr('')
+    }else 
+    setPinErr("Enter valid PinCode")
   };
 
   const handleCity = (e) => {
@@ -372,13 +402,14 @@ const GeneralDetails = () => {
                             <Typography variant="h5">Profile:</Typography>
 
                             <Grid container>
-                              <Grid item md={3} sx={{ margin: "10px" }}>
+                              <Grid item md={2} sx={{ margin: "10px" }}>
                                 <TextField
                                   sx={{ fontSize: "20px", fontWeight: "bold" }}
                                   label="Name"
                                   color="fields"
                                   inputMode="text"
                                   fullWidth={true}
+                                  
                                   onChange={handleName}
                                   value={formData.name}
                                 />
@@ -387,6 +418,8 @@ const GeneralDetails = () => {
                                 <TextField
                                   sx={{ fontSize: "20px" }}
                                   label="E-mail "
+                                  error={emailErr.length>0?true:false}
+                                  helperText={emailErr}
                                   color="fields"
                                   inputMode="text"
                                   fullWidth={true}
@@ -400,6 +433,7 @@ const GeneralDetails = () => {
                                   label="Roll Number"
                                   color="fields"
                                   inputMode="text"
+                                  
                                   fullWidth={true}
                                   onChange={handleRoll}
                                   value={formData.rollNo}
@@ -409,6 +443,8 @@ const GeneralDetails = () => {
                                 <TextField
                                   sx={{ fontSize: "20px" }}
                                   label="Phone"
+                                  error={phErr.length>0?true:false}
+                                  helperText={phErr}
                                   color="fields"
                                   inputMode="text"
                                   fullWidth={true}
@@ -421,6 +457,8 @@ const GeneralDetails = () => {
                                   sx={{ fontSize: "20px" }}
                                   label="Aadhar Number"
                                   color="fields"
+                                  error={aadharErr.length>0?true:false}
+                                  helperText={aadharErr}
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleAadhar}
@@ -433,6 +471,8 @@ const GeneralDetails = () => {
                                   label="Blood Group"
                                   color="fields"
                                   inputMode="text"
+                                  error={bloodErr.length>0?true:false}
+                                  helperText={bloodErr}
                                   fullWidth={true}
                                   onChange={handleBloodGrp}
                                   value={formData.bloodgrp}
@@ -545,6 +585,8 @@ const GeneralDetails = () => {
                                 <TextField
                                   sx={{ fontSize: "20px" }}
                                   label="Pin Code"
+                                  error={pinErr.length>0?true:false}
+                                  helperText={pinErr}
                                   color="fields"
                                   inputMode="text"
                                   fullWidth={true}
@@ -607,8 +649,8 @@ const GeneralDetails = () => {
                       padding: "20px",
                     }}
                   >
-                    <Grid container direction="column">
-                      <Box sx={{ position: "absolute", left: "82rem" }}>
+                    <Grid container direction="column" >
+                      <Box sx={{ position: "sticky", right: "82rem" ,display:'inline-flex',justifyContent:'right'}}>
                         <IconButton onClick={handleEdit}>
                           <EditOutlinedIcon fontSize="large" color="pink" />
                         </IconButton>
@@ -640,7 +682,7 @@ const GeneralDetails = () => {
                           item
                           alignSelf="center"
                           className={classes.gridItems}
-                          md={2}
+                          md={3}
                         >
                           <Typography variant="h6">{formData.name}</Typography>
                         </Grid>

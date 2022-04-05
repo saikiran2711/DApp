@@ -5,7 +5,7 @@ contract SemDetails{
   struct  Profile{
     string name;
     string email;
-    string rollNo;
+    uint256 rollNo;
     uint256 phone;
     string addrss;
     uint256 aadharNumber;
@@ -139,3 +139,71 @@ contract SemDetails{
 }
 
 
+contract Semester{
+
+
+  mapping(string=>int256) public sem1 ;
+  mapping(string=>int256) public sem2;
+  mapping(string=>int256) public sem3;
+  mapping(uint256 => string) public gradeMapping;
+
+
+
+  function Sem1initializer () public {
+    sem1["Mathematics-1"]=-2;
+    sem1["Physics"]=-2;
+    sem1["Basics of Electrical Engineering"]=-2;
+    sem1["Physics Lab"]=-2;
+    sem1["Basics of Electrical Engineering Lab"]=-2;
+    sem1["Engineering Graphics & Design"]=-2;
+  }
+
+
+  function Sem2initializer() public{
+    sem2["Mathematics-2"]=-2;
+    sem2["Chemistry"]=23;
+    sem2["Programming for Problem Solving"]=-2;
+    sem2["Chemistry Lab"]=-2;
+    sem2["Programming for Problem Solving Lab"]=-2;
+    sem2["WorkShop-Manufacture Lab"]=-2;
+  }
+
+
+
+  //IMP function to manage subjects
+  // 0 -> Deleted Subject
+  // -1 -> Failed subject
+  // -2 -> Not initialized...
+
+  //Gets the grade by giving points..
+  
+  function getGrade(uint256 subjectScore) public pure returns(string memory){
+    if(subjectScore <=10) return "S";
+    else if(subjectScore<=9) return "A";
+    else if(subjectScore<=8) return "B";
+    else if(subjectScore<=7) return "C";
+    else if(subjectScore<=6) return "D";
+    else if(subjectScore<=5) return "E";
+    else return "F";
+  }
+  
+  //Testing function
+  function testDelete() public{
+    delete sem2["Chemistry"];
+  }
+
+  function Sem3initializer() public{
+    sem3["Discrete Mathematics"]=-2;
+    sem3["Environmental Science"]=-2;
+    sem3["Essence of Indian Traditional Knowledge"]=-2;
+    sem3["Programming Languages"]=-2;
+    sem3["Operations Research"]=-2;
+    sem3["Advanced Computer Skills Lab"]=-2;
+    sem3["Biology for Engineers"]=-2;
+    sem3["Digital Electronics"]=-2;
+    sem3["Basic Electronics"]=-2;
+    sem3["Basic Electronics Lab"]=-2;
+    sem3["Data Structures and Algorithms Lab"]=-2;
+    sem3["Data Structures and Algorithms"]=-2;
+  }
+}

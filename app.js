@@ -17,7 +17,6 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type , Authorization");
   next();
 });
-
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 
@@ -31,7 +30,7 @@ mongoose
   )
   .then((response) => {
     console.log("Connected to mongodb..", response);
-    app.listen(7000, () => {
+    app.listen(9000, () => {
       console.log("Server started at 5000");
     });
   })

@@ -34,12 +34,8 @@ function App() {
         <Route path="/general" element={<GeneralDetails />} />
 
         <Route path="/account" element={<AccountPage />} />
-        <Route path="/educationalDetails" element={<EducationPage />} />
-        <Route
-          exact
-          path={"/educationalDetails/:sem"}
-          element={<SemesterTable />}
-        />
+        <Route path="/educationalDetails" element={<ListSemCards />} />
+        <Route exact path={"/educationalDetails/:sem"} element={<InterfaceCard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/logout" element={<LogoutComponent />} />
       </Routes>

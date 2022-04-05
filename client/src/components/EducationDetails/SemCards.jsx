@@ -4,6 +4,7 @@ import React from "react";
 function SemCards(props) {
   return (
     <Paper
+    {...props}
       sx={{
         width: "fit-content",
         margin: 5,

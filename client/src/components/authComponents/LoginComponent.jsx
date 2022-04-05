@@ -54,10 +54,14 @@ const LoginComponent = () => {
   let navigate = useNavigate();
   const [rollNo, setrollNo] = useState("");
   const [password, setPassword] = useState("");
+  let [rollErr,setRollErr]=useState('');
   const classes = useStyles();
 
   const handleRoll = (e) => {
+    if(e.target.value.match(/[0-9]{4}-[0-9]{2}-[0-9]{3}-[0-9]{3}/g)){
+      setRollErr('')
     setrollNo(e.target.value);
+    }else setRollErr("Enter valid Roll Number")
   };
 
   const handlePassword = (e) => {
@@ -67,7 +71,7 @@ const LoginComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(rollNo, password);
-    fetch("/auth/signin", {
+    fetch("http://localhost:9000/auth/signin", {
       method: "post",
       headers: {
         "Content-type": "application/json",
@@ -128,8 +132,10 @@ const LoginComponent = () => {
                   color="login"
                   inputMode="text"
                   fullWidth={true}
+                  error={rollErr.length>0?true:false}
                   onChange={handleRoll}
-                  value={rollNo}
+                  helperText={rollErr}
+                  // value={rollNo}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
