@@ -12,17 +12,17 @@ function ListSemCards(props) {
           to={"/educationalDetails/" + (i + 1)}
           style={{ textDecoration: "none" }}
         >
-          <SemCards sem={"Semester - " + (i + 1)}></SemCards>
+          <SemCards sem={"Semester - " + (i + 1)} id={i + 1}></SemCards>
         </Link>
       </Grid>
     );
   return (
     <Grid container>
       <Grid item>
-      <Sidebar />
+        <SideBar />
       </Grid>
-      <Grid item xs={8} >
-      <Grid container>{content}</Grid>
+      <Grid item xs={8}>
+        <Grid container>{content}</Grid>
       </Grid>
     </Grid>
   );

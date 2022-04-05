@@ -51,7 +51,7 @@ string[] sem5Subs = ["Operating Systems","Software Engineering","Artificial Inte
 string[] sem6Subs = ["Compiler Design","Computer Networks","Design and Analysis of Algorithms","Internet of Things","Cloud Computing","Disaster Mitigation"];
 string[] sem7Subs = ["Information Security","Data science using R programming","Distributed Systems","Enterpreneurship"];
 string[] sem8Subs = ["Mobile Computing","Road Safety Engineering"];
-  function seminitializer () public{
+  function seminitializer  ()public  {
       subjects[0]=sem1Subs;
       subjects[1]=sem2Subs;
       subjects[2]=sem3Subs;
@@ -104,6 +104,7 @@ string[] sem8Subs = ["Mobile Computing","Road Safety Engineering"];
 
   
   function getSemSubs(uint256 semNumber) public view returns(string[] memory){
+   
     string[] memory temp=subjects[semNumber-1];
     return temp;
   }

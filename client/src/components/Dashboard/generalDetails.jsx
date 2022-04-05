@@ -50,11 +50,11 @@ const GeneralDetails = () => {
     newForm: false,
   });
 
-  let [phErr,setPhErr]=useState('');
-  let [aadharErr,setAadharErr]=useState('');
-  let [pinErr,setPinErr]=useState('')
-  let [bloodErr,setBloodErr]=useState('');
-  let [emailErr,setEmailErr]=useState('');
+  let [phErr, setPhErr] = useState("");
+  let [aadharErr, setAadharErr] = useState("");
+  let [pinErr, setPinErr] = useState("");
+  let [bloodErr, setBloodErr] = useState("");
+  let [emailErr, setEmailErr] = useState("");
   // const [load, setload] = useState(true);
   const handleName = (e) => {
     console.log(e.target.value);
@@ -69,10 +69,9 @@ const GeneralDetails = () => {
       ...formData,
       email: e.target.value,
     });
-    if(e.target.value.includes('.com') & e.target.value.includes('@')){
-      setEmailErr('');
-      
-    }else setEmailErr('Enter valid email');
+    if (e.target.value.includes(".com") & e.target.value.includes("@")) {
+      setEmailErr("");
+    } else setEmailErr("Enter valid email");
     console.log(emailErr);
   };
   const handleRoll = (e) => {
@@ -81,7 +80,6 @@ const GeneralDetails = () => {
       ...formData,
       rollNo: e.target.value,
     });
-    
   };
   const handlePhone = (e) => {
     console.log(e.target.value);
@@ -89,10 +87,12 @@ const GeneralDetails = () => {
       ...formData,
       phone: e.target.value,
     });
-    if(e.target.value.length==10 && e.target.value.match(/[0-9]/g).length>0){
+    if (
+      e.target.value.length == 10 &&
+      e.target.value.match(/[0-9]/g).length > 0
+    ) {
       setPhErr("");
-      
-    }else setPhErr("Enter valid Phone number");
+    } else setPhErr("Enter valid Phone number");
   };
   const handleAadhar = (e) => {
     console.log(e.target.value);
@@ -100,11 +100,12 @@ const GeneralDetails = () => {
       ...formData,
       aadharNumber: e.target.value,
     });
-    if(e.target.value.length==12 && e.target.value.match(/[0-9]/g).length>0){
-      setAadharErr('');
-
-    }else 
-    setAadharErr("Enter valid aadhar number");
+    if (
+      e.target.value.length == 12 &&
+      e.target.value.match(/[0-9]/g).length > 0
+    ) {
+      setAadharErr("");
+    } else setAadharErr("Enter valid aadhar number");
   };
   const handleBloodGrp = (e) => {
     console.log(e.target.value);
@@ -112,11 +113,13 @@ const GeneralDetails = () => {
       ...formData,
       bloodgrp: e.target.value,
     });
-    if((e.target.value.endsWith('+') || e.target.value.endsWith('-')) && e.target.value.match(/[O|A|AB]/g)){
-      
-      setBloodErr('');
-    }else{
-      setBloodErr('Enter valid Blood Group');
+    if (
+      (e.target.value.endsWith("+") || e.target.value.endsWith("-")) &&
+      e.target.value.match(/[O|A|AB]/g)
+    ) {
+      setBloodErr("");
+    } else {
+      setBloodErr("Enter valid Blood Group");
     }
   };
   const handleAddress = (e) => {
@@ -165,10 +168,12 @@ const GeneralDetails = () => {
       ...formData,
       pincode: e.target.value,
     });
-    if(e.target.value.length==6 && e.target.value.match(/[0-9]/g).length>0){
-      setPinErr('')
-    }else 
-    setPinErr("Enter valid PinCode")
+    if (
+      e.target.value.length == 6 &&
+      e.target.value.match(/[0-9]/g).length > 0
+    ) {
+      setPinErr("");
+    } else setPinErr("Enter valid PinCode");
   };
 
   const handleCity = (e) => {
@@ -211,19 +216,16 @@ const GeneralDetails = () => {
     const web3 = new Web3(provider);
     const networkId = await web3.eth.net.getId();
     const deployedNetwork = SemDetails.networks[networkId];
-    instance = new web3.eth.Contract(
+    let instance = new web3.eth.Contract(
       SemDetails.abi,
       deployedNetwork && deployedNetwork.address
     );
+    console.log(instance);
 
-    // let result = await instance.methods
-    //   .setProfile("abc", "abc@zxyc.com", 22222222222)
-    //   .send({ from: account });
-    // console.log("Result is : ", result);
-
-    let response = await instance.methods.getProfile().call({ from: account });
+    let response = await instance.methods
+      .getProfile()
+      .call({ from: account, gas: 300000 });
     console.log("Response is :", response);
-    // setload(false);
 
     setformData({
       ...formData,
@@ -409,7 +411,6 @@ const GeneralDetails = () => {
                                   color="fields"
                                   inputMode="text"
                                   fullWidth={true}
-                                  
                                   onChange={handleName}
                                   value={formData.name}
                                 />
@@ -418,7 +419,7 @@ const GeneralDetails = () => {
                                 <TextField
                                   sx={{ fontSize: "20px" }}
                                   label="E-mail "
-                                  error={emailErr.length>0?true:false}
+                                  error={emailErr.length > 0 ? true : false}
                                   helperText={emailErr}
                                   color="fields"
                                   inputMode="text"
@@ -433,7 +434,6 @@ const GeneralDetails = () => {
                                   label="Roll Number"
                                   color="fields"
                                   inputMode="text"
-                                  
                                   fullWidth={true}
                                   onChange={handleRoll}
                                   value={formData.rollNo}
@@ -443,7 +443,7 @@ const GeneralDetails = () => {
                                 <TextField
                                   sx={{ fontSize: "20px" }}
                                   label="Phone"
-                                  error={phErr.length>0?true:false}
+                                  error={phErr.length > 0 ? true : false}
                                   helperText={phErr}
                                   color="fields"
                                   inputMode="text"
@@ -457,7 +457,7 @@ const GeneralDetails = () => {
                                   sx={{ fontSize: "20px" }}
                                   label="Aadhar Number"
                                   color="fields"
-                                  error={aadharErr.length>0?true:false}
+                                  error={aadharErr.length > 0 ? true : false}
                                   helperText={aadharErr}
                                   inputMode="text"
                                   fullWidth={true}
@@ -471,7 +471,7 @@ const GeneralDetails = () => {
                                   label="Blood Group"
                                   color="fields"
                                   inputMode="text"
-                                  error={bloodErr.length>0?true:false}
+                                  error={bloodErr.length > 0 ? true : false}
                                   helperText={bloodErr}
                                   fullWidth={true}
                                   onChange={handleBloodGrp}
@@ -585,7 +585,7 @@ const GeneralDetails = () => {
                                 <TextField
                                   sx={{ fontSize: "20px" }}
                                   label="Pin Code"
-                                  error={pinErr.length>0?true:false}
+                                  error={pinErr.length > 0 ? true : false}
                                   helperText={pinErr}
                                   color="fields"
                                   inputMode="text"
@@ -649,8 +649,15 @@ const GeneralDetails = () => {
                       padding: "20px",
                     }}
                   >
-                    <Grid container direction="column" >
-                      <Box sx={{ position: "sticky", right: "82rem" ,display:'inline-flex',justifyContent:'right'}}>
+                    <Grid container direction="column">
+                      <Box
+                        sx={{
+                          position: "sticky",
+                          right: "82rem",
+                          display: "inline-flex",
+                          justifyContent: "right",
+                        }}
+                      >
                         <IconButton onClick={handleEdit}>
                           <EditOutlinedIcon fontSize="large" color="pink" />
                         </IconButton>
