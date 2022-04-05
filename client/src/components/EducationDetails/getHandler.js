@@ -1,4 +1,5 @@
 // import getWeb3 from "../../web3";
+import { RedoTwoTone } from "@mui/icons-material";
 import Web3 from "web3";
 import SemDetails from "../../contracts/SEMT.json";
 export let acc;
@@ -19,7 +20,12 @@ export async function connectionHandler() {
   console.log(acc);
   return instance;
 }
-
+export const semInitializer=async(accountNo)=>{
+  let instance =await connectionHandler();
+  let result=await instance.methods.seminitializer().call({from:accountNo});
+  console.log(result);
+  return result;
+}
 export const getSemDetails = async (semNumber,accountNo) => {
   let instance=await connectionHandler();
   let result=await instance.methods.getsem(semNumber).call({from:accountNo});

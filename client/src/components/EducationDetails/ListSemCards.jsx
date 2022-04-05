@@ -1,9 +1,14 @@
 import SemCards from "./SemCards";
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import SideBar from "../Dashboard/sidebar";
+import { semInitializer } from "./getHandler";
 function ListSemCards(props) {
+  let a=localStorage.getItem('address');
+  useEffect(()=>{
+    semInitializer().then((res,err)=>console.log(res));
+  },[]);
   let content = [];
   for (let i = 0; i < 8; i++)
     content.push(
@@ -19,7 +24,7 @@ function ListSemCards(props) {
   return (
     <Grid container>
       <Grid item>
-      <Sidebar />
+      <SideBar />
       </Grid>
       <Grid item xs={8} >
       <Grid container>{content}</Grid>

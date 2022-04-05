@@ -17,7 +17,6 @@ import SideBar from "./sidebar";
 import { makeStyles } from "@mui/styles";
 import Web3 from "web3";
 import SemDetails from "../../contracts/SemDetails.json";
-
 import InputAdornment from "@mui/material/InputAdornment";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 let instance;

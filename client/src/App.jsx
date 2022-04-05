@@ -6,13 +6,12 @@ import SignUpBox from "./components/authComponents/SignUpComponent";
 import Profile from "./components/Dashboard/Profile";
 import Index from "./components/Dashboard/index";
 import AccountPage from "./components/Dashboard/account";
-import EducationPage from "./components/Dashboard/education";
 import LandingPage from "./components/landingPage";
 import AdminComponent from "./components/authComponents/adminComponent";
 import GeneralDetails from "./components/Dashboard/generalDetails";
-
+import InterfaceCard from "./components/EducationDetails/InterfaceCard";
 import SemesterTable from "./components/EducationDetails/SemesterTable";
-
+import ListSemCards from "./components/EducationDetails/ListSemCards";
 import LogoutComponent from "./components/authComponents/LogoutComponent";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 
