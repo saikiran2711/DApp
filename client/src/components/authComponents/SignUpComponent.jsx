@@ -30,7 +30,7 @@ function SignUpBox(props) {
   };
 
   const handleSignup = (event) => {
-    fetch("/auth/signup", {
+    fetch("http://localhost:9000/auth/signup", {
       method: "post",
       headers: {
         "Content-type": "application/json",

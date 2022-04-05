@@ -1,13 +1,10 @@
 const User = require("../models/userModel");
-const { use } = require("../routes/adminRoutes");
 
 exports.adminLogin = (req, res, next) => {
   console.log(req.body);
   const email = req.body.email;
   const password = req.body.password;
-  // User.find().then((user) => {
-  //   console.log(user);
-  // });
+
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {

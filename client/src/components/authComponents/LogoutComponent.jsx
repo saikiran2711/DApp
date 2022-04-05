@@ -6,7 +6,7 @@ const LogoutComponent = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/auth/logout", {
+    fetch("http://localhost:9000/auth/logout", {
       method: "post",
       headers: {
         "Content-type": "application/json",

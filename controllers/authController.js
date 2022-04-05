@@ -5,8 +5,6 @@ const Web3 = require("web3");
 const web3 = new Web3("http://localhost:7545");
 
 const getAddress = async (idx) => {
-  //   let accounts = await web3.eth.getAccounts()[idx];
-
   let accounts = await web3.eth.getAccounts();
 
   return accounts[+idx];

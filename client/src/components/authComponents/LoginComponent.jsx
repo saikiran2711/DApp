@@ -49,8 +49,8 @@ const useStyles = makeStyles({
 });
 
 const LoginComponent = () => {
-  const web3=new getWeb3();
-  
+  const web3 = new getWeb3();
+
   let navigate = useNavigate();
   const [rollNo, setrollNo] = useState("");
   const [password, setPassword] = useState("");
@@ -67,7 +67,7 @@ const LoginComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(rollNo, password);
-    fetch("/auth/signin", {
+    fetch("http://localhost:9000/auth/signin", {
       method: "post",
       headers: {
         "Content-type": "application/json",

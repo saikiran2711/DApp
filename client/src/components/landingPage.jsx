@@ -98,12 +98,12 @@ const LandingPage = () => {
               <Grid item>
                 <Box className={classes.rightCircle}></Box>
               </Grid>
-                <Grid container spacing={5} sx={{marginTop:2}}>
-                  <Grid item>
+              <Grid container spacing={5} sx={{ marginTop: 2 }}>
+                <Grid item>
                   <Link
-                to="/admin"
-                style={{ textDecoration: "none", color: "black" }}
-              >
+                    to="/admin"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
                     <Paper
                       className={classes.hoverItem}
                       elevation={3}
@@ -113,36 +113,42 @@ const LandingPage = () => {
                         height: "100px",
                         textAlign: "center",
                         display: "flex",
-                        flexWrap:'wrap',
+                        flexWrap: "wrap",
                         flexDirection: "column",
                         justifyContent: "center",
                       }}
                     >
-                      <Box display='inline-flex' justifyContent='center' flexDirection='center'>
-                      <Typography>Admin
-                      </Typography>
-                      <ManageAccountsIcon
-                          sx={{ color: "#26e2d9",paddingLeft:1}}
+                      <Box
+                        display="inline-flex"
+                        justifyContent="center"
+                        flexDirection="center"
+                      >
+                        <Typography>Admin</Typography>
+                        <ManageAccountsIcon
+                          sx={{ color: "#26e2d9", paddingLeft: 1 }}
                         />
-                        </Box>
+                      </Box>
                       <ArrowForwardRounded
                         sx={{
                           display: "flex",
                           width: "inherit",
                           textAlign: "right",
-                          position:'relative',
-                          top:'1rem',
+                          position: "relative",
+                          top: "1rem",
                           left: "3rem",
                         }}
                       />
                     </Paper>
-                    </Link>
-                  </Grid>
-                  
-                  <Grid item>
-                  <Link to='/login' style={{ textDecoration: "none", color: "black" }}>
+                  </Link>
+                </Grid>
+
+                <Grid item>
+                  <Link
+                    to="/login"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
                     <Paper
-                    elevation={3}
+                      elevation={3}
                       className={classes.hoverItem}
                       sx={{
                         borderRadius: "8%",
@@ -150,33 +156,36 @@ const LandingPage = () => {
                         height: "100px",
                         textAlign: "center",
                         display: "flex",
-                        flexWrap:'wrap',
+                        flexWrap: "wrap",
                         flexDirection: "column",
                         justifyContent: "center",
                       }}
                     >
-                      <Box display='inline-flex' justifyContent='center' flexDirection='center'>
-                      <Typography>Student
-                      </Typography>
-                      <AccountCircleIcon
-                          sx={{ color: "#26e2d9",paddingLeft:1}}
+                      <Box
+                        display="inline-flex"
+                        justifyContent="center"
+                        flexDirection="center"
+                      >
+                        <Typography>Student</Typography>
+                        <AccountCircleIcon
+                          sx={{ color: "#26e2d9", paddingLeft: 1 }}
                         />
-                        </Box>
+                      </Box>
                       <ArrowForwardRounded
                         sx={{
                           display: "flex",
                           width: "inherit",
                           textAlign: "right",
-                          position:'relative',
-                          top:'1rem',
+                          position: "relative",
+                          top: "1rem",
                           left: "3rem",
                         }}
                       />
                     </Paper>
-                    </Link>
-                  </Grid>
+                  </Link>
                 </Grid>
-                {/* <Grid
+              </Grid>
+              {/* <Grid
                   item
                   sx={{
                     marginTop: "90px",
@@ -215,7 +224,7 @@ const LandingPage = () => {
                 to="/login"
               >
                  */}
-                {/* <Grid
+              {/* <Grid
                   item
                   sx={{
                     marginTop: "10px",
