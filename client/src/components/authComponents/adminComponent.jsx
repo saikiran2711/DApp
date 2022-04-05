@@ -81,7 +81,7 @@ const AdminComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(email, password);
-    fetch("/admin/signin", {
+    fetch("http://localhost:9000/admin/signin", {
       method: "post",
       headers: {
         "Content-type": "application/json",

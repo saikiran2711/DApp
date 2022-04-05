@@ -49,8 +49,8 @@ const useStyles = makeStyles({
 });
 
 const LoginComponent = () => {
-  const web3=new getWeb3();
-  
+  const web3 = new getWeb3();
+
   let navigate = useNavigate();
   const [rollNo, setrollNo] = useState("");
   const [password, setPassword] = useState("");

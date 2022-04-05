@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import LoginComponent from "./components/authComponents/LoginComponent";
 import SignUpBox from "./components/authComponents/SignUpComponent";
-import Home from "./components/Dashboard/Home";
+
 import Profile from "./components/Dashboard/Profile";
 import Index from "./components/Dashboard/index";
 import AccountPage from "./components/Dashboard/account";
@@ -10,13 +10,9 @@ import EducationPage from "./components/Dashboard/education";
 import LandingPage from "./components/landingPage";
 import AdminComponent from "./components/authComponents/adminComponent";
 import GeneralDetails from "./components/Dashboard/generalDetails";
-import SemesterComponent from "./components/EducationDetails/SemesterDetails";
-import SemCards from "./components/EducationDetails/SemCards";
-import ListSemCards from "./components/EducationDetails/ListSemCards";
+
 import SemesterTable from "./components/EducationDetails/SemesterTable";
-import { setSemDetails } from "./components/EducationDetails/getHandler";
-import SetSemesterTable from "./components/EducationDetails/SetSemesterTable";
-import InterfaceCard from "./components/EducationDetails/InterfaceCard";
+
 import LogoutComponent from "./components/authComponents/LogoutComponent";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 

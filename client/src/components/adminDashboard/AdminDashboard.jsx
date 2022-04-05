@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   const [data, setdata] = useState();
 
   useEffect(() => {
-    fetch("/admin/users")
+    fetch("http://localhost:9000/admin/users")
       .then((res) => {
         return res.json();
         // console.log(res.data);
