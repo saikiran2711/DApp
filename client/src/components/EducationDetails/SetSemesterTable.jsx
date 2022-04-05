@@ -2,9 +2,12 @@ import { Grid, TextField, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { getSemSubjects, setSemDetails } from "./getHandler";
 import SideBar from "../Dashboard/sidebar";
+import { ClassNames } from "@emotion/react";
+import { useParams } from "react-router";
 function SetSemester(props) {
   let [subs, setSubs] = useState([]);
   let [marks, setMarks] = useState({});
+  let query=useParams();
   // let [result,setResult]=useState([]);
   // connectionHandler();
   console.log("Before Calling", subs);
@@ -14,7 +17,7 @@ function SetSemester(props) {
     for (let i = 0; i < subs.length; i += 1) {
       result[i] = marks[subs[i]];
     }
-    let r = await setSemDetails(account, result);
+    let r = await setSemDetails(query['sem'],account, result);
     console.log(r);
   };
   const handle = (subject, value) => {
@@ -27,7 +30,10 @@ function SetSemester(props) {
   };
   let account = localStorage.getItem("address");
   if (subs.length == 0) {
-    getSemSubjects(account).then((res, err) => {
+    console.log(subs.length,"Sbu length");
+    console.log(subs);
+    getSemSubjects(query['sem'],account).then((res, err) => {
+      console.log(res);
       console.log(account);
       setSubs([...res]);
     });
@@ -43,6 +49,7 @@ function SetSemester(props) {
           <TextField
             error={marks[subs[i]] > 10 || marks[subs[i]] < 5 ? true : false}
             onChange={(e) => handle(subs[i], e.target.value)}
+            defaultValue={props.edit==true?props.marks[i]:''}
             sx={{ width: 1 / 5 }}
           />
           <Typography color="red">

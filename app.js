@@ -31,7 +31,7 @@ mongoose
   .then((response) => {
     console.log("Connected to mongodb..", response);
     app.listen(9000, () => {
-      console.log("Server started at 5000");
+      console.log("Server started");
     });
   })
   .catch((err) => {

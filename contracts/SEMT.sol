@@ -2,7 +2,7 @@
 pragma solidity >=0.4.0 <0.9.0;
 pragma experimental ABIEncoderV2;
 
-contract Semester{
+contract SEMT{
 
 
    mapping(address=> mapping(uint256=> mapping(string=>int256))) public sem ;

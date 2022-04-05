@@ -5,8 +5,6 @@ const Web3 = require("web3");
 const web3 = new Web3("http://localhost:7545");
 
 const getAddress = async (idx) => {
-  //   let accounts = await web3.eth.getAccounts()[idx];
-
   let accounts = await web3.eth.getAccounts();
 
   return accounts[+idx];
@@ -92,5 +90,25 @@ exports.signIn = (req, res, next) => {
       err.statusCode = 500;
       err.message = "Internal Server Error";
       next(err);
+    });
+};
+
+exports.logOut = (req, res, next) => {
+  const address = req.body.address;
+  console.log(req);
+  User.updateOne(
+    { address: address },
+    {
+      $set: {
+        isLoggedIn: false,
+      },
+    }
+  )
+    .then((user) => {
+      console.log(user);
+      res.status(200).json({ message: "Logged out " });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

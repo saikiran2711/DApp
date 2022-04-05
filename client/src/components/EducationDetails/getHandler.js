@@ -1,6 +1,7 @@
 // import getWeb3 from "../../web3";
+import { RedoTwoTone } from "@mui/icons-material";
 import Web3 from "web3";
-import SemDetails from "../../contracts/Semester.json";
+import SemDetails from "../../contracts/SEMT.json";
 export let acc;
 export async function connectionHandler() {
   console.log("in function");
@@ -19,10 +20,16 @@ export async function connectionHandler() {
   console.log(acc);
   return instance;
 }
-
-export const getSemDetails = async (accountNo) => {
+export const semInitializer=async(accountNo)=>{
+  let instance =await connectionHandler();
+  let result=await instance.methods.seminitializer().call({from:accountNo});
+  console.log(result);
+  return result;
+}
+export const getSemDetails = async (semNumber,accountNo) => {
   let instance=await connectionHandler();
-  let result=await instance.methods.getSem1().call({from:accountNo});
+  let result=await instance.methods.getsem(semNumber).call({from:accountNo});
+  console.log(result);
   return result;
   // connectionHandler().then(async (res, err) => {
   //   if (res) {
@@ -34,9 +41,9 @@ export const getSemDetails = async (accountNo) => {
   //   }
   // });
 };
-export const getSemSubjects = async (accountNo) => {
+export const getSemSubjects = async (semNumber,accountNo) => {
     let instance=await connectionHandler();
-    let result=await instance.methods.getSemSubs().call({from:accountNo});
+    let result=await instance.methods.getSemSubs(semNumber).call({from:accountNo});
 //   connectionHandler().then(async (res, err) => {
 //        result = await res.methods.getSemSubs().call({ from: accountNo });
 //     //   console.log(result);
@@ -45,10 +52,13 @@ export const getSemSubjects = async (accountNo) => {
   return result;
 };
 
-export const setSemDetails = async (accountNo, arr) => {
+export const setSemDetails = async (semNumber,accountNo, arr) => {
   //accountNo:'string', arr:Array of scores (size == subject's size)
 let instance =await connectionHandler();
-let result=await instance.methods.setSem1(arr).send({from:accountNo,gas:300000});
+console.log(arr,"ARRR");
+console.log(semNumber,"seEM");
+console.log(accountNo,"ACCC");
+let result=await instance.methods.setsem(arr,semNumber).send({from:accountNo,gas:300000});
   console.log(result);
   return result;
 };
