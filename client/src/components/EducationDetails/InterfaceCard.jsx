@@ -9,8 +9,10 @@ function InterfaceCard(props) {
   let address = localStorage.getItem("address");
   let [semDetails, setSem] = useState([]);
   if (semDetails.length == 0)
-    getSemDetails(query["sem"], address).then((res, err) => setSem([...res]));
-  console.log(semDetails[0]);
+    getSemDetails(parseInt(query["sem"]), address).then((res, err) =>
+      setSem([...res])
+    );
+  console.log("Sem details : ", semDetails[0]);
   if (semDetails[0] > "0") {
     return <SemesterTable />;
   } else {

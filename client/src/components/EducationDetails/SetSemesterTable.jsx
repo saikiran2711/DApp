@@ -2,12 +2,14 @@ import { Grid, TextField, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { getSemSubjects, setSemDetails } from "./getHandler";
 import SideBar from "../Dashboard/sidebar";
+import { useNavigate } from "react-router-dom";
 import { ClassNames } from "@emotion/react";
 import { useParams } from "react-router";
 function SetSemester(props) {
+  let navigate = useNavigate();
   let [subs, setSubs] = useState([]);
   let [marks, setMarks] = useState({});
-  let query=useParams();
+  let query = useParams();
   // let [result,setResult]=useState([]);
   // connectionHandler();
   console.log("Before Calling", subs);
@@ -17,26 +19,29 @@ function SetSemester(props) {
     for (let i = 0; i < subs.length; i += 1) {
       result[i] = marks[subs[i]];
     }
-    let r = await setSemDetails(query['sem'],account, result);
-    console.log(r);
+    let r = await setSemDetails(query["sem"], account, result);
+    return navigate(`/educationalDetails/${query["sem"]}`);
   };
   const handle = (subject, value) => {
     console.log(subject);
     let tempmarks = {};
-    tempmarks[subject] = value.length > 0 ? parseInt(value) : 0;
-    console.log(Object.entries(tempmarks));
+    tempmarks[subject] = !isNaN(parseInt(value)) ? parseInt(value) : 0;
+    console.log("Object keys ", Object.entries(tempmarks));
     setMarks((prev) => ({ ...prev, ...tempmarks }));
     console.log(marks);
   };
   let account = localStorage.getItem("address");
   if (subs.length == 0) {
-    console.log(subs.length,"Sbu length");
+    console.log(subs.length, "Sbu length");
     console.log(subs);
-    getSemSubjects(query['sem'],account).then((res, err) => {
+    getSemSubjects(query["sem"], account).then((res, err) => {
+      console.log(res);
       console.log(account);
+      console.log("MArks arwe", res);
       setSubs([...res]);
     });
   }
+
   let content = [];
   for (let i = 0; i < subs.length; i++) {
     content.push(
@@ -48,7 +53,7 @@ function SetSemester(props) {
           <TextField
             error={marks[subs[i]] > 10 || marks[subs[i]] < 5 ? true : false}
             onChange={(e) => handle(subs[i], e.target.value)}
-            defaultValue={props.edit==true?props.marks[i]:''}
+            defaultValue={props.edit == true ? props.marks[i] : ""}
             sx={{ width: 1 / 5 }}
           />
           <Typography color="red">
@@ -61,7 +66,11 @@ function SetSemester(props) {
     );
   }
   content.push(
-    <Grid item xs={8} sx={{margin:10,display:'flex',justifyContent:'center'}}>
+    <Grid
+      item
+      xs={8}
+      sx={{ margin: 10, display: "flex", justifyContent: "center" }}
+    >
       <Button
         variant="contained"
         sx={{ textTransform: "capitalize" }}

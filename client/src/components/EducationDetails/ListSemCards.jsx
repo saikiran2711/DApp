@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import SideBar from "../Dashboard/sidebar";
 import { semInitializer } from "./getHandler";
 function ListSemCards(props) {
-  let a = localStorage.getItem("address");
   useEffect(() => {
-    semInitializer().then((res, err) => console.log(res));
+    console.log("Address : ", localStorage.getItem("address"));
+    let a = localStorage.getItem("address");
+
+    semInitializer(a).then((res, err) => console.log(res));
   }, []);
   let content = [];
   for (let i = 0; i < 8; i++)
@@ -17,7 +19,7 @@ function ListSemCards(props) {
           to={"/educationalDetails/" + (i + 1)}
           style={{ textDecoration: "none" }}
         >
-          <SemCards sem={"Semester - " + (i + 1)} id={i + 1}></SemCards>
+          <SemCards sem={"Semester - " + (i + 1)} id={i + 1} />
         </Link>
       </Grid>
     );

@@ -1,4 +1,3 @@
-// import getWeb3 from "../../web3";
 import { RedoTwoTone } from "@mui/icons-material";
 import Web3 from "web3";
 import SemDetails from "../../contracts/SEMT.json";
@@ -7,28 +6,25 @@ export async function connectionHandler() {
   console.log("in function");
   const provider = new Web3.providers.HttpProvider("http://127.0.0.1:7545");
   const web3 = new Web3(provider);
-  //   const web3 = await getWeb3();
+
   const networkId = await web3.eth.net.getId();
   const deployedNetwork = SemDetails.networks[networkId];
   let instance = new web3.eth.Contract(
     SemDetails.abi,
     deployedNetwork && deployedNetwork.address
   );
-  console.log("Got instance!!!!!", instance);
-  acc = await web3.eth.getAccounts();
-  acc = acc[0];
-  console.log(acc);
+
   return instance;
 }
 export const semInitializer = async (accountNo) => {
   let instance = await connectionHandler();
   let result = await instance.methods
     .seminitializer()
-    .call({ from: accountNo });
+    .send({ from: accountNo, gas: 5000000 });
   console.log(result);
-  return result;
 };
 export const getSemDetails = async (semNumber, accountNo) => {
+  console.log("Sem Number : ", semNumber);
   let instance = await connectionHandler();
   let result = await instance.methods
     .getsem(semNumber)
