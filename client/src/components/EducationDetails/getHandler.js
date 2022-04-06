@@ -16,13 +16,13 @@ export async function connectionHandler() {
   );
   console.log("Got instance!!!!!", instance);
   acc = await web3.eth.getAccounts();
-  acc = acc[0];
-  console.log(acc);
+  // acc = acc[0];
+  // console.log(acc);
   return instance;
 }
 export const semInitializer=async(accountNo)=>{
   let instance =await connectionHandler();
-  let result=await instance.methods.seminitializer().call({from:accountNo});
+  let result=await instance.methods.seminitializer().send({from:accountNo,gas:5000000});
   console.log(result);
   return result;
 }
@@ -58,7 +58,7 @@ let instance =await connectionHandler();
 console.log(arr,"ARRR");
 console.log(semNumber,"seEM");
 console.log(accountNo,"ACCC");
-let result=await instance.methods.setsem(arr,semNumber).send({from:accountNo,gas:300000});
+let result=await instance.methods.setsem(arr,semNumber).send({from:accountNo,gas:5000000});
   console.log(result);
   return result;
 };

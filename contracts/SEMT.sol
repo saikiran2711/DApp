@@ -110,8 +110,8 @@ string[] sem8Subs = ["Mobile Computing","Road Safety Engineering"];
 
   
 
-  function getsem(uint256 semNumber) public view returns(int256[10] memory) {
-    int256[10] memory  scores;
+  function getsem(uint256 semNumber) public view returns(int256[15] memory) {
+    int256[15] memory  scores;
     // string[] memory temp;
     for(uint256 i=0;i<subjects[semNumber-1].length;i++){
       scores[i]=sem[msg.sender][semNumber][subjects[semNumber-1][i]];
