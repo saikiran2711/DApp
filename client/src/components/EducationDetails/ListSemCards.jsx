@@ -3,13 +3,12 @@ import React, { useEffect } from "react";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import SideBar from "../Dashboard/sidebar";
-import { semInitializer } from "./getHandler";
+import { getSemSubjects, semInitializer } from "./getHandler";
 function ListSemCards(props) {
-  useEffect(() => {
-    console.log("Address : ", localStorage.getItem("address"));
-    let a = localStorage.getItem("address");
-
-    semInitializer(a).then((res, err) => console.log(res));
+  let a = localStorage.getItem("address");
+  useEffect(async () => {
+    let res = await getSemSubjects(1, a);
+    if (res.length == 0) semInitializer(a).then((res, err) => console.log(res));
   }, []);
   let content = [];
   for (let i = 0; i < 8; i++)

@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route, useSearchParams } from "react-router-dom";
 import LoginComponent from "./components/authComponents/LoginComponent";
 import SignUpBox from "./components/authComponents/SignUpComponent";
 
@@ -15,9 +15,11 @@ import ListSemCards from "./components/EducationDetails/ListSemCards";
 import LogoutComponent from "./components/authComponents/LogoutComponent";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 
+export const hashProvider=React.createContext();
 function App() {
+  let hasher=useState('0xfffffffffffffff');
   return (
-    <>
+    <hashProvider.Provider value={hasher}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/admin" element={<AdminComponent />} />
@@ -38,7 +40,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/logout" element={<LogoutComponent />} />
       </Routes>
-    </>
+    </hashProvider.Provider>
   );
 }
 

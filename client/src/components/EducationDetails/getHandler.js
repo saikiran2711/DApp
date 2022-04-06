@@ -13,7 +13,10 @@ export async function connectionHandler() {
     SemDetails.abi,
     deployedNetwork && deployedNetwork.address
   );
-
+  console.log("Got instance!!!!!", instance);
+  acc = await web3.eth.getAccounts();
+  // acc = acc[0];
+  // console.log(acc);
   return instance;
 }
 export const semInitializer = async (accountNo) => {
@@ -62,7 +65,7 @@ export const setSemDetails = async (semNumber, accountNo, arr) => {
   console.log(accountNo, "ACCC");
   let result = await instance.methods
     .setsem(arr, semNumber)
-    .send({ from: accountNo, gas: 300000 });
+    .send({ from: accountNo, gas: 5000000 });
   console.log(result);
   return result;
 };

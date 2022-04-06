@@ -54,6 +54,7 @@ const GeneralDetails = () => {
   let [pinErr, setPinErr] = useState("");
   let [bloodErr, setBloodErr] = useState("");
   let [emailErr, setEmailErr] = useState("");
+  let rollNo = localStorage.getItem("roll");
   // const [load, setload] = useState(true);
   const handleName = (e) => {
     console.log(e.target.value);
@@ -67,6 +68,10 @@ const GeneralDetails = () => {
     setformData({
       ...formData,
       email: e.target.value,
+    });
+    setformData({
+      ...formData,
+      rollNo: rollNo,
     });
     if (e.target.value.includes(".com") & e.target.value.includes("@")) {
       setEmailErr("");
@@ -424,7 +429,8 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleEmail}
-                                  value={formData.email}
+                                  defaultValue={formData.email}
+                                  // value={formData.email}
                                 />
                               </Grid>
                               <Grid item md={4} sx={{ margin: "10px" }}>
@@ -434,8 +440,8 @@ const GeneralDetails = () => {
                                   color="fields"
                                   inputMode="text"
                                   fullWidth={true}
-                                  onChange={handleRoll}
-                                  value={formData.rollNo}
+                                  // onChange={handleRoll}
+                                  value={rollNo}
                                 />
                               </Grid>
                               <Grid item md={3} sx={{ margin: "10px" }}>
@@ -743,9 +749,7 @@ const GeneralDetails = () => {
                           alignSelf="center"
                           md={3}
                         >
-                          <Typography variant="h6">
-                            {formData.rollNo}
-                          </Typography>
+                          <Typography variant="h6">{rollNo}</Typography>
                         </Grid>
                       </Grid>
 
