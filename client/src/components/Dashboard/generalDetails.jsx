@@ -284,7 +284,7 @@ const GeneralDetails = () => {
     console.log(profile, relation, address);
     const result = await instance.methods
       .setProfile(
-        [name, email, +rollNo, +phone, addrss, +aadharNumber, bloodgrp],
+        [name, email, rollNo, +phone, addrss, +aadharNumber, bloodgrp],
         [fatherName, motherName],
         [country, state, +pincode, city]
       )
@@ -741,7 +741,7 @@ const GeneralDetails = () => {
                           item
                           className={classes.gridItems}
                           alignSelf="center"
-                          md={2}
+                          md={3}
                         >
                           <Typography variant="h6">
                             {formData.rollNo}
