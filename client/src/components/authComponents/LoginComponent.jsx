@@ -71,6 +71,7 @@ const LoginComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(rollNo, password);
+    localStorage.setItem('roll',rollNo);
     fetch("http://localhost:9000/auth/signin", {
       method: "post",
       headers: {

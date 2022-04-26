@@ -99,7 +99,7 @@ function SemesterTable(props) {
           </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} sx={{overflow:'scroll'}}>
           <Grid container margin={5}>
             {content}
           </Grid>

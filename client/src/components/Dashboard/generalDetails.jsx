@@ -54,6 +54,7 @@ const GeneralDetails = () => {
   let [pinErr,setPinErr]=useState('')
   let [bloodErr,setBloodErr]=useState('');
   let [emailErr,setEmailErr]=useState('');
+  let rollNo=localStorage.getItem('roll');
   // const [load, setload] = useState(true);
   const handleName = (e) => {
     console.log(e.target.value);
@@ -68,11 +69,16 @@ const GeneralDetails = () => {
       ...formData,
       email: e.target.value,
     });
+    setformData({
+      ...formData,
+      rollNo: rollNo,
+    });
     if(e.target.value.includes('.com') & e.target.value.includes('@')){
       setEmailErr('');
       
     }else setEmailErr('Enter valid email');
     console.log(emailErr);
+    
   };
   const handleRoll = (e) => {
     console.log(e.target.value);
@@ -423,7 +429,8 @@ const GeneralDetails = () => {
                                   inputMode="text"
                                   fullWidth={true}
                                   onChange={handleEmail}
-                                  value={formData.email}
+                                  defaultValue={formData.email}
+                                  // value={formData.email}
                                 />
                               </Grid>
                               <Grid item md={4} sx={{ margin: "10px" }}>
@@ -432,10 +439,10 @@ const GeneralDetails = () => {
                                   label="Roll Number"
                                   color="fields"
                                   inputMode="text"
-                                  
+                                  disabled={true}
                                   fullWidth={true}
-                                  onChange={handleRoll}
-                                  value={formData.rollNo}
+                                  // onChange={handleRoll}
+                                  value={rollNo}
                                 />
                               </Grid>
                               <Grid item md={3} sx={{ margin: "10px" }}>
@@ -737,7 +744,7 @@ const GeneralDetails = () => {
                           md={2}
                         >
                           <Typography variant="h6">
-                            {formData.rollNo}
+                            {rollNo}
                           </Typography>
                         </Grid>
                       </Grid>
