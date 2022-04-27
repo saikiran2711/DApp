@@ -92,10 +92,15 @@ const AdminComponent = () => {
       }),
     })
       .then((res) => {
+        console.log("Status is :", res.status);
         return res.json();
       })
       .then((data) => {
         console.log(data);
+        if (data.err) {
+          return navigate("/admin");
+        }
+
         return navigate("/admin/dashboard");
       })
       .catch((err) => {
