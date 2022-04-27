@@ -68,11 +68,9 @@ const GeneralDetails = () => {
     setformData({
       ...formData,
       email: e.target.value,
-    });
-    setformData({
-      ...formData,
       rollNo: rollNo,
     });
+
     if (e.target.value.includes(".com") & e.target.value.includes("@")) {
       setEmailErr("");
     } else setEmailErr("Enter valid email");

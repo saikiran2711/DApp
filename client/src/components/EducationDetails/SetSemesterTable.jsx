@@ -4,10 +4,9 @@ import { getSemDetails, getSemSubjects, setSemDetails } from "./getHandler";
 import SideBar from "../Dashboard/sidebar";
 import { useNavigate } from "react-router-dom";
 import { ClassNames } from "@emotion/react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { StartRounded } from "@mui/icons-material";
 function SetSemester(props) {
-  let navigate = useNavigate();
   let [subs, setSubs] = useState([]);
   let [marks, setMarks] = useState({});
   let query = useParams();
