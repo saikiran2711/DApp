@@ -1,5 +1,5 @@
 import EditOutlined from "@mui/icons-material/EditOutlined";
-import { Grid, IconButton } from "@mui/material";
+import { Card, Grid, IconButton,Paper } from "@mui/material";
 import { grid } from "@mui/system";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -33,6 +33,7 @@ function SemesterTable(props) {
     // console.log(subs, subs.length);
     let content = [];
     // content.push(<Grid item><EditOutlinedIcon /></Grid>)
+
     content.push(
       <>
         <Grid item xs={6} sx={{ margin: 2 }} fontWeight="bold">
@@ -44,6 +45,7 @@ function SemesterTable(props) {
           justifyItems="center"
           alignItems="center"
           fontWeight="bold"
+          marginLeft={3}
         >
           Grade
         </Grid>
@@ -60,7 +62,7 @@ function SemesterTable(props) {
           <Grid item xs={6} sx={{ margin: 2 }}>
             {subs[i]}
           </Grid>
-          <Grid item display="flex" justifyContent="center" alignItems="center">
+          <Grid item display="flex" justifyContent="center" alignItems="center" marginLeft={3}>
             {marks[i]}
           </Grid>
         </>
@@ -69,7 +71,7 @@ function SemesterTable(props) {
     let total = sum / length;
     content.push(
       <>
-        <Grid item xs={6} sx={{ margin: 2 }} fontWeight="bold">
+        <Grid item xs={6} sx={{ margin: 1 }} fontWeight="bold">
           Total GPA
         </Grid>
         <Grid
@@ -78,6 +80,7 @@ function SemesterTable(props) {
           justifyContent="center"
           alignItems="center"
           fontWeight="bold"
+          marginLeft={4}
         >
           {total.toPrecision(3)}
         </Grid>
@@ -86,13 +89,18 @@ function SemesterTable(props) {
     return subs.length == 0 ? (
       <>Loading</>
     ) : (
-      <Grid container>
+      <Grid container> 
         <Grid item xs={4}>
           <SideBar />
         </Grid>
-        <Grid item position='relative' left='30rem' height='fit-content'>
+          <Grid item xs={8} marginTop={2}>
           <Grid container>
-            <Grid item>
+        <Grid item height="fit-content" xs={6}>
+          Semester - {query['sem']} details:
+        </Grid>
+        <Grid item position='relative' top="3rem" right='4rem' height='fit-content'>
+          <Grid container>
+            <Grid item >
               <IconButton onClick={handleClick}>
           <EditOutlined color='pink'/>
           </IconButton>
@@ -100,11 +108,15 @@ function SemesterTable(props) {
           </Grid>
         </Grid>
         <Grid item xs={6} sx={{overflow:'scroll'}}>
+        <Card elevation={2}  sx={{borderRadius:5,background:'linear-gradient(to right bottom,#FFF6B7,#F6416C)'}}>
           <Grid container margin={5}>
             {content}
           </Grid>
+        </Card>
         </Grid>
       </Grid>
+      </Grid>
+        </Grid>
     );
   }
   else{
