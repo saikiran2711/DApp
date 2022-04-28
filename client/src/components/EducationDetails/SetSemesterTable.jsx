@@ -108,10 +108,10 @@ function SetSemester(props) {
       <Grid item xs={4} sx={{ position: "fixed" }}>
         <SideBar />
       </Grid>
-      <Grid item sx={{ marginLeft: 10 }}>
-        Enter marks of Semester - {query["sem"]}
+      <Grid item sx={{ position: "relative",left:'36rem', top:'1rem' ,fontSize:18, fontWeight:'bold'}}>
+        Enter marks of Semester - {query["sem"]} : 
       </Grid>
-      <Grid item xs={6} sx={{ overflow: "scroll", marginLeft: 40 }}>
+      <Grid item xs={6} sx={{  marginLeft: 40 }}>
         <Grid container margin={5}>
           {content}
         </Grid>

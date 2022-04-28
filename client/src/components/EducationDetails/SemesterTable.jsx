@@ -95,7 +95,7 @@ function SemesterTable(props) {
         </Grid>
           <Grid item xs={8} marginTop={2}>
           <Grid container>
-        <Grid item height="fit-content" xs={6}>
+        <Grid item height="fit-content" xs={6} sx={{fontWeight:"bold",fontSize:18}}>
           Semester - {query['sem']} details:
         </Grid>
         <Grid item position='relative' top="3rem" right='4rem' height='fit-content'>
@@ -107,7 +107,7 @@ function SemesterTable(props) {
           </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6} sx={{overflow:'scroll'}}>
+        <Grid item xs={6}>
         <Card elevation={2}  sx={{borderRadius:5,background:'linear-gradient(to right bottom,#FFF6B7,#F6416C)'}}>
           <Grid container margin={5}>
             {content}
