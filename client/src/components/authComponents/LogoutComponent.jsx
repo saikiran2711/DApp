@@ -1,10 +1,10 @@
 import { CircularProgress } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { hashProvider } from "../../App";
 const LogoutComponent = () => {
   let navigate = useNavigate();
-
+  let [hash,setHash]=useContext(hashProvider);
   useEffect(() => {
     fetch("http://localhost:9000/auth/logout", {
       method: "post",
@@ -20,6 +20,7 @@ const LogoutComponent = () => {
       })
       .then((data) => {
         console.log(data);
+        setHash(false);
         return navigate("/");
       })
       .catch((err) => {

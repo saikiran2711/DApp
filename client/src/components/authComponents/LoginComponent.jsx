@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { Box, Card, Grid, Typography, Button, TextField } from "@mui/material";
-
+import { hashProvider } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
 import getWeb3 from "../../web3";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 
 const LoginComponent = () => {
   const web3 = new getWeb3();
-
+  let [hash,setHash]=useContext(hashProvider)
   let navigate = useNavigate();
   const [rollNo, setrollNo] = useState("");
   const [password, setPassword] = useState("");
@@ -88,6 +88,7 @@ const LoginComponent = () => {
       .then((data) => {
         console.log(data);
         localStorage.setItem("address", data.user.address);
+        setHash(true)
         return navigate("/dashboard");
       })
       .catch((err) => {

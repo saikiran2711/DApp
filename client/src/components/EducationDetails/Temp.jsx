@@ -1,6 +1,9 @@
 import { Grid,Box,Typography } from "@mui/material";
-import React,{useState} from "react";
+import React,{useContext, useState} from "react";
+import { Navigate } from "react-router-dom";
+import { hashProvider } from "../../App";
 function ListLog(props) {
+  let [hash,setHash]=useContext(hashProvider);
   let [log,setLog]=useState([])
   const rollNo=localStorage.getItem("roll")
   const temphandle=async()=>{
@@ -17,11 +20,8 @@ function ListLog(props) {
      data.json().then((d)=>{
        console.log(d.log)
        setLog(d.log);
-      //  console.log(log)
     })
     })
-    // console.log(data.json());
-    // setLog(data)
     console.log("LOG"+log);
   }
 }
@@ -30,22 +30,24 @@ function ListLog(props) {
   for(let i =0 ;i<log.length;i++){
     content.push(
       <>
-  <Grid item xs={2.4}><Typography textAlign="center">{i+1}</Typography></Grid>
+<Grid item xs={2.4}><Typography textAlign="center">{i+1}</Typography></Grid>
 <Grid item xs={2.4}><Typography textAlign="center">{log[i]['Msg']}</Typography></Grid>
-<Grid item  xs={2.4} ><Typography overflow="auto">{log[i]["TransactionID"]}</Typography></Grid>
-<Grid item xs={2.4}><Typography textAlign="center">{log[i]["GasUsed"]} GWei</Typography></Grid>
+<Grid item xs={2.4}><Typography textAlign="center" fontSize={9} overflow="auto">{log[i]["TransactionID"]}</Typography></Grid>
+<Grid item xs={2.4}><Typography textAlign="center">{log[i]["GasUsed"]}</Typography></Grid>
 <Grid item xs={2.4}><Typography textAlign="center">{log[i]["Time"]}</Typography></Grid>
 </>
     );
   }
   return (
+    (hash)?
     <Box margin={10}>
-    <Grid container alignItems="center" justifyContent="center" rowSpacing={2}>
-      <Grid item xs={2.4}><Typography textAlign="center">S.No</Typography></Grid>
-      <Grid item xs={2.4}><Typography textAlign="center">Message</Typography></Grid>
-      <Grid item xs={2.4}><Typography textAlign="center">Transaction ID</Typography></Grid>
-      <Grid item xs={2.4}><Typography textAlign="center">Gas used</Typography></Grid>
-      <Grid item xs={2.4}><Typography textAlign="center">Time</Typography></Grid>
+      <Typography variant="h6" fontWeight={"#004d4d"} marginBottom={5}>Recent Update Log: </Typography>
+    <Grid container border={3} borderColor={"#004d4d"} alignItems="center" justifyContent="center" rowSpacing={2}>
+      <Grid item border={1} borderColor={"#004d4d"} xs={2.4}><Typography textAlign="center">S.No</Typography></Grid>
+      <Grid item border={1} borderColor={"#004d4d"} xs={2.4}><Typography textAlign="center">Message</Typography></Grid>
+      <Grid item border={1} borderColor={"#004d4d"} xs={2.4}><Typography  textAlign="center">Transaction ID</Typography></Grid>
+      <Grid item border={1} borderColor={"#004d4d"}xs={2.4}><Typography textAlign="center">Gas used</Typography></Grid>
+      <Grid item border={1} borderColor={"#004d4d"} xs={2.4}><Typography textAlign="center">Time</Typography></Grid>
       {content}
       {/* <Grid item xs={3}>S.No</Grid>
       <Grid item xs={3}>Log Message</Grid>
@@ -66,6 +68,7 @@ function ListLog(props) {
       <Grid item xs={3}><Button onClick={(e)=>handle()}>CLIKC</Button></Grid> */}
     </Grid>
     </Box>
+    :<Navigate to={"/login"} />
   );
 }
 export default ListLog;

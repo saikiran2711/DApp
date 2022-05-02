@@ -14,10 +14,11 @@ import SemesterTable from "./components/EducationDetails/SemesterTable";
 import ListSemCards from "./components/EducationDetails/ListSemCards";
 import LogoutComponent from "./components/authComponents/LogoutComponent";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
+import ListLog from "./components/EducationDetails/Temp";
 
 export const hashProvider=React.createContext();
 function App() {
-  let hasher=useState('0xfffffffffffffff');
+  let hasher=useState(false);
   return (
     <hashProvider.Provider value={hasher}>
       <Routes>
@@ -29,6 +30,7 @@ function App() {
         <Route path="/dashboard" element={<Index />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/general" element={<GeneralDetails />} />
+        <Route path="/logMessage" element={<ListLog />} />
 
         <Route path="/account" element={<AccountPage />} />
         <Route path="/educationalDetails" element={<ListSemCards />} />

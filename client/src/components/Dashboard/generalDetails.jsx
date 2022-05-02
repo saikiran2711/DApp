@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   CircularProgress,
   Grid,
@@ -19,6 +19,8 @@ import Web3 from "web3";
 import SemDetails from "../../contracts/SemDetails.json";
 import InputAdornment from "@mui/material/InputAdornment";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { hashProvider } from "../../App";
+import { Navigate } from "react-router-dom";
 let instance;
 const useStyles = makeStyles({
   gridItems: {
@@ -29,7 +31,7 @@ const useStyles = makeStyles({
 });
 const GeneralDetails = () => {
   const classes = useStyles();
-
+let [hash,setHash]=useContext(hashProvider)
   const [formData, setformData] = useState({
     name: "",
     email: "",
@@ -321,6 +323,7 @@ const GeneralDetails = () => {
   }, []);
 
   return (
+    (hash)?
     <>
       <Grid container>
         <Grid item>
@@ -1067,6 +1070,7 @@ const GeneralDetails = () => {
         )}
       </Grid>
     </>
+    :<Navigate to={"/login"} />
   );
 };
 

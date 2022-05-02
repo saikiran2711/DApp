@@ -1,10 +1,12 @@
 import SemCards from "./SemCards";
-import React, { useEffect } from "react";
+import React, { useEffect,useContext } from "react";
 import { Grid } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import SideBar from "../Dashboard/sidebar";
 import { getSemSubjects, semInitializer } from "./getHandler";
+import { hashProvider } from "../../App";
 function ListSemCards(props) {
+let [hash,setHash]=useContext(hashProvider);
   let a = localStorage.getItem("address");
   useEffect(async () => {
     let res = await getSemSubjects(1, a);
@@ -23,6 +25,7 @@ function ListSemCards(props) {
       </Grid>
     );
   return (
+    (hash)?
     <Grid container>
       <Grid item>
         <SideBar />
@@ -31,6 +34,7 @@ function ListSemCards(props) {
         <Grid container>{content}</Grid>
       </Grid>
     </Grid>
+    :<Navigate to={"/login"} />
   );
 }
 export default ListSemCards;
