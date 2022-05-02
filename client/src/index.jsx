@@ -5,6 +5,7 @@ import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
+import ListLog from "./components/EducationDetails/Temp";
 const theme = createTheme({
   palette: {
     login: {

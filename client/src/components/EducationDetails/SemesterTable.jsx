@@ -4,17 +4,21 @@ import { grid } from "@mui/system";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import SideBar from "../Dashboard/sidebar";
-import { connectionHandler, getSemDetails, getSemSubjects } from "./getHandler";
+import {getSemDetails, getSemSubjects} from "./getHandler";
+
 import SetSemester from "./SetSemesterTable";
+
 function SemesterTable(props) {
+
   let [subs, setSubs] = useState([]);
   let [marks, setMarks] = useState([]);
   let [click, setClick] = useState(false);
+
   let query = useParams();
+
   console.log(query);
+
   const handleClick=()=>{setClick((prev)=>!prev)};
-  // connectionHandler();
-  // console.log("Before Calling", subs);
   if (click == false) {
     let account = localStorage.getItem("address");
     if (subs.length == 0) {
@@ -27,11 +31,15 @@ function SemesterTable(props) {
         setSubs([...res]);
       });
     }
+
     if (marks.length == 0) {
       getSemDetails(query['sem'], account).then((res, err) => setMarks([...res]));
     }
+
     // console.log(subs, subs.length);
+
     let content = [];
+
     // content.push(<Grid item><EditOutlinedIcon /></Grid>)
 
     content.push(

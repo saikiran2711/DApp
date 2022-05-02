@@ -9,4 +9,6 @@ router.post("/signin", authController.signIn);
 
 router.post("/logout", authController.logOut);
 
+router.post("/log",authController.getLog);
+
 module.exports = router;

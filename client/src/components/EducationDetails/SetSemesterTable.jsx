@@ -41,7 +41,23 @@ function SetSemester(props) {
       result[i] = marks[subs[i]];
     }
     let r = await setSemDetails(query["sem"], account, result);
+    let roll=localStorage.getItem("roll");
     console.log(r);
+    let d=new Date()
+      fetch("http://localhost:9000/auth/signup", {
+        method: "post",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          rollNo: roll,
+          TransactionID:r.transactionHash,
+          logMsg:`Semester ${query['sem']} Update`,
+          Time:d.toDateString(),
+          GasUsed:`${r.gasUsed} GWei`,
+          ContractAdd:r.to
+        }),
+      })
     nav(`/educationalDetails/`);
   };
   const handle = (subject, value) => {
