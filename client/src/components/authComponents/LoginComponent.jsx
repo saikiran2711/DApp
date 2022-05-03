@@ -167,7 +167,7 @@ const LoginComponent = () => {
                 />
               </Grid>
               <Grid item sx={{ marginTop: "20px" }}>
-                <Typography>Forgot password ?</Typography>
+                {/* <Typography>Forgot password ?</Typography> */}
               </Grid>
               <Grid item>
                 <Box className={classes.leftCircle}></Box>

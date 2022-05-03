@@ -317,6 +317,21 @@ let [hash,setHash]=useContext(hashProvider)
       newForm: false,
       edit: false,
     });
+    const d=new Date()
+    fetch("http://localhost:9000/auth/signup", {
+        method: "post",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          rollNo: rollNo,
+          TransactionID:result.transactionHash,
+          logMsg:`Profile Update`,
+          Time:d.toDateString(),
+          GasUsed:`${result.gasUsed} GWei`,
+          ContractAdd:result.to
+        }),
+      })
   };
   useEffect(() => {
     fetchData();
@@ -441,6 +456,7 @@ let [hash,setHash]=useContext(hashProvider)
                                   color="fields"
                                   inputMode="text"
                                   fullWidth={true}
+                                  disabled
                                   // onChange={handleRoll}
                                   value={rollNo}
                                 />

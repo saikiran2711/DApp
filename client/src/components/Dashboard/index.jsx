@@ -53,7 +53,7 @@ const Index = (props) => {
               padding: "6px",
             }}
           >
-            <Typography variant="h4">Welcome, Mr.Kiran </Typography>
+            <Typography variant="h4">Welcome, User </Typography>
           </Box>
           <Grid
             container
