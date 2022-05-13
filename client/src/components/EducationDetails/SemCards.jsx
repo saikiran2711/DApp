@@ -18,7 +18,6 @@ function SemCards(props) {
       <Box sx={{ paddingBottom: 2, paddingTop: 5, paddingX: 5 }}>
         {props.sem}
       </Box>
-      {/* <Typography paddingTop={1} fontSize={12}> Get your result</Typography> */}
       <ArrowForward
         sx={{
           width: "inherit",

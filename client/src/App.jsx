@@ -25,18 +25,19 @@ function App() {
     <hashProvider.Provider value={hasher}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/admin" element={<AdminComponent />} />
-        <Route path="/admin/students" element={<ListRollNoWithSearchBar />} />
-        <Route path="/admin/students/view/:roll" element={<TempCompo />} />
         <Route path="/login" element={<LoginComponent />} />
-
         <Route path="/signup" element={<SignUpBox />} />
         <Route path="/dashboard" element={<Index />} />
+
+        <Route path="/admin" element={<AdminComponent />} />
+        <Route path="/admin/students" element={<ListRollNoWithSearchBar />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/students/view/:roll" element={<TempCompo />} />
+        
+        
         <Route path="/general" element={<GeneralDetails />} />
         <Route path="/logMessage" element={<ListLog />} />
 
-        <Route path="/account" element={<AccountPage />} />
         <Route path="/educationalDetails" element={<ListSemCards />} />
         <Route
           exact

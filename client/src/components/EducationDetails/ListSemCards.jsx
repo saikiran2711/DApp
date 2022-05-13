@@ -20,7 +20,7 @@ let [hash,setHash]=useContext(hashProvider);
           to={"/educationalDetails/" + (i + 1)}
           style={{ textDecoration: "none" }}
         >
-          <SemCards sem={"Semester - " + (i + 1)} id={i + 1} />
+          <SemCards {...props} sem={"Semester - " + (i + 1)} id={i + 1} />
         </Link>
       </Grid>
     );

@@ -18,7 +18,7 @@ function InterfaceCard(props) {
   console.log("Sem details : ", semDetails[0]);
   if(hash){
   if (semDetails[0] > "0") {
-    return <SemesterTable />;
+    return <SemesterTable {...props}/>;
   } else {
     return <SetSemester edit={false} />;
   }
