@@ -15,6 +15,8 @@ import ListSemCards from "./components/EducationDetails/ListSemCards";
 import LogoutComponent from "./components/authComponents/LogoutComponent";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 import ListLog from "./components/EducationDetails/Temp";
+import ListRollNoWithSearchBar from "./components/adminDashboard/ListRollNoWithSearchBar";
+import TempCompo from "./components/adminDashboard/TempCompo";
 
 export const hashProvider=React.createContext();
 function App() {
@@ -24,6 +26,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/admin" element={<AdminComponent />} />
+        <Route path="/admin/students" element={<ListRollNoWithSearchBar />} />
+        <Route path="/admin/students/view/:roll" element={<TempCompo />} />
         <Route path="/login" element={<LoginComponent />} />
 
         <Route path="/signup" element={<SignUpBox />} />
