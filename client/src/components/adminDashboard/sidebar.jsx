@@ -65,90 +65,43 @@ const AdminSideBar = () => {
                 <Typography sx={{ color: "white" }}>User Dashboard </Typography>{" "}
               </Grid>
             </Link>
-
-            {/* <Link style={{ textDecoration: "none" }} to="/general">
-              <Grid
-                item
-                sx={{
-                  marginTop: "2px",
-                  marginLeft: "10px",
-                  marginRight: "10px",
-                }}
-                className={`${
-                  url.match("/general")
-                    ? `${classes.sideBarItems}`
-                    : `${classes.notsideBarItems}`
-                }`}
-              >
-                <Typography sx={{ color: "white" }}>General Details</Typography>{" "}
-              </Grid>
-            </Link>
-            <Link style={{ textDecoration: "none" }} to="/educationalDetails">
-              <Grid
-                item
-                sx={{
-                  marginTop: "2px",
-                  marginLeft: "10px",
-                  marginRight: "10px",
-                }}
-                classNa
-                className={`${
-                  url.match("/educationalDetails")
-                    ? `${classes.sideBarItems}`
-                    : `${classes.notsideBarItems}`
-                }`}
-                me={classes.sideBarItems}
-              >
-                <Typography sx={{ color: "white" }}>
-                  Educational Details
-                </Typography>
-              </Grid>
-            </Link>
-            <Link style={{ textDecoration: "none" }} to="/account">
-              <Grid
-                item
-                sx={{
-                  marginTop: "2px",
-                  marginLeft: "10px",
-                  marginRight: "10px",
-                }}
-                classN
-                className={`${
-                  url.match("/account")
-                    ? `${classes.sideBarItems}`
-                    : `${classes.notsideBarItems}`
-                }`}
-                ame={classes.sideBarItems}
-              >
-                <Typography sx={{ color: "white" }}>Account</Typography>
-              </Grid>
-            </Link> */}
             <Link style={{ textDecoration: "none" }} to="/admin/students">
               <Grid
                 item
                 sx={{
-                  marginTop: "2px",
+                  marginTop: "8px",
                   marginLeft: "10px",
                   marginRight: "10px",
                 }}
-                className={classes.notsideBarItems}
+                className={`${
+                  url.match("/students")
+                    ? `${classes.sideBarItems}`
+                    : `${classes.notsideBarItems}`
+                }`}
               >
-                <Typography sx={{ color: "white" }}>Registered Users</Typography>
+                <Typography sx={{ color: "white" }}>
+                  Registered Users{" "}
+                </Typography>{" "}
               </Grid>
             </Link>
             <Link style={{ textDecoration: "none" }} to="/admin/addRecruiter">
               <Grid
                 item
                 sx={{
-                  marginTop: "2px",
+                  marginTop: "8px",
                   marginLeft: "10px",
                   marginRight: "10px",
                 }}
-                className={classes.notsideBarItems}
+                className={`${
+                  url.match("/addRecruiter")
+                    ? `${classes.sideBarItems}`
+                    : `${classes.notsideBarItems}`
+                }`}
               >
-                <Typography sx={{ color: "white" }}>Register Recruiter</Typography>
+                <Typography sx={{ color: "white" }}>Add Recruiter </Typography>{" "}
               </Grid>
             </Link>
+
             <Link style={{ textDecoration: "none" }} to="/logout">
               <Grid
                 item
