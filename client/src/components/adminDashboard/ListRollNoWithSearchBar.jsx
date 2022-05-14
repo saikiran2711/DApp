@@ -1,4 +1,4 @@
-import { TextField, Grid, Box, Checkbox } from "@mui/material";
+import { TextField, Grid, Box, Checkbox, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import AdminSideBar from "./sidebar";
@@ -11,7 +11,6 @@ function ListRollNoWithSearchBar(props) {
     fetch("http://localhost:9000/admin/users")
       .then((res) => {
         return res.json();
-        // console.log(res.data);
       })
       .then((data) => {
         const result = data.data;
@@ -53,6 +52,10 @@ function ListRollNoWithSearchBar(props) {
       setChecked(checked);
     }
   };
+  const sendMailClick=(e,roll)=>{
+    console.log("R",roll)
+
+  }
   const handleClickRoll = (roll) => {
     console.log("Rol is :", roll);
     localStorage.setItem("roll", roll);
@@ -72,7 +75,7 @@ function ListRollNoWithSearchBar(props) {
         <Grid item xs={8}>
           <Box
             margin={1}
-            onClick={() => handleClickRoll(rolldata[i]["rollNo"])}
+            
             padding={2}
             bgcolor="violet"
           >
@@ -82,7 +85,10 @@ function ListRollNoWithSearchBar(props) {
               bgColor="violet"
               onChange={onChangeChecked}
             />
-            {rolldata[i]["rollNo"]}
+            <Button onClick={() => handleClickRoll(rolldata[i]["rollNo"])} variant="text">{rolldata[i]["rollNo"]}</Button>
+            <Box bgcolor="red" display="inline-flex" justifyContent="end">
+            <Button variant="outlined" onClick={(e)=>sendMailClick(e,rolldata[i])} sx={{textTransform:"capitalize"}} >Send Email</Button>
+            </Box>
           </Box>
         </Grid>
       );

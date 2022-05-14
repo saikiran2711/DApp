@@ -81,6 +81,7 @@ const AdminComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(email, password);
+    localStorage.setItem('admin',email);
     fetch("http://localhost:9000/admin/signin", {
       method: "post",
       headers: {

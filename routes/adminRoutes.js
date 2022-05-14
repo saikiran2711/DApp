@@ -7,4 +7,5 @@ router.post("/signin", adminController.adminLogin);
 
 router.get("/users", adminController.getUsers);
 
+router.post("/addRecruiter",adminController.addRecruiters);
 module.exports = router;

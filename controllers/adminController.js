@@ -43,3 +43,23 @@ exports.getUsers = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.addRecruiters=(req,res,next)=>{
+  console.log(req.body.email);
+  console.log(req.body.password);
+  const email=req.body.email;
+  const password=req.body.password;
+  const adminEmail=req.body.adminEmail;
+  User.findOne({email:adminEmail}).then((user)=>{
+    if(user){
+      let recruiter=user.recruiters
+      let i={}
+      i['recruiterEmail']=email;
+      i['recruiterPassword']=password;
+      recruiter.push(i)
+      user.recruiters=recruiter;
+      user.save();
+      return res.status(201).json({ message: "Admin added" });
+    }
+  })
+}

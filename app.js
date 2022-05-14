@@ -23,11 +23,10 @@ app.use("/admin", adminRoutes);
 app.use((err, req, res, next) => {
   res.status(500).json({ err: err.message });
 });
-
+//    "mongodb+srv://admin:SZU4VZBeqlx7uEaA@cluster0.w3g9c.mongodb.net/DApp?retryWrites=true&w=majority"
 mongoose
   .connect(
-    "mongodb+srv://admin:SZU4VZBeqlx7uEaA@cluster0.w3g9c.mongodb.net/DApp?retryWrites=true&w=majority"
-  )
+    "mongodb+srv://sampath:DB123@cluster0.b1kws.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"  )
   .then((response) => {
     console.log("Connected to mongodb..", response);
     app.listen(9000, () => {

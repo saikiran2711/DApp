@@ -101,7 +101,23 @@ const AdminSideBar = () => {
                 <Typography sx={{ color: "white" }}>Add Recruiter </Typography>{" "}
               </Grid>
             </Link>
-
+            <Link style={{ textDecoration: "none" }} to="/admin/manageRecruiter">
+              <Grid
+                item
+                sx={{
+                  marginTop: "8px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
+                className={`${
+                  url.match("/manageRecruiter")
+                    ? `${classes.sideBarItems}`
+                    : `${classes.notsideBarItems}`
+                }`}
+              >
+                <Typography sx={{ color: "white" }}>Manage Recruiter </Typography>{" "}
+              </Grid>
+            </Link>
             <Link style={{ textDecoration: "none" }} to="/logout">
               <Grid
                 item

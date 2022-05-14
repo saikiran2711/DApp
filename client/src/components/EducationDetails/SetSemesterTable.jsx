@@ -67,8 +67,8 @@ function SetSemester(props) {
       .then((data) => {
         console.log("Data is : ", data);
         props.admin
-          ? nav(`/admin/educationDetails/${query["sem"]}`)
-          : nav(`/educationalDetails/${query["sem"]}`);
+          ? nav(`/admin/students/view/semester`)
+          : nav(`/educationalDetails/`);
       })
       .catch((err) => {
         console.log("Error is ", err);
