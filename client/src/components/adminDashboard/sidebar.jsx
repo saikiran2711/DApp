@@ -123,6 +123,32 @@ const AdminSideBar = () => {
                 <Typography sx={{ color: "white" }}>Account</Typography>
               </Grid>
             </Link> */}
+            <Link style={{ textDecoration: "none" }} to="/admin/students">
+              <Grid
+                item
+                sx={{
+                  marginTop: "2px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
+                className={classes.notsideBarItems}
+              >
+                <Typography sx={{ color: "white" }}>Registered Users</Typography>
+              </Grid>
+            </Link>
+            <Link style={{ textDecoration: "none" }} to="/admin/addRecruiter">
+              <Grid
+                item
+                sx={{
+                  marginTop: "2px",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
+                className={classes.notsideBarItems}
+              >
+                <Typography sx={{ color: "white" }}>Register Recruiter</Typography>
+              </Grid>
+            </Link>
             <Link style={{ textDecoration: "none" }} to="/logout">
               <Grid
                 item

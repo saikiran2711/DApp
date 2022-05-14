@@ -1,6 +1,7 @@
 import { TextField, Grid, Box, Checkbox } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import AdminSideBar from "./sidebar";
 function ListRollNoWithSearchBar(props) {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const mockData = [
@@ -12,7 +13,7 @@ function ListRollNoWithSearchBar(props) {
   ];
   const [checked, setChecked] = useState([]);
   let [search, setSearch] = useState("");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const onchange = (e) => {
     setSearch(e.target.value);
   };
@@ -25,9 +26,9 @@ function ListRollNoWithSearchBar(props) {
       setChecked(checked);
     }
   };
-  const handleClickRoll=(roll)=>{
-      navigate('/admin/students/view/'+roll)
-  }
+  const handleClickRoll = (roll) => {
+    navigate("/admin/students/view/" + roll);
+  };
   console.log(search);
   console.log(checked);
 
@@ -35,8 +36,13 @@ function ListRollNoWithSearchBar(props) {
   for (let i = 0; i < mockData.length; i++) {
     if (search.length == 0 || mockData[i].includes(search))
       content.push(
-        <Grid item xs={10}>
-          <Box margin={1} onClick={()=>handleClickRoll(mockData[i])} padding={2} bgcolor="violet">
+        <Grid item xs={8}>
+          <Box
+            margin={1}
+            onClick={() => handleClickRoll(mockData[i])}
+            padding={2}
+            bgcolor="violet"
+          >
             <Checkbox
               {...label}
               value={mockData[i]}
@@ -49,10 +55,15 @@ function ListRollNoWithSearchBar(props) {
       );
   }
   return (
-    <>
-      <TextField onChange={onchange} />
-      <Grid container>{content}</Grid>
-    </>
+    <Grid container>
+      <Grid item>
+        <AdminSideBar />
+      </Grid>
+      <Grid item xs={8} overflow="scroll">
+        <TextField onChange={onchange} />
+        <Grid container>{content}</Grid>
+      </Grid>
+    </Grid>
   );
 }
 export default ListRollNoWithSearchBar;

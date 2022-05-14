@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ClassNames } from "@emotion/react";
 import { useParams } from "react-router";
 import { StartRounded } from "@mui/icons-material";
+import AdminSideBar from "../adminDashboard/sidebar";
 function SetSemester(props) {
   let [subs, setSubs] = useState([]);
   let [marks, setMarks] = useState({});
@@ -58,7 +59,7 @@ function SetSemester(props) {
           ContractAdd:r.to
         }),
       })
-    nav(`/educationalDetails/`);
+   (props.admin)?nav(`/admin/educationDetails/${query['sem']}`): nav(`/educationalDetails/${query['sem']}`);
   };
   const handle = (subject, value) => {
     console.log(subject);
@@ -122,7 +123,7 @@ function SetSemester(props) {
   return subs.length > 0 ? (
     <Grid container>
       <Grid item xs={4} sx={{ position: "fixed" }}>
-        <SideBar />
+       {(props.admin)?<AdminSideBar />:<SideBar />} 
       </Grid>
       <Grid item sx={{ position: "relative",left:'36rem', top:'1rem' ,fontSize:18, fontWeight:'bold'}}>
         Enter marks of Semester - {query["sem"]} : 

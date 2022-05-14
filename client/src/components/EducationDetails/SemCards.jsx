@@ -8,7 +8,6 @@ function SemCards(props) {
       sx={{
         width: "fit-content",
         margin: 5,
-
         backgroundColor: "blue",
         color: "white",
         borderRadius: 5,

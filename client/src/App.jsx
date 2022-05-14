@@ -5,7 +5,6 @@ import SignUpBox from "./components/authComponents/SignUpComponent";
 
 import Profile from "./components/Dashboard/Profile";
 import Index from "./components/Dashboard/index";
-import AccountPage from "./components/Dashboard/account";
 import LandingPage from "./components/landingPage";
 import AdminComponent from "./components/authComponents/adminComponent";
 import GeneralDetails from "./components/Dashboard/generalDetails";
@@ -16,7 +15,7 @@ import LogoutComponent from "./components/authComponents/LogoutComponent";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 import ListLog from "./components/EducationDetails/Temp";
 import ListRollNoWithSearchBar from "./components/adminDashboard/ListRollNoWithSearchBar";
-import TempCompo from "./components/adminDashboard/TempCompo";
+import DetailsInterface from "./components/adminDashboard/DetailsInterface";
 
 export const hashProvider=React.createContext();
 function App() {
@@ -32,8 +31,9 @@ function App() {
         <Route path="/admin" element={<AdminComponent />} />
         <Route path="/admin/students" element={<ListRollNoWithSearchBar />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/students/view/:roll" element={<TempCompo />} />
-        
+        <Route path="/admin/students/view/:roll" element={<DetailsInterface />} />
+        <Route path="/admin/students/view/semester" element={<ListSemCards admin={true}/>} />
+        <Route path="/admin/educationDetails/:sem" element={<InterfaceCard admin={true}/>} />
         
         <Route path="/general" element={<GeneralDetails />} />
         <Route path="/logMessage" element={<ListLog />} />

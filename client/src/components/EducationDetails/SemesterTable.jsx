@@ -3,6 +3,7 @@ import { Card, Grid, IconButton, Paper } from "@mui/material";
 import { grid } from "@mui/system";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import AdminSideBar from "../adminDashboard/sidebar";
 import SideBar from "../Dashboard/sidebar";
 import { getSemDetails, getSemSubjects } from "./getHandler";
 
@@ -105,7 +106,7 @@ function SemesterTable(props) {
     ) : (
       <Grid container>
         <Grid item xs={4}>
-          <SideBar />
+        {(props.admin)?<AdminSideBar />:<SideBar />}  
         </Grid>
         <Grid item xs={8} marginTop={2}>
           <Grid container>
