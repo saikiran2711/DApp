@@ -10,18 +10,26 @@ function DetailsInterface(props) {
   console.log(query["roll"]);
   return (
     <Grid container>
-        <Grid item>
-      <AdminSideBar />
+      <Grid item>
+        <AdminSideBar />
       </Grid>
       <Grid item xs={8}>
         <Grid container>
-          <Grid item>
-            <SemCards sem={"Profile Details"} />
-          </Grid>
-          <Link to="/admin/students/view/semester" style={{ textDecoration: "none" }} >
-          <Grid item>
-            <SemCards sem={"Semester Details"} />
-          </Grid>
+          <Link
+            to="/admin/students/view/general"
+            style={{ textDecoration: "none" }}
+          >
+            <Grid item>
+              <SemCards sem={"Profile Details"} />
+            </Grid>
+          </Link>
+          <Link
+            to="/admin/students/view/semester"
+            style={{ textDecoration: "none" }}
+          >
+            <Grid item>
+              <SemCards sem={"Semester Details"} />
+            </Grid>
           </Link>
         </Grid>
       </Grid>

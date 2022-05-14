@@ -21,6 +21,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { hashProvider } from "../../App";
 import { Navigate } from "react-router-dom";
+import AdminSideBar from "../adminDashboard/sidebar";
 let instance;
 const useStyles = makeStyles({
   gridItems: {
@@ -29,9 +30,9 @@ const useStyles = makeStyles({
     // margin: "2px",
   },
 });
-const GeneralDetails = () => {
+const GeneralDetails = (props) => {
   const classes = useStyles();
-let [hash,setHash]=useContext(hashProvider)
+  let [hash, setHash] = useContext(hashProvider);
   const [formData, setformData] = useState({
     name: "",
     email: "",
@@ -49,6 +50,7 @@ let [hash,setHash]=useContext(hashProvider)
     edit: false,
     load: true,
     newForm: false,
+    adminForm: !props.admin,
   });
 
   let [phErr, setPhErr] = useState("");
@@ -317,33 +319,30 @@ let [hash,setHash]=useContext(hashProvider)
       newForm: false,
       edit: false,
     });
-    const d=new Date()
+    const d = new Date();
     fetch("http://localhost:9000/auth/signup", {
-        method: "post",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          rollNo: rollNo,
-          TransactionID:result.transactionHash,
-          logMsg:`Profile Update`,
-          Time:d.toDateString(),
-          GasUsed:`${result.gasUsed} GWei`,
-          ContractAdd:result.to
-        }),
-      })
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        rollNo: rollNo,
+        TransactionID: result.transactionHash,
+        logMsg: `Profile Update`,
+        Time: d.toDateString(),
+        GasUsed: `${result.gasUsed} GWei`,
+        ContractAdd: result.to,
+      }),
+    });
   };
   useEffect(() => {
     fetchData();
   }, []);
 
-  return (
-    (hash)?
+  return hash || props.admin ? (
     <>
       <Grid container>
-        <Grid item>
-          <SideBar />
-        </Grid>
+        <Grid item>{props.admin ? <AdminSideBar /> : <SideBar />}</Grid>
         {formData.load ? (
           <Grid
             alignSelf="center"
@@ -355,737 +354,720 @@ let [hash,setHash]=useContext(hashProvider)
           >
             <CircularProgress color="pink" />
           </Grid>
-        ) : (
-          <>
-            {formData.newForm || formData.edit ? (
+        ) : (formData.newForm && !props.admin) || formData.edit ? (
+          <Grid
+            item
+            sx={{
+              flex: "1",
+              height: "100vh",
+              overflowY: "scroll",
+              overflowX: "hidden",
+            }}
+          >
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              // alignContent="center"
+              sx={{ marginLeft: "20px" }}
+            >
               <Grid
                 item
                 sx={{
-                  flex: "1",
-                  height: "100vh",
-                  overflowY: "scroll",
-                  overflowX: "hidden",
+                  padding: "10px",
+                  marginTop: "40px",
                 }}
               >
-                <Grid
-                  container
-                  direction="column"
-                  justifyContent="center"
-                  // alignContent="center"
-                  sx={{ marginLeft: "20px" }}
+                {formData.edit ? (
+                  <Typography variant="h4">Welcome user,</Typography>
+                ) : (
+                  <Typography sx={{}} variant="h4">
+                    Hello, I guess you are new here. Please fill up the below
+                    form.
+                  </Typography>
+                )}
+              </Grid>
+              <Grid item sx={{ marginTop: "20px" }}>
+                <Card
+                  sx={
+                    {
+                      // height: "1000px",
+                      // marginBottom: "30px",
+                    }
+                  }
                 >
-                  <Grid
-                    item
-                    sx={{
-                      padding: "10px",
-                      marginTop: "40px",
-                    }}
-                  >
-                    {formData.edit ? (
-                      <Typography variant="h4">Welcome user,</Typography>
-                    ) : (
-                      <Typography sx={{}} variant="h4">
-                        Hello, I guess you are new here. Please fill up the
-                        below form.
-                      </Typography>
-                    )}
-                  </Grid>
-                  <Grid item sx={{ marginTop: "20px" }}>
-                    <Card
-                      sx={
-                        {
-                          // height: "1000px",
-                          // marginBottom: "30px",
-                        }
-                      }
+                  <Grid container direction="column">
+                    <Grid item alignSelf="center" sx={{ padding: "10px" }}>
+                      {formData.edit ? (
+                        <Typography variant="h4">Edit Your Details</Typography>
+                      ) : (
+                        <Typography variant="h4">Fill Your Details</Typography>
+                      )}
+                    </Grid>
+
+                    <Box
+                      sx={{
+                        // backgroundColor: "pink",
+                        // marginLeft: "20px",
+                        marginTop: "15px",
+                        // width: "500px",
+                      }}
                     >
-                      <Grid container direction="column">
-                        <Grid item alignSelf="center" sx={{ padding: "10px" }}>
-                          {formData.edit ? (
-                            <Typography variant="h4">
-                              Edit Your Details
-                            </Typography>
-                          ) : (
-                            <Typography variant="h4">
-                              Fill Your Details
-                            </Typography>
-                          )}
+                      <Box sx={{ margin: "20px" }}>
+                        <Typography variant="h5">Profile:</Typography>
+
+                        <Grid container>
+                          <Grid item md={2} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px", fontWeight: "bold" }}
+                              label="Name"
+                              color="fields"
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handleName}
+                              value={formData.name}
+                            />
+                          </Grid>
+                          <Grid item md={4} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="E-mail "
+                              error={emailErr.length > 0 ? true : false}
+                              helperText={emailErr}
+                              color="fields"
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handleEmail}
+                              defaultValue={formData.email}
+                              // value={formData.email}
+                            />
+                          </Grid>
+                          <Grid item md={4} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="Roll Number"
+                              color="fields"
+                              inputMode="text"
+                              fullWidth={true}
+                              disabled
+                              value={rollNo}
+                            />
+                          </Grid>
+                          <Grid item md={3} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="Phone"
+                              error={phErr.length > 0 ? true : false}
+                              helperText={phErr}
+                              color="fields"
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handlePhone}
+                              value={formData.phone}
+                            />
+                          </Grid>
+                          <Grid item md={4} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="Aadhar Number"
+                              color="fields"
+                              error={aadharErr.length > 0 ? true : false}
+                              helperText={aadharErr}
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handleAadhar}
+                              value={formData.aadharNumber}
+                            />
+                          </Grid>
+                          <Grid item md={3} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="Blood Group"
+                              color="fields"
+                              inputMode="text"
+                              error={bloodErr.length > 0 ? true : false}
+                              helperText={bloodErr}
+                              fullWidth={true}
+                              onChange={handleBloodGrp}
+                              value={formData.bloodgrp}
+                            />
+                          </Grid>
+                          <Grid item md={4} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="Address"
+                              color="fields"
+                              maxRows={3}
+                              multiline="true"
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handleAddress}
+                              value={formData.addrss}
+                            />
+                          </Grid>
                         </Grid>
-
-                        <Box
-                          sx={{
-                            // backgroundColor: "pink",
-                            // marginLeft: "20px",
-                            marginTop: "15px",
-                            // width: "500px",
-                          }}
-                        >
-                          <Box sx={{ margin: "20px" }}>
-                            <Typography variant="h5">Profile:</Typography>
-
-                            <Grid container>
-                              <Grid item md={2} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px", fontWeight: "bold" }}
-                                  label="Name"
-                                  color="fields"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handleName}
-                                  value={formData.name}
-                                />
-                              </Grid>
-                              <Grid item md={4} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="E-mail "
-                                  error={emailErr.length > 0 ? true : false}
-                                  helperText={emailErr}
-                                  color="fields"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handleEmail}
-                                  defaultValue={formData.email}
-                                  // value={formData.email}
-                                />
-                              </Grid>
-                              <Grid item md={4} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="Roll Number"
-                                  color="fields"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  disabled
-                                  value={rollNo}
-                                />
-                              </Grid>
-                              <Grid item md={3} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="Phone"
-                                  error={phErr.length > 0 ? true : false}
-                                  helperText={phErr}
-                                  color="fields"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handlePhone}
-                                  value={formData.phone}
-                                />
-                              </Grid>
-                              <Grid item md={4} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="Aadhar Number"
-                                  color="fields"
-                                  error={aadharErr.length > 0 ? true : false}
-                                  helperText={aadharErr}
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handleAadhar}
-                                  value={formData.aadharNumber}
-                                />
-                              </Grid>
-                              <Grid item md={3} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="Blood Group"
-                                  color="fields"
-                                  inputMode="text"
-                                  error={bloodErr.length > 0 ? true : false}
-                                  helperText={bloodErr}
-                                  fullWidth={true}
-                                  onChange={handleBloodGrp}
-                                  value={formData.bloodgrp}
-                                />
-                              </Grid>
-                              <Grid item md={4} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="Address"
-                                  color="fields"
-                                  maxRows={3}
-                                  multiline="true"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handleAddress}
-                                  value={formData.addrss}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Box>
-                          <Box sx={{ margin: "20px" }}>
-                            <Typography variant="h5">Relation:</Typography>{" "}
-                            <Grid container>
-                              <Grid item md={4} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="Father's Name"
-                                  color="fields"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handleFather}
-                                  value={formData.fatherName}
-                                />
-                              </Grid>
-                              <Grid item md={4} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="Mother's Name "
-                                  color="fields"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handleMother}
-                                  value={formData.motherName}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Box>
-                          <Box sx={{ margin: "20px" }}>
-                            <Typography variant="h5">Address:</Typography>{" "}
-                            <Grid container>
-                              <Grid item md={3} sx={{ margin: "10px" }}>
-                                <FormControl fullWidth>
-                                  <InputLabel
-                                    color="fields"
-                                    id="demo-simple-select-label"
-                                  >
-                                    Country
-                                  </InputLabel>
-
-                                  <Select
-                                    fullWidth={true}
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={formData.country}
-                                    color="fields"
-                                    label="Country"
-                                    // placeholder="Age"
-                                    onChange={handleCountry}
-                                  >
-                                    <MenuItem value="India" name="India">
-                                      India
-                                    </MenuItem>
-                                    <MenuItem value="USA" name="USA">
-                                      USA
-                                    </MenuItem>
-                                    <MenuItem value="China" name="China">
-                                      China
-                                    </MenuItem>
-                                  </Select>
-                                </FormControl>
-                              </Grid>
-                              <Grid item md={4} sx={{ margin: "10px" }}>
-                                <FormControl fullWidth>
-                                  <InputLabel
-                                    color="fields"
-                                    id="demo-simple-select-label"
-                                  >
-                                    State
-                                  </InputLabel>
-
-                                  <Select
-                                    fullWidth={true}
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={formData.state}
-                                    color="fields"
-                                    label="State"
-                                    // placeholder="Age"
-                                    onChange={handleState}
-                                  >
-                                    <MenuItem value="Telengana">
-                                      Telengana
-                                    </MenuItem>
-                                    <MenuItem value="Delhi">Delhi</MenuItem>
-                                    <MenuItem value="Mumbai">Mumbai</MenuItem>
-                                  </Select>
-                                </FormControl>
-                              </Grid>
-                              <Grid item md={4} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="Pin Code"
-                                  error={pinErr.length > 0 ? true : false}
-                                  helperText={pinErr}
-                                  color="fields"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handlePin}
-                                  value={formData.pincode}
-                                />
-                              </Grid>
-                              <Grid item md={3} sx={{ margin: "10px" }}>
-                                <TextField
-                                  sx={{ fontSize: "20px" }}
-                                  label="City"
-                                  color="fields"
-                                  inputMode="text"
-                                  fullWidth={true}
-                                  onChange={handleCity}
-                                  value={formData.city}
-                                />
-                              </Grid>
-                            </Grid>
-                          </Box>
-                        </Box>
-                        <Grid item alignSelf="center" sx={{ margin: "15px" }}>
-                          <Button onClick={handleSubmit} variant="contained">
-                            Submit
-                          </Button>
+                      </Box>
+                      <Box sx={{ margin: "20px" }}>
+                        <Typography variant="h5">Relation:</Typography>{" "}
+                        <Grid container>
+                          <Grid item md={4} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="Father's Name"
+                              color="fields"
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handleFather}
+                              value={formData.fatherName}
+                            />
+                          </Grid>
+                          <Grid item md={4} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="Mother's Name "
+                              color="fields"
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handleMother}
+                              value={formData.motherName}
+                            />
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    </Card>
+                      </Box>
+                      <Box sx={{ margin: "20px" }}>
+                        <Typography variant="h5">Address:</Typography>{" "}
+                        <Grid container>
+                          <Grid item md={3} sx={{ margin: "10px" }}>
+                            <FormControl fullWidth>
+                              <InputLabel
+                                color="fields"
+                                id="demo-simple-select-label"
+                              >
+                                Country
+                              </InputLabel>
+
+                              <Select
+                                fullWidth={true}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={formData.country}
+                                color="fields"
+                                label="Country"
+                                // placeholder="Age"
+                                onChange={handleCountry}
+                              >
+                                <MenuItem value="India" name="India">
+                                  India
+                                </MenuItem>
+                                <MenuItem value="USA" name="USA">
+                                  USA
+                                </MenuItem>
+                                <MenuItem value="China" name="China">
+                                  China
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          </Grid>
+                          <Grid item md={4} sx={{ margin: "10px" }}>
+                            <FormControl fullWidth>
+                              <InputLabel
+                                color="fields"
+                                id="demo-simple-select-label"
+                              >
+                                State
+                              </InputLabel>
+
+                              <Select
+                                fullWidth={true}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={formData.state}
+                                color="fields"
+                                label="State"
+                                // placeholder="Age"
+                                onChange={handleState}
+                              >
+                                <MenuItem value="Telengana">Telengana</MenuItem>
+                                <MenuItem value="Delhi">Delhi</MenuItem>
+                                <MenuItem value="Mumbai">Mumbai</MenuItem>
+                              </Select>
+                            </FormControl>
+                          </Grid>
+                          <Grid item md={4} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="Pin Code"
+                              error={pinErr.length > 0 ? true : false}
+                              helperText={pinErr}
+                              color="fields"
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handlePin}
+                              value={formData.pincode}
+                            />
+                          </Grid>
+                          <Grid item md={3} sx={{ margin: "10px" }}>
+                            <TextField
+                              sx={{ fontSize: "20px" }}
+                              label="City"
+                              color="fields"
+                              inputMode="text"
+                              fullWidth={true}
+                              onChange={handleCity}
+                              value={formData.city}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    </Box>
+                    <Grid item alignSelf="center" sx={{ margin: "15px" }}>
+                      <Button onClick={handleSubmit} variant="contained">
+                        Submit
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
+        ) : formData.newForm && props.admin ? (
+          <h1>Not entered....</h1>
+        ) : (
+          <Grid
+            item
+            sx={{
+              flex: "1",
+
+              height: "100vh",
+              overflowY: "scroll",
+              overflowX: "hidden",
+            }}
+          >
+            <Box mx={2} my={5}>
+              <Typography variant="h4">
+                {props.admin
+                  ? "Below are your general details of " +
+                    localStorage.getItem("roll")
+                  : " Welcome user, below are your general details."}
+              </Typography>
+            </Box>
+            <Box marginTop={6} marginLeft="150px" p={3}>
+              <Card
+                elevation={5}
+                sx={{
+                  borderRadius: 5,
+                  // backgroundColor: "#e25474",
+
+                  boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+                  transition: "0.5s",
+                  width: "900px",
+                  marginBottom: "10px",
+                  backgroundColor: "#3f3f47",
+                  padding: "20px",
+                }}
+              >
+                <Grid container direction="column">
+                  {props.admin ? (
+                    <Box
+                      sx={{
+                        position: "sticky",
+                        right: "82rem",
+                        display: "inline-flex",
+                        justifyContent: "right",
+                      }}
+                    >
+                      <IconButton onClick={handleEdit}>
+                        <EditOutlinedIcon fontSize="large" color="pink" />
+                      </IconButton>
+                    </Box>
+                  ) : (
+                    ""
+                  )}
+
+                  <Grid item sx={{ padding: "8px" }}>
+                    <Typography variant="h5" color="white" fontWeight="bold">
+                      Personal Details :
+                    </Typography>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item md={3} className={classes.gridItems}>
+                      <Typography alignSelf="center" variant="h6">
+                        Name
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      width="20px"
+                      className={classes.gridItems}
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      item
+                      alignSelf="center"
+                      className={classes.gridItems}
+                      md={3}
+                    >
+                      <Typography variant="h6">{formData.name}</Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      md={3}
+                      className={classes.gridItems}
+                      alignSelf="center"
+                    >
+                      <Typography variant="h6">Email</Typography>
+                    </Grid>
+                    <Grid
+                      width="20px"
+                      className={classes.gridItems}
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">{formData.email}</Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">Roll no</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">{rollNo}</Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">Aadhar number</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">
+                        {formData.aadharNumber}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6"> Blood grp</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">{formData.bloodgrp}</Typography>
+                    </Grid>
+                  </Grid>
+
+                  {/* <Box> */}
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">Contact no</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">{formData.phone}</Typography>
+                    </Grid>
+                  </Grid>
+                  {/* </Box> */}
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="flex-start"
+                      md={3}
+                    >
+                      <Typography variant="h6">Address</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      alignSelf="flex-start"
+                      className={classes.gridItems}
+                      width="20px"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      sx={{ wordWrap: "break-word" }}
+                      item
+                      className={classes.gridItems}
+                      alignSelf="flex-start"
+                      md={6}
+                    >
+                      <Typography flexWrap="wrap" variant="h6">
+                        {formData.addrss}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid item sx={{ padding: "8px", marginTop: "20px" }}>
+                    <Typography variant="h5" color="white" fontWeight="bold">
+                      Relational Details :
+                    </Typography>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid item className={classes.gridItems} md={3}>
+                      <Typography alignSelf="center" variant="h6">
+                        Mother's Name
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">
+                        {formData.motherName}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">Father's Name</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">
+                        {formData.fatherName}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid item sx={{ padding: "8px", marginTop: "20px" }}>
+                    <Typography variant="h5" color="white" fontWeight="bold">
+                      Address Details :
+                    </Typography>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">Country</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">{formData.country}</Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">State</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">{formData.state}</Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">Pin code</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">{formData.pincode}</Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={3}
+                    >
+                      <Typography variant="h6">City</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      width="20px"
+                      alignSelf="center"
+                    >
+                      :
+                    </Grid>
+
+                    <Grid
+                      item
+                      className={classes.gridItems}
+                      alignSelf="center"
+                      md={2}
+                    >
+                      <Typography variant="h6">{formData.city}</Typography>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            ) : (
-              <Grid
-                item
-                sx={{
-                  flex: "1",
-
-                  height: "100vh",
-                  overflowY: "scroll",
-                  overflowX: "hidden",
-                }}
-              >
-                <Box mx={2} my={5}>
-                  <Typography variant="h4">
-                    Welcome user, below are your general details.
-                  </Typography>
-                </Box>
-                <Box marginTop={6} marginLeft="150px" p={3}>
-                  <Card
-                    elevation={5}
-                    sx={{
-                      borderRadius: 5,
-                      // backgroundColor: "#e25474",
-
-                      boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
-                      transition: "0.5s",
-                      width: "900px",
-                      marginBottom: "10px",
-                      backgroundColor: "#3f3f47",
-                      padding: "20px",
-                    }}
-                  >
-                    <Grid container direction="column">
-                      <Box
-                        sx={{
-                          position: "sticky",
-                          right: "82rem",
-                          display: "inline-flex",
-                          justifyContent: "right",
-                        }}
-                      >
-                        <IconButton onClick={handleEdit}>
-                          <EditOutlinedIcon fontSize="large" color="pink" />
-                        </IconButton>
-                      </Box>
-                      <Grid item sx={{ padding: "8px" }}>
-                        <Typography
-                          variant="h5"
-                          color="white"
-                          fontWeight="bold"
-                        >
-                          Personal Details :
-                        </Typography>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid item md={3} className={classes.gridItems}>
-                          <Typography alignSelf="center" variant="h6">
-                            Name
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          width="20px"
-                          className={classes.gridItems}
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          item
-                          alignSelf="center"
-                          className={classes.gridItems}
-                          md={3}
-                        >
-                          <Typography variant="h6">{formData.name}</Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          md={3}
-                          className={classes.gridItems}
-                          alignSelf="center"
-                        >
-                          <Typography variant="h6">Email</Typography>
-                        </Grid>
-                        <Grid
-                          width="20px"
-                          className={classes.gridItems}
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">{formData.email}</Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">Roll no</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">{rollNo}</Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">Aadhar number</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">
-                            {formData.aadharNumber}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6"> Blood grp</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">
-                            {formData.bloodgrp}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      {/* <Box> */}
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">Contact no</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">{formData.phone}</Typography>
-                        </Grid>
-                      </Grid>
-                      {/* </Box> */}
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="flex-start"
-                          md={3}
-                        >
-                          <Typography variant="h6">Address</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          alignSelf="flex-start"
-                          className={classes.gridItems}
-                          width="20px"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          sx={{ wordWrap: "break-word" }}
-                          item
-                          className={classes.gridItems}
-                          alignSelf="flex-start"
-                          md={6}
-                        >
-                          <Typography flexWrap="wrap" variant="h6">
-                            {formData.addrss}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid item sx={{ padding: "8px", marginTop: "20px" }}>
-                        <Typography
-                          variant="h5"
-                          color="white"
-                          fontWeight="bold"
-                        >
-                          Relational Details :
-                        </Typography>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid item className={classes.gridItems} md={3}>
-                          <Typography alignSelf="center" variant="h6">
-                            Mother's Name
-                          </Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">
-                            {formData.motherName}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">Father's Name</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">
-                            {formData.fatherName}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid item sx={{ padding: "8px", marginTop: "20px" }}>
-                        <Typography
-                          variant="h5"
-                          color="white"
-                          fontWeight="bold"
-                        >
-                          Address Details :
-                        </Typography>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">Country</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">
-                            {formData.country}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">State</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">{formData.state}</Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">Pin code</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">
-                            {formData.pincode}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={3}
-                        >
-                          <Typography variant="h6">City</Typography>
-                        </Grid>
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          width="20px"
-                          alignSelf="center"
-                        >
-                          :
-                        </Grid>
-
-                        <Grid
-                          item
-                          className={classes.gridItems}
-                          alignSelf="center"
-                          md={2}
-                        >
-                          <Typography variant="h6">{formData.city}</Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Card>
-                </Box>
-              </Grid>
-            )}
-          </>
+              </Card>
+            </Box>
+          </Grid>
         )}
       </Grid>
     </>
-    :<Navigate to={"/login"} />
+  ) : (
+    <Navigate to={"/login"} />
   );
 };
 

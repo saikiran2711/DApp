@@ -17,9 +17,9 @@ import ListLog from "./components/EducationDetails/Temp";
 import ListRollNoWithSearchBar from "./components/adminDashboard/ListRollNoWithSearchBar";
 import DetailsInterface from "./components/adminDashboard/DetailsInterface";
 
-export const hashProvider=React.createContext();
+export const hashProvider = React.createContext();
 function App() {
-  let hasher=useState(false);
+  let hasher = useState(false);
   return (
     <hashProvider.Provider value={hasher}>
       <Routes>
@@ -30,11 +30,25 @@ function App() {
 
         <Route path="/admin" element={<AdminComponent />} />
         <Route path="/admin/students" element={<ListRollNoWithSearchBar />} />
+        <Route
+          path="admin/students/view/general"
+          element={<GeneralDetails admin={true} />}
+        />
+
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/students/view/:roll" element={<DetailsInterface />} />
-        <Route path="/admin/students/view/semester" element={<ListSemCards admin={true}/>} />
-        <Route path="/admin/educationDetails/:sem" element={<InterfaceCard admin={true}/>} />
-        
+        <Route
+          path="/admin/students/view/:roll"
+          element={<DetailsInterface />}
+        />
+        <Route
+          path="/admin/students/view/semester"
+          element={<ListSemCards admin={true} />}
+        />
+        <Route
+          path="/admin/educationDetails/:sem"
+          element={<InterfaceCard admin={true} />}
+        />
+
         <Route path="/general" element={<GeneralDetails />} />
         <Route path="/logMessage" element={<ListLog />} />
 
@@ -42,7 +56,7 @@ function App() {
         <Route
           exact
           path={"/educationalDetails/:sem"}
-          element={<InterfaceCard />}
+          element={<InterfaceCard admin={false} />}
         />
         <Route path="/profile" element={<Profile />} />
         <Route path="/logout" element={<LogoutComponent />} />

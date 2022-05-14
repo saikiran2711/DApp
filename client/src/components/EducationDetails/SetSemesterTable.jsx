@@ -17,6 +17,7 @@ function SetSemester(props) {
   console.log("Before Calling", subs);
   let result = [];
   const starter = async () => {
+    console.log("Props are : ", props);
     console.log(props.edit);
     if (props.edit == true) {
       let mar = await getSemDetails(query["sem"], account);
@@ -42,24 +43,38 @@ function SetSemester(props) {
       result[i] = marks[subs[i]];
     }
     let r = await setSemDetails(query["sem"], account, result);
-    let roll=localStorage.getItem("roll");
+    let roll = localStorage.getItem("roll");
     console.log(r);
-    let d=new Date()
-      fetch("http://localhost:9000/auth/signup", {
-        method: "post",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          rollNo: roll,
-          TransactionID:r.transactionHash,
-          logMsg:`Semester ${query['sem']} Update`,
-          Time:d.toDateString(),
-          GasUsed:`${r.gasUsed} GWei`,
-          ContractAdd:r.to
-        }),
+    let d = new Date();
+    fetch("http://localhost:9000/auth/setSemData", {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        rollNo: roll,
+        TransactionID: r.transactionHash,
+        logMsg: `Semester ${query["sem"]} Update`,
+        Time: d.toDateString(),
+        GasUsed: `${r.gasUsed} GWei`,
+        ContractAdd: r.to,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+        // console.log(res.data);
       })
-   (props.admin)?nav(`/admin/educationDetails/${query['sem']}`): nav(`/educationalDetails/${query['sem']}`);
+      .then((data) => {
+        console.log("Data is : ", data);
+        props.admin
+          ? nav(`/admin/educationDetails/${query["sem"]}`)
+          : nav(`/educationalDetails/${query["sem"]}`);
+      })
+      .catch((err) => {
+        console.log("Error is ", err);
+      });
+
+    console.log("Props are : ", props);
   };
   const handle = (subject, value) => {
     console.log(subject);
@@ -123,12 +138,21 @@ function SetSemester(props) {
   return subs.length > 0 ? (
     <Grid container>
       <Grid item xs={4} sx={{ position: "fixed" }}>
-       {(props.admin)?<AdminSideBar />:<SideBar />} 
+        {props.admin ? <AdminSideBar /> : <SideBar />}
       </Grid>
-      <Grid item sx={{ position: "relative",left:'36rem', top:'1rem' ,fontSize:18, fontWeight:'bold'}}>
-        Enter marks of Semester - {query["sem"]} : 
+      <Grid
+        item
+        sx={{
+          position: "relative",
+          left: "36rem",
+          top: "1rem",
+          fontSize: 18,
+          fontWeight: "bold",
+        }}
+      >
+        Enter marks of Semester - {query["sem"]} :
       </Grid>
-      <Grid item xs={6} sx={{  marginLeft: 40 }}>
+      <Grid item xs={6} sx={{ marginLeft: 40 }}>
         <Grid container margin={5}>
           {content}
         </Grid>

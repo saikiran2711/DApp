@@ -106,7 +106,7 @@ function SemesterTable(props) {
     ) : (
       <Grid container>
         <Grid item xs={4}>
-        {(props.admin)?<AdminSideBar />:<SideBar />}  
+          {props.admin ? <AdminSideBar /> : <SideBar />}
         </Grid>
         <Grid item xs={8} marginTop={2}>
           <Grid container>
@@ -157,7 +157,7 @@ function SemesterTable(props) {
       </Grid>
     );
   } else {
-    return <SetSemester edit={true} marks={marks} />;
+    return <SetSemester edit={true} admin={true} marks={marks} />;
   }
 }
 export default SemesterTable;

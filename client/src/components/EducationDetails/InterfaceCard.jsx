@@ -15,14 +15,15 @@ function InterfaceCard(props) {
     getSemDetails(parseInt(query["sem"]), address).then((res, err) =>
       setSem([...res])
     );
+  console.log("//////////////////////PROPS are : ", props);
   console.log("Sem details : ", semDetails[0]);
-  if (hash || props.admin==true) {
+  if (hash || props.admin == true) {
     if (semDetails[0] > "0") {
       return <SemesterTable {...props} />;
     } else {
       return <SetSemester {...props} edit={false} />;
     }
-  } else if(props.admin!=true) {
+  } else if (props.admin != true) {
     return <Navigate to={"/login"} />;
   }
 }

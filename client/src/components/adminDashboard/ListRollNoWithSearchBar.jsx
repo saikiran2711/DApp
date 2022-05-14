@@ -1,9 +1,36 @@
 import { TextField, Grid, Box, Checkbox } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import AdminSideBar from "./sidebar";
 function ListRollNoWithSearchBar(props) {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
+  const [rolldata, setRollData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:9000/admin/users")
+      .then((res) => {
+        return res.json();
+        // console.log(res.data);
+      })
+      .then((data) => {
+        const result = data.data;
+        const setData = [];
+        result.map((res) => {
+          const temp = { rollNo: "", address: "" };
+          temp["rollNo"] = res.rollNo;
+          temp["address"] = res.address;
+          setData.push(temp);
+        });
+        console.log("Set data is : ", setData);
+        setRollData(setData);
+        // setdata(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const mockData = [
     "2451-18-733-024",
     "2451-18-733-023",
@@ -27,29 +54,35 @@ function ListRollNoWithSearchBar(props) {
     }
   };
   const handleClickRoll = (roll) => {
+    console.log("Rol is :", roll);
+    localStorage.setItem("roll", roll);
+    const res = rolldata.filter((r) => r.rollNo == roll);
+
+    console.log("Res is :", res);
+    localStorage.setItem("address", res[0].address);
     navigate("/admin/students/view/" + roll);
   };
   console.log(search);
   console.log(checked);
 
   let content = [];
-  for (let i = 0; i < mockData.length; i++) {
-    if (search.length == 0 || mockData[i].includes(search))
+  for (let i = 0; i < rolldata.length; i++) {
+    if (search.length == 0 || rolldata[i]["rollNo"].includes(search))
       content.push(
         <Grid item xs={8}>
           <Box
             margin={1}
-            onClick={() => handleClickRoll(mockData[i])}
+            onClick={() => handleClickRoll(rolldata[i]["rollNo"])}
             padding={2}
             bgcolor="violet"
           >
             <Checkbox
               {...label}
-              value={mockData[i]}
+              value={rolldata[i]["rollNo"]}
               bgColor="violet"
               onChange={onChangeChecked}
             />
-            {mockData[i]}
+            {rolldata[i]["rollNo"]}
           </Box>
         </Grid>
       );
