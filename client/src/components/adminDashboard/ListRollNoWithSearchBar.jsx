@@ -1,12 +1,14 @@
 import { TextField, Grid, Box, Checkbox, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import SemDetails from "../../contracts/SemDetails.json";
+import Web3 from "web3";
 import AdminSideBar from "./sidebar";
 function ListRollNoWithSearchBar(props) {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
+  const nav=useNavigate();
   const [rolldata, setRollData] = useState([]);
-
+  const [email,setEmail]=useState('');
   useEffect(() => {
     fetch("http://localhost:9000/admin/users")
       .then((res) => {
@@ -14,11 +16,13 @@ function ListRollNoWithSearchBar(props) {
       })
       .then((data) => {
         const result = data.data;
+        console.log(data)
         const setData = [];
         result.map((res) => {
           const temp = { rollNo: "", address: "" };
           temp["rollNo"] = res.rollNo;
           temp["address"] = res.address;
+          temp["email"]=res.email;
           setData.push(temp);
         });
         console.log("Set data is : ", setData);
@@ -52,9 +56,26 @@ function ListRollNoWithSearchBar(props) {
       setChecked(checked);
     }
   };
-  const sendMailClick=(e,roll)=>{
+  const sendMailClick=async(e,roll)=>{
     console.log("R",roll)
-
+    // let account=localStorage.getItem('address')
+    // const instance=await connectionHandler();
+    const provider = new Web3.providers.HttpProvider("http://127.0.0.1:7545");
+      const web3 = new Web3(provider);
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = SemDetails.networks[networkId];
+      const instance = new web3.eth.Contract(
+        SemDetails.abi,
+        deployedNetwork && deployedNetwork.address
+      );
+    let response = await instance.methods
+        .getProfile()
+        .call({ from: roll['address'] });
+        console.log(response[0]['email'])
+        setEmail((prev)=>prev+response[0]['email']+", ")
+        localStorage.setItem("ToEmail",response[0]['email']);
+        console.log(email)
+        nav('/admin/students/sendEmail');
   }
   const handleClickRoll = (roll) => {
     console.log("Rol is :", roll);

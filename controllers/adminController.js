@@ -1,5 +1,12 @@
 const User = require("../models/userModel");
-
+const nodemailer=require("nodemailer");
+const transport=nodemailer.createTransport({
+  service:'gmail',
+  auth:{
+    user:"Your_email",
+    pass:"Your_pass"
+  }
+})
 exports.adminLogin = (req, res, next) => {
   console.log(req.body);
   const email = req.body.email;
@@ -43,7 +50,22 @@ exports.getUsers = (req, res, next) => {
       console.log(err);
     });
 };
+exports.sendEmail=(req,res,next)=>{
+  let emailArray=req.body.email
+  console.log(emailArray);
+  let mail={
+    from:"your_email",
+    to:emailArray,
+    
+    subject:req.body.subject,
+    text:req.body.body
+  }
+  transport.sendMail(mail,(err,info)=>{
+    if(err)console.log("Email Send Error",err)
+    else console.log("Email senT",info)
+  })
 
+}
 exports.addRecruiters=(req,res,next)=>{
   console.log(req.body.email);
   console.log(req.body.password);

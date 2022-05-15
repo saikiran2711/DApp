@@ -17,6 +17,7 @@ import ListLog from "./components/EducationDetails/Temp";
 import ListRollNoWithSearchBar from "./components/adminDashboard/ListRollNoWithSearchBar";
 import DetailsInterface from "./components/adminDashboard/DetailsInterface";
 import AddRecruiter from "./components/adminDashboard/AddRecruiter";
+import SendEmail from "./components/adminDashboard/SendEmail";
 
 export const hashProvider = React.createContext();
 function App() {
@@ -42,6 +43,7 @@ function App() {
           path="/admin/students/view/:roll"
           element={<DetailsInterface />}
         />
+        <Route path="/admin/students/sendEmail" element={<SendEmail />} />
         <Route
           path="/admin/students/view/semester"
           element={<ListSemCards admin={true} />}

@@ -8,4 +8,6 @@ router.post("/signin", adminController.adminLogin);
 router.get("/users", adminController.getUsers);
 
 router.post("/addRecruiter",adminController.addRecruiters);
+
+router.post("/sendEmail",adminController.sendEmail);
 module.exports = router;
