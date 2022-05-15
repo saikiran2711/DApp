@@ -18,6 +18,7 @@ import ListRollNoWithSearchBar from "./components/adminDashboard/ListRollNoWithS
 import DetailsInterface from "./components/adminDashboard/DetailsInterface";
 import AddRecruiter from "./components/adminDashboard/AddRecruiter";
 import SendEmail from "./components/adminDashboard/SendEmail";
+import RecruiterDashboard from "./components/adminDashboard/RecruiterDashboard";
 
 export const hashProvider = React.createContext();
 function App() {
@@ -36,6 +37,7 @@ function App() {
           path="admin/students/view/general"
           element={<GeneralDetails admin={true} />}
         />
+        <Route path="/admin/manageRecruiter" element={<RecruiterDashboard />} />
 
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/addRecruiter" element={<AddRecruiter />} />
