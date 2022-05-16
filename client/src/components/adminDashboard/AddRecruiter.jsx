@@ -42,25 +42,28 @@ function AddRecruiter(props) {
           </Grid>
 
           <Grid item xs={12} margin={1}>
-            <Typography display="inline-flex">Recruiter's Email : </Typography>
+            <Typography display="inline-flex">Email : </Typography>
             <TextField
+            size="small"
               sx={{ justifyContent: "center" }}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter email"
               label="Email"
             ></TextField>
           </Grid>
-          <Grid item xs={12} margin={1}>
+          <Grid item margin={1}>
             <Typography display="inline-flex">
-              Recruiter's Password :{" "}
+              Password :{" "}
             </Typography>
 
             <TextField
+            size="small"
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Enter Password"
               label="Password"
             ></TextField>
+
           </Grid>
           <Grid item xs={12} margin={1}>
             <Button
