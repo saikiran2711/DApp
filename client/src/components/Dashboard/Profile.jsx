@@ -1,6 +1,6 @@
 import { Box, Hidden, Paper, Typography } from "@mui/material";
 import React, { useEffect, useState, Component } from "react";
-import SemDetails from "../../contracts/SemDetails.json";
+import SemDetails from "../../contracts/ProfileDetails.json";
 // import getWeb3 from "../../web3";
 import Web3 from "web3";
 

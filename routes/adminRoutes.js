@@ -9,6 +9,7 @@ router.get("/users", adminController.getUsers);
 router.get("/recruiters", adminController.gerRecruiters);
 
 router.post("/addRecruiter", adminController.addRecruiters);
-
+router.post("/changePassword",adminController.changePass);
+router.post("/deleteUser",adminController.deleteUser);
 router.post("/sendEmail", adminController.sendEmail);
 module.exports = router;

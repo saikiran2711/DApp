@@ -1,7 +1,7 @@
 import { TextField, Grid, Box, Checkbox, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import SemDetails from "../../contracts/SemDetails.json";
+import SemDetails from "../../contracts/ProfileDetails.json";
 import Web3 from "web3";
 import AdminSideBar from "./sidebar";
 function ListRollNoWithSearchBar(props) {
@@ -96,9 +96,11 @@ function ListRollNoWithSearchBar(props) {
         <Grid item xs={8}>
           <Box
             margin={1}
-            
+            borderRadius={3}
+            border={1}
+            borderColor="black"
             padding={2}
-            bgcolor="violet"
+            // bgcolor="violet"
           >
             <Checkbox
               {...label}
@@ -107,7 +109,7 @@ function ListRollNoWithSearchBar(props) {
               onChange={onChangeChecked}
             />
             <Button onClick={() => handleClickRoll(rolldata[i]["rollNo"])} variant="text">{rolldata[i]["rollNo"]}</Button>
-            <Box bgcolor="red" display="inline-flex" justifyContent="end">
+            <Box marginLeft={20} display="inline-flex" justifyContent="end">
             <Button variant="outlined" onClick={(e)=>sendMailClick(e,rolldata[i])} sx={{textTransform:"capitalize"}} >Send Email</Button>
             </Box>
           </Box>
@@ -121,6 +123,7 @@ function ListRollNoWithSearchBar(props) {
       </Grid>
       <Grid item xs={8} overflow="scroll">
         <TextField onChange={onchange} />
+        {/* <Button  variant="outlined" onClick={sendMailClick(e,rolldata[i])} sx={{textTransform:"capitalize"}}>Send E-Mail</Button> */}
         <Grid container>{content}</Grid>
       </Grid>
     </Grid>

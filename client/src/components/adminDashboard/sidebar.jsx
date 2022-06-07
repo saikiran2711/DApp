@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
-
+import { RecruiterProvider } from "../../App";
 const useStyles = makeStyles({
   sideBarBox: {
     backgroundColor: "#3f3f47",
@@ -38,6 +38,7 @@ const useStyles = makeStyles({
   },
 });
 const AdminSideBar = () => {
+  let [recruiter, setRecruiter] = React.useContext(RecruiterProvider);
   const classes = useStyles();
   const url = window.location.pathname;
   return (
@@ -84,40 +85,57 @@ const AdminSideBar = () => {
                 </Typography>{" "}
               </Grid>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/admin/addRecruiter">
-              <Grid
-                item
-                sx={{
-                  marginTop: "8px",
-                  marginLeft: "10px",
-                  marginRight: "10px",
-                }}
-                className={`${
-                  url.match("/addRecruiter")
-                    ? `${classes.sideBarItems}`
-                    : `${classes.notsideBarItems}`
-                }`}
-              >
-                <Typography sx={{ color: "white" }}>Add Recruiter </Typography>{" "}
-              </Grid>
-            </Link>
-            <Link style={{ textDecoration: "none" }} to="/admin/manageRecruiter">
-              <Grid
-                item
-                sx={{
-                  marginTop: "8px",
-                  marginLeft: "10px",
-                  marginRight: "10px",
-                }}
-                className={`${
-                  url.match("/manageRecruiter")
-                    ? `${classes.sideBarItems}`
-                    : `${classes.notsideBarItems}`
-                }`}
-              >
-                <Typography sx={{ color: "white" }}>Manage Recruiter </Typography>{" "}
-              </Grid>
-            </Link>
+            {recruiter == false ? (
+              <>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/admin/addRecruiter"
+                >
+                  <Grid
+                    item
+                    sx={{
+                      marginTop: "8px",
+                      marginLeft: "10px",
+                      marginRight: "10px",
+                    }}
+                    className={`${
+                      url.match("/addRecruiter")
+                        ? `${classes.sideBarItems}`
+                        : `${classes.notsideBarItems}`
+                    }`}
+                  >
+                    <Typography sx={{ color: "white" }}>
+                      Add Recruiter{" "}
+                    </Typography>{" "}
+                  </Grid>
+                </Link>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to="/admin/manageRecruiter"
+                >
+                  <Grid
+                    item
+                    sx={{
+                      marginTop: "8px",
+                      marginLeft: "10px",
+                      marginRight: "10px",
+                    }}
+                    className={`${
+                      url.match("/manageRecruiter")
+                        ? `${classes.sideBarItems}`
+                        : `${classes.notsideBarItems}`
+                    }`}
+                  >
+                    <Typography sx={{ color: "white" }}>
+                      Manage Recruiter{" "}
+                    </Typography>{" "}
+                  </Grid>
+                </Link>
+              </>
+            ) : (
+              ""
+            )}
+
             <Link style={{ textDecoration: "none" }} to="/logout">
               <Grid
                 item

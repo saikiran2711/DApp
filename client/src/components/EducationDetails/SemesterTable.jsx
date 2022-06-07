@@ -1,5 +1,5 @@
 import EditOutlined from "@mui/icons-material/EditOutlined";
-import { Card, Grid, IconButton, Paper } from "@mui/material";
+import { Card, Grid, IconButton, Paper, Typography } from "@mui/material";
 import { grid } from "@mui/system";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -135,7 +135,7 @@ function SemesterTable(props) {
                 </Grid>
               </Grid>
             ) : (
-              ""
+              <Typography width={1} color="white">H</Typography>
             )}
 
             <Grid item xs={6}>

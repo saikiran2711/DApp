@@ -1,9 +1,12 @@
 import { TextareaAutosize } from "@mui/base";
-import { InputLabel, Box, TextField, Button, Grid } from "@mui/material";
+import { InputLabel, Box, TextField, Button, Grid,Typography } from "@mui/material";
 
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { RecruiterProvider } from "../../App";
+import AdminSideBar from "./sidebar";
 
 function SendEmail(props) {
+  let [recruiter,setRecruiter]=useContext(RecruiterProvider)
   let [body, setBody] = useState("");
   let [subject, setSubject] = useState("");
   let to=localStorage.getItem('ToEmail');
@@ -26,11 +29,17 @@ function SendEmail(props) {
     })
   }
   return (
-    <Grid container rowSpacing={2}>
+    <Grid container>
+      <Grid item>
+    <AdminSideBar />
+    </Grid>
+    <Grid item>
+    <Grid container marginTop={2} rowSpacing={2}>
       <Grid item xs={12}>
-        <TextField placeholder="To : " onChange={(e)=>setToEmail(e.target.value)} value={toEmail}/>
+       <Typography>Receipent's Email:</Typography> <TextField placeholder="To : " onChange={(e)=>setToEmail(e.target.value)} value={toEmail}/>
       </Grid>
       <Grid item xs={12}>
+        <Typography>Subject : </Typography>
         <TextField
           placeholder="Subject"
           onChange={(e) => setSubject(e.target.value)}
@@ -38,6 +47,7 @@ function SendEmail(props) {
       </Grid>
       {/* <InputLabel>From : </InputLabel> */}
       <Grid item xs={12}>
+        <Typography>Body: </Typography>
         <TextareaAutosize
           placeholder="Enter text to send"
           onChange={(e) => setBody(e.target.value)}
@@ -50,6 +60,8 @@ function SendEmail(props) {
           Submit
         </Button>
       </Grid>
+    </Grid>
+    </Grid>
     </Grid>
   );
 }

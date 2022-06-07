@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { Box, Card, Grid, Typography, Button, TextField } from "@mui/material";
 
@@ -9,6 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { Email } from "@mui/icons-material";
+import { RecruiterProvider } from "../../App";
 
 const useStyles = makeStyles({
   root: {
@@ -56,7 +57,7 @@ const AdminComponent = () => {
   let navigate = useNavigate();
   let [boolErr, setBoolErr] = useState(false);
   let [errormsg, setErr] = useState("");
-
+  let [recruiter,setRecruiter]=useContext(RecruiterProvider);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
@@ -97,11 +98,15 @@ const AdminComponent = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        console.log("Data after login");
+        if(data['message']=="Success Recruiter"){
+          setRecruiter(true);
+        }else if(data['message']!="Success Recruiter"){
+          setRecruiter(false);
+        }
         if (data.err) {
           return navigate("/admin");
         }
-
         return navigate("/admin/dashboard");
       })
       .catch((err) => {

@@ -21,10 +21,13 @@ import SendEmail from "./components/adminDashboard/SendEmail";
 import RecruiterDashboard from "./components/adminDashboard/RecruiterDashboard";
 
 export const hashProvider = React.createContext();
+export const RecruiterProvider=React.createContext();
 function App() {
   let hasher = useState(false);
+  let isRecruiter=useState(false);
   return (
     <hashProvider.Provider value={hasher}>
+      <RecruiterProvider.Provider value={isRecruiter}>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginComponent />} />
@@ -67,6 +70,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/logout" element={<LogoutComponent />} />
       </Routes>
+      </RecruiterProvider.Provider>
     </hashProvider.Provider>
   );
 }

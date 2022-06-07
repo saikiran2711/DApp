@@ -3,15 +3,33 @@ const nodemailer = require("nodemailer");
 const transport = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "Your_email",
-    pass: "Your_pass",
+    user: "245118733024@mvsrec.edu.in",
+    pass: "Sampath@123",
   },
 });
 exports.adminLogin = (req, res, next) => {
   console.log(req.body);
   const email = req.body.email;
   const password = req.body.password;
-
+  User.find().then((users)=>{
+    for(let i in users){
+      for(let j in users[i]['recruiters']){
+        if(email==users[i]['recruiters'][j]['recruiterEmail']){
+          console.log(users[i])
+          return res.status(200).json({message:"Success Recruiter"})
+        }
+      }
+      if(users[i]['email']==email && users[i]['password']==password){
+        return res.status(200).json({message:"Logged successfully."})
+      }else if(users[i]['email']==email){
+        return res.status(422).json({err:"password is incorrect"})
+      }
+      else{
+        return res.status(422).json({err:"user not found"})
+      }
+      
+    }
+  })
   User.findOne({ email: email })
     .then((user) => {
       if (!user) {
@@ -23,6 +41,7 @@ exports.adminLogin = (req, res, next) => {
       } else {
         return res.status(422).json({ err: "Password is incorrect" });
       }
+
     })
     .then((user) => {
       return res
@@ -67,6 +86,18 @@ exports.gerRecruiters = (req, res, next) => {
       console.log(err);
     });
 };
+exports.changePass=(req,res,next)=>{
+  User.findOne({email:req.body.email}).then((users)=>{
+    if(users){
+      users.password=req.body.newPassword;
+      users.save();
+      return res.status(201).json({message:"Changed Password successfule!"});
+    }
+  })
+};
+exports.deleteUser=(req,res,next)=>{
+ console.log(User.deleteOne({email:req.body.email}))
+}
 exports.sendEmail = (req, res, next) => {
   let emailArray = req.body.email;
   console.log(emailArray);

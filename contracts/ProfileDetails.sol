@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.0 <0.9.0;
 pragma experimental ABIEncoderV2;
-contract SemDetails{
+contract ProfileDetails{
   struct  Profile{
     string name;
     string email;

@@ -1,6 +1,6 @@
-import { RedoTwoTone } from "@mui/icons-material";
+
 import Web3 from "web3";
-import SemDetails from "../../contracts/SEMT.json";
+import SemDetails from "../../contracts/Semester.json";
 export let acc;
 export async function connectionHandler() {
   console.log("in function");

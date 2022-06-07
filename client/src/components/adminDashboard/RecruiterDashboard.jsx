@@ -6,11 +6,22 @@ import {
   Typography,
   Card,
   Paper,
+  Button,
   CircularProgress,
 } from "@mui/material";
 const RecruiterDashboard = () => {
   const [data, setdata] = useState();
-
+  const handleChangePass=(email,pass)=>{
+    fetch("http://localhost:9000/admin/changePassword",{
+      
+        method: "post",
+        headers: {
+          "Content-type": "application/json",
+        },
+        
+      body:JSON.stringify({email:email,newPassword:pass})
+    })
+  }
   useEffect(() => {
     fetch("http://localhost:9000/admin/recruiters")
       .then((res) => {
@@ -101,7 +112,7 @@ const RecruiterDashboard = () => {
                   >
                     <Grid
                       item
-                      md={12}
+                      md={8}
                       sx={{
                         padding: "8px",
                         borderBottom: "1px solid #aaacbe",
@@ -111,7 +122,15 @@ const RecruiterDashboard = () => {
                       <Typography variant="h6" color="white">
                         Recruiter's email
                       </Typography>
+                      
                     </Grid>
+                    <Grid item md={4}  sx={{
+                        padding: "8px",
+                        borderBottom: "1px solid #aaacbe",
+                        //   borderBottomColor: "GrayText",
+                      }}>
+                        <Typography variant="h6" color="white">Action</Typography>
+                        </Grid>
                     {/* <Grid
                       item
                       md={3}
@@ -139,11 +158,11 @@ const RecruiterDashboard = () => {
 
                     {data.map((d) => {
                       return (
-                        <>
+                        <Grid container>
                           <Grid
                             item
                             alignSelf="center"
-                            md={12}
+                            md={4}
                             sx={{
                               paddingLeft: "8px",
                               paddingTop: "10px",
@@ -161,6 +180,12 @@ const RecruiterDashboard = () => {
                                 {d.recruiterEmail}
                               </Typography>
                             </Grid>
+                            <Grid  item md={4}>
+                              <Button  variant="outlined">Change Password</Button>
+                              </Grid>
+                              <Grid item md={4}>
+                              <Button variant="outlined">Delete User</Button>
+                              </Grid>
                             {/* <Grid
                               item
                               sx={{
@@ -219,7 +244,7 @@ const RecruiterDashboard = () => {
                               </span>
                             )}
                           </Grid> */}
-                        </>
+                        </Grid>
                       );
                     })}
                   </Grid>
