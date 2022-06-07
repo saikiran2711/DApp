@@ -4,10 +4,10 @@ import React from "react";
 function SemCards(props) {
   return (
     <Paper
+      {...props}
       sx={{
         width: "fit-content",
         margin: 5,
-
         backgroundColor: "blue",
         color: "white",
         borderRadius: 5,
@@ -17,7 +17,6 @@ function SemCards(props) {
       <Box sx={{ paddingBottom: 2, paddingTop: 5, paddingX: 5 }}>
         {props.sem}
       </Box>
-      {/* <Typography paddingTop={1} fontSize={12}> Get your result</Typography> */}
       <ArrowForward
         sx={{
           width: "inherit",

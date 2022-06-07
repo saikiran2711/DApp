@@ -5,11 +5,49 @@ const Web3 = require("web3");
 const web3 = new Web3("http://localhost:7545");
 
 const getAddress = async (idx) => {
-  //   let accounts = await web3.eth.getAccounts()[idx];
-
   let accounts = await web3.eth.getAccounts();
 
   return accounts[+idx];
+};
+
+exports.getLog = async (req, res, next) => {
+  const rollNo = req.body.rollNo;
+  const user = await User.findOne({ rollNo: req.body.rollNo });
+  console.log(user);
+  res.json({ log: user.log });
+  //  return User.findOne({rollNo:rollNo}).then((user)=>{
+  //     console.log("USERLOG : "+user.log[4]['Msg'])
+  //     return user.log;
+  //   })
+};
+
+exports.setSemData = async (req, res, next) => {
+  const rollNo = req.body.rollNo;
+  console.log("Roll no is :", rollNo);
+
+  User.findOne({ rollNo: rollNo }, function (err, doc) {
+    console.log("Doc is " + doc);
+    if (
+      req.body.logMsg != null &&
+      req.body.TransactionID != null &&
+      req.body.Time != null &&
+      req.body.GasUsed != null &&
+      req.body.ContractAdd != null
+    ) {
+      let l = doc.log;
+      // let l=[];
+      let i = {};
+      i["Msg"] = req.body.logMsg;
+      i["TransactionID"] = req.body.TransactionID;
+      i["Time"] = req.body.Time;
+      (i["GasUsed"] = req.body.GasUsed),
+        (i["ContractAdd"] = req.body.ContractAdd);
+      l.push(i);
+      doc.log = l;
+      doc.save();
+      return res.status(201).json({ message: "Updated" });
+    }
+  });
 };
 
 exports.signUp = async (req, res, next) => {

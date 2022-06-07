@@ -12,6 +12,12 @@ const userSchema = new Schema({
   rollNo: {
     type: String,
   },
+  log:[{
+    type:Object
+  }],
+  recruiters:[{
+    type:Object
+  }],
   password: {
     type: String,
     required: true,

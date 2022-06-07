@@ -8,17 +8,17 @@ import {
   Paper,
   CircularProgress,
 } from "@mui/material";
-const AdminDashboard = () => {
+const RecruiterDashboard = () => {
   const [data, setdata] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:9000/admin/users")
+    fetch("http://localhost:9000/admin/recruiters")
       .then((res) => {
         return res.json();
         // console.log(res.data);
       })
       .then((data) => {
-        console.log(data);
+        console.log(data.data);
         setdata(data.data);
       })
       .catch((err) => {
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
             <Grid container direction="column">
               <Grid item>
                 <Box sx={{ padding: "10px", margin: "20px" }}>
-                  <Typography variant="h4">Welcome Admin,</Typography>
+                  <Typography variant="h4">Recruiters Details</Typography>
                 </Box>
               </Grid>
               <Grid item></Grid>
@@ -79,7 +79,7 @@ const AdminDashboard = () => {
                     color="white"
                     sx={{ padding: "10px" }}
                   >
-                    User Status Table
+                    Recruiter's Status Table
                   </Typography>
                 </Paper>
                 <Paper
@@ -101,7 +101,7 @@ const AdminDashboard = () => {
                   >
                     <Grid
                       item
-                      md={6}
+                      md={12}
                       sx={{
                         padding: "8px",
                         borderBottom: "1px solid #aaacbe",
@@ -109,10 +109,10 @@ const AdminDashboard = () => {
                       }}
                     >
                       <Typography variant="h6" color="white">
-                        User
+                        Recruiter's email
                       </Typography>
                     </Grid>
-                    <Grid
+                    {/* <Grid
                       item
                       md={3}
                       sx={{
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
                       <Typography variant="h6" color="white">
                         Status{" "}
                       </Typography>
-                    </Grid>
+                    </Grid> */}
 
                     {data.map((d) => {
                       return (
@@ -143,7 +143,7 @@ const AdminDashboard = () => {
                           <Grid
                             item
                             alignSelf="center"
-                            md={6}
+                            md={12}
                             sx={{
                               paddingLeft: "8px",
                               paddingTop: "10px",
@@ -157,9 +157,11 @@ const AdminDashboard = () => {
                                 paddingTop: "5px",
                               }}
                             >
-                              <Typography color="white">{d.rollNo}</Typography>
+                              <Typography color="white">
+                                {d.recruiterEmail}
+                              </Typography>
                             </Grid>
-                            <Grid
+                            {/* <Grid
                               item
                               sx={{
                                 paddingBottom: "5px",
@@ -169,9 +171,9 @@ const AdminDashboard = () => {
                               <Typography color="white">
                                 Public address : {d.address}
                               </Typography>
-                            </Grid>
+                            </Grid> */}
                           </Grid>
-                          <Grid
+                          {/* <Grid
                             item
                             alignSelf="center"
                             md={3}
@@ -182,8 +184,8 @@ const AdminDashboard = () => {
                             }}
                           >
                             <Typography color="white">{d.role}</Typography>
-                          </Grid>
-                          <Grid
+                          </Grid> */}
+                          {/* <Grid
                             item
                             md={3}
                             alignSelf="center"
@@ -216,7 +218,7 @@ const AdminDashboard = () => {
                                 offline
                               </span>
                             )}
-                          </Grid>
+                          </Grid> */}
                         </>
                       );
                     })}
@@ -231,4 +233,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default RecruiterDashboard;

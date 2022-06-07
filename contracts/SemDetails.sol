@@ -5,7 +5,7 @@ contract SemDetails{
   struct  Profile{
     string name;
     string email;
-    uint256 rollNo;
+    string rollNo;
     uint256 phone;
     string addrss;
     uint256 aadharNumber;

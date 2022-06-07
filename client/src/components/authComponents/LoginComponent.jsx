@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import { Box, Card, Grid, Typography, Button, TextField } from "@mui/material";
-
+import { hashProvider } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
 import getWeb3 from "../../web3";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -49,15 +49,19 @@ const useStyles = makeStyles({
 });
 
 const LoginComponent = () => {
-  const web3=new getWeb3();
-  
+  const web3 = new getWeb3();
+  let [hash,setHash]=useContext(hashProvider)
   let navigate = useNavigate();
   const [rollNo, setrollNo] = useState("");
   const [password, setPassword] = useState("");
+  let [rollErr,setRollErr]=useState('');
   const classes = useStyles();
 
   const handleRoll = (e) => {
+    if(e.target.value.match(/[0-9]{4}-[0-9]{2}-[0-9]{3}-[0-9]{3}/g)){
+      setRollErr('')
     setrollNo(e.target.value);
+    }else setRollErr("Enter valid Roll Number")
   };
 
   const handlePassword = (e) => {
@@ -67,7 +71,8 @@ const LoginComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(rollNo, password);
-    fetch("/auth/signin", {
+    localStorage.setItem('roll',rollNo);
+    fetch("http://localhost:9000/auth/signin", {
       method: "post",
       headers: {
         "Content-type": "application/json",
@@ -83,6 +88,7 @@ const LoginComponent = () => {
       .then((data) => {
         console.log(data);
         localStorage.setItem("address", data.user.address);
+        setHash(true)
         return navigate("/dashboard");
       })
       .catch((err) => {
@@ -128,8 +134,10 @@ const LoginComponent = () => {
                   color="login"
                   inputMode="text"
                   fullWidth={true}
+                  error={rollErr.length>0?true:false}
                   onChange={handleRoll}
-                  value={rollNo}
+                  helperText={rollErr}
+                  // value={rollNo}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -159,7 +167,7 @@ const LoginComponent = () => {
                 />
               </Grid>
               <Grid item sx={{ marginTop: "20px" }}>
-                <Typography>Forgot password ?</Typography>
+                {/* <Typography>Forgot password ?</Typography> */}
               </Grid>
               <Grid item>
                 <Box className={classes.leftCircle}></Box>

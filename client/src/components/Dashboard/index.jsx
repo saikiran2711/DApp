@@ -8,9 +8,9 @@ import {
   CardContent,
   CardHeader,
 } from "@mui/material";
-import React from "react";
-import { makeStyles } from "@mui/styles";
-
+import React, { useContext, useState } from "react";
+import { makeStyles, propsToClassKey } from "@mui/styles";
+import { useNavigate, Navigate } from "react-router-dom";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -21,6 +21,8 @@ import {
   ArrowForwardOutlined,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { hashProvider } from "../../App";
+import LoginComponent from "../authComponents/LoginComponent";
 
 const useStyles = makeStyles({
   cardMui: {
@@ -33,9 +35,12 @@ const useStyles = makeStyles({
   },
 });
 
-const Index = () => {
+const Index = (props) => {
+  let [hash,setHash]=useContext(hashProvider);
   const classes = useStyles();
+  let navigate=useNavigate();
   return (
+    (hash)?
     <>
       <Grid container display="flex">
         <Grid item>
@@ -46,15 +51,13 @@ const Index = () => {
             sx={{
               marginTop: "30px",
               padding: "6px",
-              // backgroundColor: "yellow",
             }}
           >
-            <Typography variant="h4">Welcome, Mr.Kiran </Typography>
+            <Typography variant="h4">Welcome, User </Typography>
           </Box>
           <Grid
             container
             sx={{
-              // backgroundColor: "orange",
               marginTop: "20px",
               padding: "10px",
             }}
@@ -94,7 +97,6 @@ const Index = () => {
                       position: "relative",
                       left: "19rem",
                       top: "3rem",
-                      // bottom: "1rem",
                     }}
                   >
                     <ArrowForwardOutlined
@@ -147,10 +149,57 @@ const Index = () => {
                 </Link>
               </Card>
             </Grid>
+            <Grid item md={3}>
+            <Card
+                elevation={5}
+                sx={{
+                  borderRadius: 5,
+                  backgroundColor: "#ff6600",
+
+                  boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+                  transition: "0.5s",
+                }}
+                className={classes.cardMui}
+              >
+                <Box
+                  sx={{
+                    padding: "8px",
+                    borderBottom: 1,
+                    borderBottomColor: "white",
+                  }}
+                >
+                  <Typography variant="h5" color="white">
+                    Update Log
+                  </Typography>
+                </Box>
+
+                <CardContent>
+                  <Typography sx={{ fontSize: "18px" }} color="white">
+                    Get to know your log of your updates...
+                  </Typography>
+                </CardContent>
+                <Link to="/logMessage">
+                  <IconButton
+                    sx={{
+                      position: "relative",
+                      left: "19rem",
+                      top: "3rem",
+                    }}
+                  >
+                    <ArrowForwardOutlined
+                      sx={{ color: "white" }}
+                      fontSize="large"
+                    />
+                  </IconButton>
+                </Link>
+              </Card>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
     </>
+    :
+<Navigate to={"/login"} />
   );
 };
 

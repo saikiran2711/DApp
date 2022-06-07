@@ -81,7 +81,8 @@ const AdminComponent = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(email, password);
-    fetch("/admin/signin", {
+    localStorage.setItem('admin',email);
+    fetch("http://localhost:9000/admin/signin", {
       method: "post",
       headers: {
         "Content-type": "application/json",
@@ -92,10 +93,15 @@ const AdminComponent = () => {
       }),
     })
       .then((res) => {
+        console.log("Status is :", res.status);
         return res.json();
       })
       .then((data) => {
         console.log(data);
+        if (data.err) {
+          return navigate("/admin");
+        }
+
         return navigate("/admin/dashboard");
       })
       .catch((err) => {

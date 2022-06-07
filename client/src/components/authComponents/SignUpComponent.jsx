@@ -17,10 +17,16 @@ function SignUpBox(props) {
   let [rollNo, setRollno] = useState("");
   let [errormsg, setErr] = useState("");
   let [password, setPassword] = useState("");
-  let [boolErr, setBoolErr] = useState(false);
+  // let [boolErr, setBoolErr] = useState(false);
+  let [emailErr,setEmailErr]=useState('');
   let theme = useTheme();
   const addressHandler = (event) => {
+    if(event.target.value.match(/[0-9]{4}-[0-9]{2}-[0-9]{3}-[0-9]{3}/g)){
     setRollno(event.target.value);
+    setEmailErr('');
+    }else{
+      setEmailErr("Enter valid Roll Number")
+    }
     console.log(rollNo);
     console.log(theme);
   };
@@ -30,7 +36,7 @@ function SignUpBox(props) {
   };
 
   const handleSignup = (event) => {
-    fetch("/auth/signup", {
+    fetch("http://localhost:9000/auth/signup", {
       method: "post",
       headers: {
         "Content-type": "application/json",
@@ -54,13 +60,13 @@ function SignUpBox(props) {
   const confirmPassHandler = (event) => {
     if (password != event.target.value) {
       setErr("Password should be same");
-      setBoolErr(true);
+      // setBoolErr(true);
     } else {
-      setBoolErr(false);
+      // setBoolErr(false);
       setErr("");
     }
 
-    console.log(boolErr);
+    // console.log(boolErr);
   };
   return (
     <Box
@@ -97,7 +103,9 @@ function SignUpBox(props) {
               color={"login"}
               label="Enter Roll Number"
               onChange={addressHandler}
-              placeholder="Eg. 2451YYBBBNNN"
+              error={emailErr.length>0?true:false}
+              helperText={emailErr}
+              placeholder="Eg. 2451-YY-BBB-NNN"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -128,7 +136,7 @@ function SignUpBox(props) {
               type="password"
               onChange={confirmPassHandler}
               label="Retype your Password"
-              error={boolErr}
+              error={errormsg.length>0?true:false}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -157,7 +165,6 @@ function SignUpBox(props) {
             </Button>
           </Grid>
         </Grid>
-        {/* </FormControl> */}
         <Typography fontSize="12px" color="grey">
           Already have an account ?{" "}
           <Link style={{ textDecoration: "none" }} to="/">
